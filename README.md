@@ -1,2 +1,2 @@
-# Bookatholns
+# Bookathlons
 Bookathlons project repository
