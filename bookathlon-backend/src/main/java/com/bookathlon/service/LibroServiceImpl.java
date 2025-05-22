@@ -21,13 +21,11 @@ public class LibroServiceImpl implements LibroService {
 
 	@Override
 	public Libro getLibroById(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Libro addLibro(Libro l) {
-		// TODO Auto-generated method stub
 		return dao.save(l);
 	}
 
