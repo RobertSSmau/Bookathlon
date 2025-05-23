@@ -1,20 +1,24 @@
 package com.bookathlon.entities;
 
+// Importa le annotazioni JPA che permettono di collegare la classe Java a una tabella del database.
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name="libro")
+@Entity   // Indica a Spring che questa classe rappresenta una tabella del database
+@Table(name="libro")  // Specifica che è collegata alla tabella 'libro' nel database
 
 public class Libro {
 	
-	@Id
+// Ogni attributo è mappato su una colonna della tabella libro.Spring e JPA si occuperà automaticamente della conversione
+	@Id // Identifica il campo 'id' come chiave primaria della tabella
 	private int id;
 	private String isbn;
 	private String titolo;
 	private String autore;
 	private int anno_pubblicazione;
+
+// I metodi getter e setter servono per accedere e modificare i valori degli attributi.
 	public int getId() {
 		return id;
 	}
