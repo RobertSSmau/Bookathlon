@@ -1,12 +1,14 @@
 package com.bookathlon.entities;
 
+import java.time.LocalDate;
+
 // Importa le annotazioni JPA che permettono di collegare la classe Java a una tabella del database.
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity   // Indica a Spring che questa classe rappresenta una tabella del database
-@Table(name="libro")  // Specifica che è collegata alla tabella 'libro' nel database
+@Table(name="libri")  // Specifica che è collegata alla tabella 'libro' nel database
 
 public class Libro {
 	
@@ -16,9 +18,9 @@ public class Libro {
 	private String isbn;
 	private String titolo;
 	private String autore;
-	private int anno_pubblicazione;
+	private String genere;
+	private LocalDate data_pubblicazione;
 
-// I metodi getter e setter servono per accedere e modificare i valori degli attributi.
 	public int getId() {
 		return id;
 	}
@@ -43,11 +45,26 @@ public class Libro {
 	public void setAutore(String autore) {
 		this.autore = autore;
 	}
-	public int getAnno_pubblicazione() {
-		return anno_pubblicazione;
+	public String getGenere() {
+		return genere;
 	}
-	public void setAnno_pubblicazione(int anno_pubblicazione) {
-		this.anno_pubblicazione = anno_pubblicazione;
+	public void setGenere(String genere) {
+		this.genere = genere;
+	}
+	public LocalDate getData_pubblicazione() {
+		return data_pubblicazione;
+	}
+	public void setData_pubblicazione(LocalDate data_pubblicazione) {
+		this.data_pubblicazione = data_pubblicazione;
 	}
 	
-}
+	
+	
+	
+
+// I metodi getter e setter servono per accedere e modificare i valori degli attributi.
+
+	
+	
+	}
+	
