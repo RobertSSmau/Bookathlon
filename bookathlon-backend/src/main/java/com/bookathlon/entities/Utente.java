@@ -9,7 +9,7 @@ public class Utente {
 
     @Id  // Questo campo è la chiave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Il valore viene generato automaticamente dal DB,autoincremento
-    private Long id;
+    private Long userId;
 
     @Column(nullable = false, unique = true)  // Lo username è un campo obbligatorio e deve essere unico nel DB
     private String username;
@@ -19,15 +19,15 @@ public class Utente {
 
     @Enumerated(EnumType.STRING)  // Salva il ruolo come stringa ( "ADMIN" o "USER" )
     @Column(nullable = false)  // Campo obbligatorio
-    private Ruolo ruolo;
+    private String type;
 
 // I getter e setter servono per accedere o modificare i valori degli attributi.
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long id) {
+        this.userId = id;
     }
 
     public String getUsername() {
@@ -46,11 +46,11 @@ public class Utente {
         this.password = password;
     }
 
-    public Ruolo getRuolo() {
-        return ruolo;
+    public String getRuolo() {
+        return type;
     }
 
-    public void setRuolo(Ruolo ruolo) {
-        this.ruolo = ruolo;
+    public void setRuolo(String type) {
+        this.type = type;
     }
 }

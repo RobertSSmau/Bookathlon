@@ -5,6 +5,6 @@ import com.bookathlon.entities.Utente;
 
 public interface UtenteService {
     List<Utente> getUtenti();
-    Utente getUtenteById(Long id);
+    Utente getUtenteById(Long userId);
     Utente addUtente(Utente u);
 }

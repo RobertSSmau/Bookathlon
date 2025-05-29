@@ -31,7 +31,7 @@ public class UtenteREST {
 // Gestisce le richieste GET con parametro dinamico {id}
 // Richiede al service di cercare l'utente con l'ID specificato
     @GetMapping("api/utenti/{id}")
-    public Utente getUtenteById(@PathVariable Long id) {
-        return service.getUtenteById(id);  
+    public Utente getUtenteById(@PathVariable Long userId) {
+        return service.getUtenteById(userId);  
     }
 }
