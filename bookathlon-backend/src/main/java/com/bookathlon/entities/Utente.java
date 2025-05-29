@@ -16,6 +16,8 @@ public class Utente {
 
     @Column(nullable = false)  //La password è obbligatoria e deve essere cifrata prima di salvarla nel DB
     private String password;
+    
+    private String email;
 
     @Enumerated(EnumType.STRING)  // Salva il ruolo come stringa ( "ADMIN" o "USER" )
     @Column(nullable = false)  // Campo obbligatorio
@@ -52,5 +54,13 @@ public class Utente {
 
     public void setRuolo(String type) {
         this.type = type;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
