@@ -19,7 +19,6 @@ public class Utente {
     
     private String email;
 
-    @Enumerated(EnumType.STRING)  // Salva il ruolo come stringa ( "ADMIN" o "USER" )
     @Column(nullable = false)  // Campo obbligatorio
     private String type;
 

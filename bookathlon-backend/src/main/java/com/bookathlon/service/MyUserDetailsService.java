@@ -36,6 +36,6 @@ public class MyUserDetailsService implements UserDetailsService {
              return new User(utente.getUsername(), utente.getPassword(), ruoli);
         	 
         }
-	}
+}
 	
 	
