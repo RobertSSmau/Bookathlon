@@ -36,4 +36,14 @@ public class UtenteServiceImpl implements UtenteService {
     	return dao
         		.save(u);
     }
+
+	@Override
+	public boolean existsByEmail(String email) {
+		return dao.findByEmail(email) != null;
+	}
+
+	@Override
+	public boolean existsByUsername(String username) {
+		return dao.findByUsername(username) != null;
+	}
 }

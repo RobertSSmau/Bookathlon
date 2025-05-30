@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.bookathlon.entities.Utente;
-import com.bookathlon.enums.Ruolo;
 import com.bookathlon.service.UtenteService;
 
 import jakarta.validation.Valid;
@@ -20,7 +19,6 @@ public class ControllerAutenticazione {
 	@Autowired
 	private UtenteService utenteService;
 	
-	//WARNING!!! Mettere una mail gia registrata manda in errore il DB , va gestito più elegantemente!!
 	@GetMapping("/register")
 	public String mostraFormRegistrazione(Model model) {
 		model.addAttribute("utente", new Utente());
@@ -50,7 +48,6 @@ public String processRegister(@Valid @ModelAttribute("utente") Utente utente,
     return "redirect:/login";
 
 }
-
 	 
 	 @GetMapping("/login")
 	    public String showLoginForm() {

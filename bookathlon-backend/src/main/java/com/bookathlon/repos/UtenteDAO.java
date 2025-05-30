@@ -9,4 +9,5 @@ public interface UtenteDAO extends JpaRepository<Utente, Long> {
 
     // login 
     Utente findByUsername(String username);
+    Utente findByEmail(String email);
 }
