@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookathlon - Home</title>
+</head>
+<body>
+
+    <h1>Benvenuto su Bookathlon</h1>
+
+    <div>
+        <a th:href="@{/login}">
+            <button>Login</button>
+        </a>
+        <a th:href="@{/register}">
+            <button>Registrati</button>
+        </a>
+    </div>
+
+    <h2>Libri disponibili</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Autore</th>
+                <th>Genere</th>
+                <th>Data Pubblicazione</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="libro : ${libri}">
+                <td th:text="${libro.titolo}"></td>
+                <td th:text="${libro.autore}"></td>
+                <td th:text="${libro.genere}"></td>
+                <td th:text="${libro.data_pubblicazione}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
