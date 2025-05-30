@@ -7,4 +7,6 @@ public interface UtenteService {
     List<Utente> getUtenti();
     Utente getUtenteById(Long userId);
     Utente addUtente(Utente u);
+    boolean existsByEmail(String email);
+    boolean existsByUsername(String username);
 }
