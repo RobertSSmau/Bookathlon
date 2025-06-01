@@ -31,7 +31,8 @@ public class LibroServiceImpl implements LibroService {
 
 	@Override
 	public List<Libro> getLibriDiTendenza() {
-	    return dao.findLibriDiTendenza();
+		List<Libro> tutti = dao.findAll();
+	    return tutti.stream().limit(5).toList();
 	}
 	
 }
