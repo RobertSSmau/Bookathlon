@@ -29,4 +29,9 @@ public class LibroServiceImpl implements LibroService {
 		return dao.save(l);
 	}
 
+	@Override
+	public List<Libro> getLibriDiTendenza() {
+	    return dao.findLibriDiTendenza();
+	}
+	
 }

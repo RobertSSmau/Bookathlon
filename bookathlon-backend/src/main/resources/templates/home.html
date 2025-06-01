@@ -1,41 +1,55 @@
+<!-- @file home.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>Bookathlon - Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookathlon - Home</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
 
-    <h1>Benvenuto su Bookathlon</h1>
+  <header>
+    <h1>Bookathlon</h1>
+    <nav>
+      <button onclick="location.href='/login'">Accedi</button>
+      <button onclick="location.href='/register'">Registrati</button>
+    </nav>
+  </header>
 
-    <div>
-        <a th:href="@{/login}">
-            <button>Login</button>
-        </a>
-        <a th:href="@{/register}">
-            <button>Registrati</button>
-        </a>
-    </div>
+  <main>
 
-    <h2>Libri disponibili</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Titolo</th>
-                <th>Autore</th>
-                <th>Genere</th>
-                <th>Data Pubblicazione</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="libro : ${libri}">
-                <td th:text="${libro.titolo}"></td>
-                <td th:text="${libro.autore}"></td>
-                <td th:text="${libro.genere}"></td>
-                <td th:text="${libro.data_pubblicazione}"></td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- libir di tendenza -->
+    <section id="sezione-tendenze">
+      <h2>Libri di Tendenza</h2>
+      <div class="card-container">
+        <div th:each="libro : ${tendenze}" class="card">
+          <h3 th:text="${libro.titolo}">Titolo</h3>
+          <p th:text="${libro.autore}">Autore</p>
+          <p th:text="${libro.genere}">Genere</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- card per i generi -->
+    <section id="sezione-generi">
+      <h2>Esplora per Genere</h2>
+      <div th:each="entry : ${libriPerGenere}">
+        <h3 th:text="${entry.key}">Genere</h3>
+        <div class="card-container">
+          <div th:each="libro : ${entry.value}" class="card">
+            <h4 th:text="${libro.titolo}">Titolo</h4>
+            <p th:text="${libro.autore}">Autore</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Bookathlon</p>
+  </footer>
 
 </body>
 </html>
