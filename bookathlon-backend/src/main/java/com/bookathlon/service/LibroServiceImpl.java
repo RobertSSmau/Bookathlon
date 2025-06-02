@@ -20,7 +20,7 @@ public class LibroServiceImpl implements LibroService {
 	}
 
 	@Override
-	public Libro getLibroById(int id) {
+	public Libro getLibroById(Long id) {
 		return repo.findById(id).orElse(null);
 	}
 

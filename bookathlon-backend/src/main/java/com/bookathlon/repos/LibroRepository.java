@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.bookathlon.entities.Libro;
 
 @Repository
-public interface LibroRepository extends JpaRepository<Libro, Integer>{
+public interface LibroRepository extends JpaRepository<Libro, Long>{
+
+	//Libro findById(Long libroId);
 
 	
 }
