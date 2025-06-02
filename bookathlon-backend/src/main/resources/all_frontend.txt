@@ -1,0 +1,151 @@
+<!-- @file home.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookathlon - Home</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+
+  <header>
+    <h1>Bookathlon</h1>
+    <nav>
+      <button onclick="location.href='/login'">Accedi</button>
+      <button onclick="location.href='/register'">Registrati</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- libir di tendenza -->
+    <section id="sezione-tendenze">
+      <h2>Libri di Tendenza</h2>
+      <div class="card-container">
+        <div th:each="libro : ${tendenze}" class="card">
+          <h3 th:text="${libro.titolo}">Titolo</h3>
+          <p th:text="${libro.autore}">Autore</p>
+          <p th:text="${libro.genere}">Genere</p>
+           <form method="post" th:action="@{/libreria/aggiungi}">
+   			 <input type="hidden" name="libroId" th:value="${libro.id}" />
+    		 <input type="hidden" name="stato" value="DA_LEGGERE" />
+   			 <button type="submit">Aggiungi</button>
+  		   </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- card per i generi -->
+    <section id="sezione-generi">
+      <h2>Esplora per Genere</h2>
+      <div th:each="entry : ${libriPerGenere}">
+        <h3 th:text="${entry.key}">Genere</h3>
+        <div class="card-container">
+          <div th:each="libro : ${entry.value}" class="card">
+            <h4 th:text="${libro.titolo}">Titolo</h4>
+            <p th:text="${libro.autore}">Autore</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Bookathlon</p>
+  </footer>
+
+</body>
+</html><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Libreria</title>
+</head>
+<body>
+    <h1>La tua Libreria</h1>
+
+    <h2>Libri Letti</h2>
+    <ul>
+        <li th:each="entry : ${letti}">
+            <span th:text="${entry.libro.titolo}">Titolo</span> - 
+            <span th:text="${entry.libro.autore}">Autore</span>
+        </li>
+    </ul>
+
+    <h2>Da leggere</h2>
+    <ul>
+        <li th:each="entry : ${daLeggere}">
+            <span th:text="${entry.libro.titolo}">Titolo</span> - 
+            <span th:text="${entry.libro.autore}">Autore</span>
+        </li>
+    </ul>
+
+    <p><a href="/" >Torna alla home</a></p>
+</body>
+</html><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Bookathlon</title>
+</head>
+<body>
+    <h2>Accedi</h2>
+
+    <form th:action="@{/login}" method="post">
+        <label>Username:</label>
+        <input type="text" name="username" required />
+        <br/>
+
+        <label>Password:</label>
+        <input type="password" name="password" required />
+        <br/>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Non hai un account? <a th:href="@{/register}">Registrati</a></p>
+
+    <div th:if="${param.error}">
+        <p style="color:red;">Username o password non validi.</p>
+    </div>
+    <div th:if="${param.logout}">
+        <p style="color:green;">Logout effettuato con successo.</p>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrazione - Bookathlon</title>
+</head>
+<body>
+    <h2>Crea un nuovo account</h2>
+
+    <form th:action="@{/register}" th:object="${utente}" method="post">
+        <label>Username:</label>
+        <input type="text" th:field="*{username}" />
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        <br/>
+
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" />
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        <br/>
+
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" />
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <br/>
+
+         <input type="hidden" th:field="*{ruolo}" value="USER" />
+
+        <button type="submit">Registrati</button>
+
+    </form>
+
+    <p>Hai già un account? <a th:href="@{/login}">Accedi</a></p>
+</body>
+</html>

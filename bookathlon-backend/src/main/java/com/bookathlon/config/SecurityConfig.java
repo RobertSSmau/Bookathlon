@@ -23,12 +23,12 @@ public class SecurityConfig{
           )
           .formLogin(form -> form
               .loginPage("/login")
-              .defaultSuccessUrl("/home", true)
+              .defaultSuccessUrl("/", true)
               .permitAll()
           )
           .logout(logout -> logout
         		    .logoutUrl("/logout") // definisce l’URL per il logout
-        		    .logoutSuccessUrl("/login?logout") // reindirizza alla login con messaggio
+        		    .logoutSuccessUrl("/") // reindirizza alla login con messaggio
         		    .permitAll()
         		);
 

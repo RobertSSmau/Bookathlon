@@ -12,10 +12,22 @@
   <header>
     <h1>Bookathlon</h1>
     <nav>
-      <button onclick="location.href='/login'">Accedi</button>
-      <button onclick="location.href='/register'">Registrati</button>
-    </nav>
-  </header>
+  		<!-- se sono loggato -->
+ 		 <div th:if="${#authorization.expression('isAuthenticated()')}">
+    		<button onclick="location.href='/libreria'">La mia Libreria</button>
+
+   			 <form th:action="@{/logout}" method="post" style="display:inline;">
+      		<button type="submit">Esci</button>
+   			 </form>
+  		</div>
+
+  		<!-- se enbtro come anonimo -->
+  		<div th:if="${#authorization.expression('isAnonymous()')}">
+    		<button onclick="location.href='/login'">Accedi</button>
+    		<button onclick="location.href='/register'">Registrati</button>
+  		</div>
+		</nav>
+  		</header>
 
   <main>
 
@@ -27,6 +39,11 @@
           <h3 th:text="${libro.titolo}">Titolo</h3>
           <p th:text="${libro.autore}">Autore</p>
           <p th:text="${libro.genere}">Genere</p>
+           <form method="post" th:action="@{/libreria/aggiungi}">
+   			 <input type="hidden" name="libroId" th:value="${libro.id}" />
+    		 <input type="hidden" name="stato" value="DA_LEGGERE" />
+   			 <button type="submit">Aggiungi</button>
+  		   </form>
         </div>
       </div>
     </section>

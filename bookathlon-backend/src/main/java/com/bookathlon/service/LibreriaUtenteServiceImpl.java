@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Libro;
@@ -12,6 +13,7 @@ import com.bookathlon.repos.LibreriaUtenteRepository;
 import com.bookathlon.repos.LibroRepository;
 import com.bookathlon.repos.UtenteRepository;
 
+@Service
 public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
 
 	@Autowired

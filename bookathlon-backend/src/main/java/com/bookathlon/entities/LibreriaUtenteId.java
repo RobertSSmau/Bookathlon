@@ -30,17 +30,21 @@ public class LibreriaUtenteId implements Serializable{
 	}
 	
 	@Override
-public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof LibreriaUtenteId)) return false;
+	public boolean equals(Object o) {
+    if (this == o) 
+    	return true;
+    if (!(o instanceof LibreriaUtenteId)) 
+    	return false;
     LibreriaUtenteId that = (LibreriaUtenteId) o;
-    return utente.equals(that.utente) && libro.equals(that.libro);
-}
+    return 
+    		utente.equals(that.utente) 
+    		&& libro.equals(that.libro);
+	}
 
-@Override
-public int hashCode() {
+	@Override
+	public int hashCode() {
     return Objects.hash(utente, libro);
-}
+	}
 	
 	
 }
