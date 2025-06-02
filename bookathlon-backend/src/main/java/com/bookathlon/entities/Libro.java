@@ -17,7 +17,7 @@ public class Libro {
 // Ogni attributo è mappato su una colonna della tabella libro.Spring e JPA si occuperà automaticamente della conversione
 	@Id // Identifica il campo 'id' come chiave primaria della tabella
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private String isbn;
 	private String titolo;
 	private String autore;
@@ -25,10 +25,10 @@ public class Libro {
 	private LocalDate data_pubblicazione;
 	private String url_copertina;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getIsbn() {
