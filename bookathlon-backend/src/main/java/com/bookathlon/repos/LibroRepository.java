@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.bookathlon.entities.Libro;
 
 @Repository
-public interface LibroDAO extends JpaRepository<Libro, Integer>{
+public interface LibroRepository extends JpaRepository<Libro, Integer>{
 
 	
 }

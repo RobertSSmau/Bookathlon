@@ -1,6 +1,5 @@
 package com.bookathlon.entities;
 
-import com.bookathlon.enums.Ruolo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

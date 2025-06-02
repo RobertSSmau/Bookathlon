@@ -1,9 +1,13 @@
 package com.bookathlon.repos;
 
-import com.bookathlon.entities.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+import org.springframework.stereotype.Repository;
+import com.bookathlon.entities.Utente;
 
+@Repository
 public interface UtenteRepository extends JpaRepository<Utente, Long> {
-    Optional<Utente> findByUsername(String username);
+
+    // login 
+    Utente findByUsername(String username);
+    Utente findByEmail(String email);
 }

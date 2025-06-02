@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.Utente;
-import com.bookathlon.repos.UtenteDAO;
+import com.bookathlon.repos.UtenteRepository;
 
 //cerca username e password creando un oggetto UserDetails per verificare password e ruolo dal db
 
@@ -21,12 +21,12 @@ import com.bookathlon.repos.UtenteDAO;
 public class MyUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UtenteDAO utenteDAO;
+	private UtenteRepository utenterepo;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Cerca l'utente nel database usando lo username
-        Utente utente = utenteDAO.findByUsername(username);
+        Utente utente = utenterepo.findByUsername(username);
         if(utente==null) {
         	 throw new UsernameNotFoundException("nessun utente: " + username);
         }

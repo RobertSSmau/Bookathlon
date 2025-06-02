@@ -7,13 +7,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.Utente;
-import com.bookathlon.repos.UtenteDAO;
+import com.bookathlon.repos.UtenteRepository;
 
 @Service
 public class UtenteServiceImpl implements UtenteService {
 
     @Autowired
-    private UtenteDAO dao;
+    private UtenteRepository dao;
     
     @Autowired
     private PasswordEncoder passwordEncoder;	//crittatore di password
