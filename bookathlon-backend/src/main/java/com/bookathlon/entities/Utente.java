@@ -3,24 +3,29 @@ package com.bookathlon.entities;
 import com.bookathlon.enums.Ruolo;
 import jakarta.persistence.*;
 
+/**
+ * Entità che rappresenta un utente del sistema
+ * Ogni utente ha un ID, un username univoco, una password e un ruolo (es. ADMIN, USER)
+ */
 @Entity
-@Table(name = "utente")
+@Table(name = "utente") // Mappa la classe alla tabella "utente" nel database
 public class Utente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // Identificativo univoco generato automaticamente
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String username; // Nome utente, deve essere univoco e non nullo
 
     @Column(nullable = false)
-    private String password;
+    private String password; // Password dell'utente (si consiglia di cifrarla nel database)
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Ruolo ruolo;
+    private Ruolo ruolo; // Ruolo dell'utente, definito come enum (es. ADMIN, USER)
 
+   
     public Long getId() {
         return id;
     }
