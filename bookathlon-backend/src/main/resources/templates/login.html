@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Bookathlon</title>
+</head>
+<body>
+    <h2>Accedi</h2>
+
+    <form th:action="@{/login}" method="post">
+        <label>Username:</label>
+        <input type="text" name="username" required />
+        <br/>
+
+        <label>Password:</label>
+        <input type="password" name="password" required />
+        <br/>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Non hai un account? <a th:href="@{/register}">Registrati</a></p>
+
+    <div th:if="${param.error}">
+        <p style="color:red;">Username o password non validi.</p>
+    </div>
+    <div th:if="${param.logout}">
+        <p style="color:green;">Logout effettuato con successo.</p>
+    </div>
+</body>
+</html>

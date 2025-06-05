@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrazione - Bookathlon</title>
+</head>
+<body>
+    <h2>Crea un nuovo account</h2>
+
+    <form th:action="@{/register}" th:object="${utente}" method="post">
+        <label>Username:</label>
+        <input type="text" th:field="*{username}" />
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        <br/>
+
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" />
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        <br/>
+
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" />
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <br/>
+
+         <input type="hidden" th:field="*{ruolo}" value="USER" />
+
+        <button type="submit">Registrati</button>
+
+    </form>
+
+    <p>Hai già un account? <a th:href="@{/login}">Accedi</a></p>
+</body>
+</html>

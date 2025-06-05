@@ -5,8 +5,9 @@ import org.springframework.stereotype.Repository;
 import com.bookathlon.entities.Utente;
 
 @Repository
-public interface UtenteDAO extends JpaRepository<Utente, Long> {
+public interface UtenteRepository extends JpaRepository<Utente, Long> {
 
     // login 
     Utente findByUsername(String username);
+    Utente findByEmail(String email);
 }

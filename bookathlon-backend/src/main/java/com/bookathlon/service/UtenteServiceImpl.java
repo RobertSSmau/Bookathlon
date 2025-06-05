@@ -3,16 +3,20 @@ package com.bookathlon.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.Utente;
-import com.bookathlon.repos.UtenteDAO;
+import com.bookathlon.repos.UtenteRepository;
 
 @Service
 public class UtenteServiceImpl implements UtenteService {
 
     @Autowired
-    private UtenteDAO dao;
+    private UtenteRepository dao;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;	//crittatore di password
 
     @Override
     public List<Utente> getUtenti() {
@@ -28,7 +32,18 @@ public class UtenteServiceImpl implements UtenteService {
 
     @Override
     public Utente addUtente(Utente u) {
-        return dao
+        u.setPassword(passwordEncoder.encode(u.getPassword()));
+    	return dao
         		.save(u);
     }
+
+	@Override
+	public boolean existsByEmail(String email) {
+		return dao.findByEmail(email) != null;
+	}
+
+	@Override
+	public boolean existsByUsername(String username) {
+		return dao.findByUsername(username) != null;
+	}
 }

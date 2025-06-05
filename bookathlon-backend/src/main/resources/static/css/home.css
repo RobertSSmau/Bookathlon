@@ -1,0 +1,58 @@
+/* @file home.css */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdfdfd;
+  color: #222;
+}
+
+header {
+  background-color: #4a90e2;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+nav {
+  margin-top: 0.5rem;
+}
+
+nav button {
+  margin: 0.3rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  background-color: white;
+  color: #4a90e2;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+main {
+  padding: 1rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #888;
+}

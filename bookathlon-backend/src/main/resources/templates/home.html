@@ -1,0 +1,72 @@
+<!-- @file home.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookathlon - Home</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+
+  <header>
+    <h1>Bookathlon</h1>
+    <nav>
+  		<!-- se sono loggato -->
+ 		 <div th:if="${#authorization.expression('isAuthenticated()')}">
+    		<button onclick="location.href='/libreria'">La mia Libreria</button>
+
+   			 <form th:action="@{/logout}" method="post" style="display:inline;">
+      		<button type="submit">Esci</button>
+   			 </form>
+  		</div>
+
+  		<!-- se enbtro come anonimo -->
+  		<div th:if="${#authorization.expression('isAnonymous()')}">
+    		<button onclick="location.href='/login'">Accedi</button>
+    		<button onclick="location.href='/register'">Registrati</button>
+  		</div>
+		</nav>
+  		</header>
+
+  <main>
+
+    <!-- libir di tendenza -->
+    <section id="sezione-tendenze">
+      <h2>Libri di Tendenza</h2>
+      <div class="card-container">
+        <div th:each="libro : ${tendenze}" class="card">
+          <h3 th:text="${libro.titolo}">Titolo</h3>
+          <p th:text="${libro.autore}">Autore</p>
+          <p th:text="${libro.genere}">Genere</p>
+           <form method="post" th:action="@{/libreria/aggiungi}">
+   			 <input type="hidden" name="libroId" th:value="${libro.id}" />
+    		 <input type="hidden" name="stato" value="DA_LEGGERE" />
+   			 <button type="submit">Aggiungi</button>
+  		   </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- card per i generi -->
+    <section id="sezione-generi">
+      <h2>Esplora per Genere</h2>
+      <div th:each="entry : ${libriPerGenere}">
+        <h3 th:text="${entry.key}">Genere</h3>
+        <div class="card-container">
+          <div th:each="libro : ${entry.value}" class="card">
+            <h4 th:text="${libro.titolo}">Titolo</h4>
+            <p th:text="${libro.autore}">Autore</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Bookathlon</p>
+  </footer>
+
+</body>
+</html>

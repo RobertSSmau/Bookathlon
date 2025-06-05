@@ -1,35 +1,61 @@
 package com.bookathlon.entities;
 
-import com.bookathlon.enums.Ruolo;
 import jakarta.persistence.*;
-
-@Entity
-@Table(name = "utente")
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
+@Entity   // Indica che questa classe rappresenta una tabella nel database
+@Table(name = "utente")   // Specifica che è collegata alla tabella chiamata "utente"
 public class Utente {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id  // Questo campo è la chiave primaria
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Il valore viene generato automaticamente dal DB,autoincremento
+    @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Lo username è obbligatorio")
+    @Size(min = 3, max = 50, message = "Lo username deve avere tra 3 e 50 caratteri")
+    @Column(nullable = false, unique = true)// Lo username è un campo obbligatorio e deve essere unico nel DB
     private String username;
 
-    @Column(nullable = false)
+    @NotBlank(message = "La password è obbligatoria")
+    @Pattern(
+        regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,}$",
+        message = "La password deve contenere almeno 8 caratteri, un numero, una lettera maiuscola, una minuscola e un carattere speciale"
+         )
+    @Column(nullable = false)  //La password è obbligatoria e deve essere cifrata prima di salvarla nel DB
     private String password;
+    
+    @NotBlank(message = "L'email è obbligatoria")
+    @Email(message = "Email non valida")
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Ruolo ruolo;
+    @Column(nullable = false)  // Campo obbligatorio
+    private String ruolo;
+
+
 
     public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getUsername() {
+	
+
+	public String getRuolo() {
+		return ruolo;
+	}
+
+	public void setRuolo(String ruolo) {
+		this.ruolo = ruolo;
+	}
+
+	public String getUsername() {
         return username;
     }
 
@@ -44,12 +70,14 @@ public class Utente {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Ruolo getRuolo() {
-        return ruolo;
+    
+    public String getEmail() {
+        return email;
     }
 
-    public void setRuolo(Ruolo ruolo) {
-        this.ruolo = ruolo;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+
 }

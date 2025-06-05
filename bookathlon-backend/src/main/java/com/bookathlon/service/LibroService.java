@@ -8,8 +8,8 @@ public interface LibroService {
 
 	
 	List<Libro> getLibri();
-	Libro getLibroById(int id);
+	Libro getLibroById(Long id);
 	Libro addLibro(Libro l);
-	
+	List<Libro> getLibriDiTendenza();
 	
 }
