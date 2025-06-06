@@ -44,6 +44,10 @@
     		 <input type="hidden" name="stato" value="DA_LEGGERE" />
    			 <button type="submit">Aggiungi</button>
   		   </form>
+  		   <form method="post" th:action="@{/libreria/rimuovi}">
+  				<input type="hidden" name="libroId" th:value="${libro.id}" />
+  				<button type="submit">Rimuovi</button>
+			</form>
         </div>
       </div>
     </section>

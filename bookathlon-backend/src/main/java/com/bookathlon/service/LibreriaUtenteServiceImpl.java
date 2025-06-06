@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.LibreriaUtente;
+import com.bookathlon.entities.LibreriaUtenteId;
 import com.bookathlon.entities.Libro;
 import com.bookathlon.entities.Utente;
 import com.bookathlon.repos.LibreriaUtenteRepository;
@@ -51,8 +52,14 @@ public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
 
 	@Override
 	public void rimuoviLibro(Long utenteId, Long libroId) {
-		// TODO Auto-generated method stub
+	    Utente utente = utenteRepo.findById(utenteId).orElseThrow();
+	    Libro libro = libroRepo.findById(libroId).orElseThrow();
 
+	    LibreriaUtenteId id = new LibreriaUtenteId();
+	    id.setUtente(utente);
+	    id.setLibro(libro);
+
+	    repo.deleteById(id);
 	}
 
 }

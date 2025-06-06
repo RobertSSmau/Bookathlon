@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.bookathlon.entities.Libro;
 import com.bookathlon.repos.LibroRepository;
 
@@ -28,6 +27,7 @@ public class LibroServiceImpl implements LibroService {
 	public Libro addLibro(Libro l) {
 		return repo.save(l);
 	}
+	
 
 	@Override
 	public List<Libro> getLibriDiTendenza() {

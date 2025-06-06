@@ -54,5 +54,18 @@ public class LibreriaController {
 
 	        return "redirect:/"; // non so dove fare il redirect
 	  }
+	  
+	  @PostMapping("/rimuovi")
+	  public String rimuoviLibro(
+		        @RequestParam Long libroId,
+		        @AuthenticationPrincipal UserDetails userDetails) {
+
+		    String username = userDetails.getUsername();
+		    Utente utente = utenteRepo.findByUsername(username);
+
+		    libreriaService.rimuoviLibro(utente.getId(), libroId);
+
+		    return "redirect:/libreria";
+	  }
 	 
 }
