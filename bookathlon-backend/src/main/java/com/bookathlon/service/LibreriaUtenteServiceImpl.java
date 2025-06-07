@@ -46,7 +46,7 @@ public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
         entry.setLibro(libro);
         entry.setStato(stato);
         entry.setDataAggiunta(LocalDate.now());
-
+        
         return repo.save(entry);
 	}
 
