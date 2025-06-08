@@ -24,15 +24,15 @@ public interface LibroRepository extends JpaRepository<Libro, Long>{
 	 * @return Una lista di libri che corrispondono alla ricerca.
 	 */
 	@Query(
-	    value = """
-	        SELECT * 
-	        FROM libro 
-	        WHERE titolo ILIKE CONCAT('%', :kw, '%') 
-	           OR autore ILIKE CONCAT('%', :kw, '%')
-	    """,
-	    nativeQuery = true
-	)
-	List<Libro> ricercaSQL(@Param("kw") String keyword);
+		    value = """
+		        SELECT *
+		        FROM "better-mockup-schema".libro
+		        WHERE titolo ILIKE CONCAT('%', :kw, '%')
+		           OR autore ILIKE CONCAT('%', :kw, '%')
+		    """,
+		    nativeQuery = true
+		)
+		List<Libro> ricercaSQL(@Param("kw") String keyword);
 
 	
 }
