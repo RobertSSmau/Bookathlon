@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookathlon.entities.Libro;
 import com.bookathlon.service.LibroService;
@@ -45,6 +46,12 @@ public class HomeController {
         return "home"; 
 	}
 	
+		@GetMapping("/cerca")
+		public String cerca(@RequestParam String q, Model m) {
+	    List<Libro> risultati = libroService.cerca(q);
+	    m.addAttribute("filtrati", risultati);
+	    return "risultati-filtrati"; // questo HTML dovrà esistere nella cartella dei template
+	}
 	
 	
 }

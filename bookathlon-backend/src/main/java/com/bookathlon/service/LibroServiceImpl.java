@@ -35,4 +35,9 @@ public class LibroServiceImpl implements LibroService {
 	    return tutti.stream().limit(5).toList();
 	}
 	
+	@Override
+	public List<Libro> cerca(String keyword) {
+	    return repo.ricercaSQL(keyword);
+	}
+	
 }
