@@ -1,0 +1,41 @@
+<!-- @file risultati-filtrati.html -->
+<!-- pagina di test -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Risultati Ricerca - Bookathlon</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+  <header>
+    <h1>Risultati della Ricerca</h1>
+    <a href="/" class="button">← Torna alla Home</a>
+  </header>
+
+  <main>
+    <section th:if="${filtrati != null}">
+      <div class="card-container">
+        <div th:each="libro : ${filtrati}" class="card">
+          <h3 th:text="${libro.titolo}">Titolo</h3>
+          <p th:text="${libro.autore}">Autore</p>
+          <p th:text="${libro.genere}">Genere</p>
+          <form method="post" th:action="@{/libreria/aggiungi}">
+            <input type="hidden" name="libroId" th:value="${libro.id}" />
+            <input type="hidden" name="stato" value="DA_LEGGERE" />
+            <button type="submit">Aggiungi alla Libreria</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section th:if="${filtrati.size() == 0}">
+      <p>Nessun libro trovato con i criteri specificati.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Bookathlon</p>
+  </footer>
+</body>
+</html>

@@ -1,3 +1,4 @@
+<!-- di debug, non definitivo -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -10,16 +11,38 @@
     <h2>Libri Letti</h2>
     <ul>
         <li th:each="entry : ${letti}">
-            <span th:text="${entry.libro.titolo}">Titolo</span> - 
+            <span th:text="${entry.libro.titolo}">Titolo</span> -
             <span th:text="${entry.libro.autore}">Autore</span>
+
+            <!-- bottone rimozione libro letto -->
+            <form method="post" th:action="@{/libreria/rimuovi}" style="display:inline;">
+                <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">Rimuovi</button>
+            </form>
         </li>
     </ul>
 
     <h2>Da leggere</h2>
     <ul>
         <li th:each="entry : ${daLeggere}">
-            <span th:text="${entry.libro.titolo}">Titolo</span> - 
+            <span th:text="${entry.libro.titolo}">Titolo</span>
             <span th:text="${entry.libro.autore}">Autore</span>
+
+            <!-- bottone per segnarlo come letto-->
+            <form method="post" th:action="@{/libreria/aggiungi}" style="display:inline;">
+                <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
+                <input type="hidden" name="stato" value="LETTO" />
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">Segna come Letto</button>
+            </form>
+
+            <!-- Bottone per rimuovere libro da leggere -->
+            <form method="post" th:action="@{/libreria/rimuovi}" style="display:inline;">
+                <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">Rimuovi</button>
+            </form>
         </li>
     </ul>
 

@@ -11,5 +11,6 @@ public interface LibroService {
 	Libro getLibroById(Long id);
 	Libro addLibro(Libro l);
 	List<Libro> getLibriDiTendenza();
+	List<Libro> cerca(String keyword);
 	
 }
