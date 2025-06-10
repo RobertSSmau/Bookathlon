@@ -1,3 +1,4 @@
 bookathlon-backend/src/main/resources/application.properties
 bookathlon-backend/src/main/java/classes.txt
 bookathlon-backend/src/main/resources/templates/all_frontend.txt
+.vscode/launch.json

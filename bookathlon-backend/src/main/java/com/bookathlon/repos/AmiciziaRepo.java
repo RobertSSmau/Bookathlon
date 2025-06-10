@@ -1,6 +1,8 @@
+ 
+
 package com.bookathlon.repos;
 
-import java.awt.List;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -40,3 +42,4 @@ public interface AmiciziaRepo extends JpaRepository<Amicizia, AmiciziaId>{
 		    List<Amicizia> trovaRichiesteInviate(@Param("userId") Long userId);
 
 }
+
