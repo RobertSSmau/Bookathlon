@@ -1,4 +1,7 @@
 bookathlon-backend/src/main/resources/application.properties
+<<<<<<< Updated upstream
 bookathlon-backend/src/main/java/classes.txt
 bookathlon-backend/src/main/resources/templates/all_frontend.txt
+=======
+>>>>>>> Stashed changes
 .vscode/launch.json
