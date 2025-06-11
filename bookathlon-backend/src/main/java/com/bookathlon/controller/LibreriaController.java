@@ -52,7 +52,7 @@ public class LibreriaController {
 
 	        libreriaService.aggiungiLibro(utente.getId(), libroId, stato);
 
-	        return "redirect:/"; // non so dove fare il redirect
+	        return "redirect:/libreria";
 	  }
 	  
 	  @PostMapping("/rimuovi")

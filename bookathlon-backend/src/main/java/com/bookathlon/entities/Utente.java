@@ -51,8 +51,6 @@ public class Utente {
 		this.id = id;
 	}
 
-	
-
 	public String getRuolo() {
 		return ruolo;
 	}

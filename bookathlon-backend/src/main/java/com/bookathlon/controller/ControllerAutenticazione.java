@@ -27,7 +27,7 @@ public class ControllerAutenticazione {
 	
 	
 	@PostMapping("/register")
-public String processRegister(@Valid @ModelAttribute("utente") Utente utente,
+	public String processRegister(@Valid @ModelAttribute("utente") Utente utente,
                               BindingResult result,
                               Model model) {
 
