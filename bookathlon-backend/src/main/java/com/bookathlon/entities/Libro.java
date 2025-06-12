@@ -9,13 +9,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity   // Indica a Spring che questa classe rappresenta una tabella del database
-@Table(name="libro")  // Specifica che è collegata alla tabella 'libro' nel database
+@Entity 
+  // Indica a Spring che questa classe rappresenta una tabella del database
+@Table(name="libro")
+  // Specifica che è collegata alla tabella 'libro' nel database
 
 public class Libro {
 	
 // Ogni attributo è mappato su una colonna della tabella libro.Spring e JPA si occuperà automaticamente della conversione
-	@Id // Identifica il campo 'id' come chiave primaria della tabella
+	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String isbn;
@@ -74,7 +76,7 @@ public class Libro {
 	
 	
 
-// I metodi getter e setter servono per accedere e modificare i valori degli attributi.
+
 
 	
 	

@@ -17,55 +17,94 @@ import com.bookathlon.entities.Utente;
 import com.bookathlon.repos.UtenteRepository;
 import com.bookathlon.service.LibreriaUtenteService;
 
+/**
+ * Controller per la gestione della libreria personale dell'utente.
+ * Gestisce le operazioni di visualizzazione, aggiunta e rimozione di libri
+ * dalla libreria di un utente autenticato.
+ */
 @Controller
 @RequestMapping("/libreria")
+ // Tutte le richieste a questo controller iniziano con libreria
 public class LibreriaController {
 
-	@Autowired
+    @Autowired
     private LibreriaUtenteService libreriaService;
-	
-	@Autowired
-	private UtenteRepository utenteRepo;
+	 // Servizio per le operazioni sulla libreria dell'utente.
 
-	 @GetMapping
-	    public String mostraLibreria(Model m, @AuthenticationPrincipal UserDetails userDetails) {
-	        String username = userDetails.getUsername();
-	        Utente utente = utenteRepo.findByUsername(username);
-	        Long utenteId = utente.getId();
+    @Autowired
+    private UtenteRepository utenteRepo; 
+	// Repository per l'accesso ai dati dell'utente.
 
-	        List<LibreriaUtente> letti = libreriaService.getLibriByStato(utenteId, "LETTO");
-	        List<LibreriaUtente> daLeggere = libreriaService.getLibriByStato(utenteId, "DA_LEGGERE");
+    /**
+     * Mostra la libreria personale dell'utente autenticato.
+     * Recupera i libri letti e da leggere per l'utente corrente e li aggiunge al modello.
+     */
+    @GetMapping
+    public String mostraLibreria(Model m, @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername(); 
+        Utente utente = utenteRepo.findByUsername(username);
+        Long utenteId = utente.getId(); 
 
-	        m.addAttribute("letti", letti);
-	        m.addAttribute("daLeggere", daLeggere);
-	        return "libreria";
-	    }
-	 
-	  @PostMapping("/aggiungi")
-	    public String aggiungiLibro(
-	            @RequestParam Long libroId,
-	            @RequestParam String stato,
-	            @AuthenticationPrincipal UserDetails userDetails) {
+        // Recupera i libri con stato "LETTO" e "DA_LEGGERE" per l'utente.
+        List<LibreriaUtente> letti = libreriaService.getLibriByStato(utenteId, "LETTO");
+        List<LibreriaUtente> daLeggere = libreriaService.getLibriByStato(utenteId, "DA_LEGGERE");
 
-	        String username = userDetails.getUsername();
-	        Utente utente = utenteRepo.findByUsername(username);
+        // Aggiunge le liste al modello per la visualizzazione nella vista.
+        m.addAttribute("letti", letti);
+        m.addAttribute("daLeggere", daLeggere);
+        return "libreria";
+		 // Ritorna il nome della vista.
+    }
 
-	        libreriaService.aggiungiLibro(utente.getId(), libroId, stato);
+    /**
+     * Aggiunge un libro alla libreria personale dell'utente con uno stato specifico.
+     */
+    @PostMapping("/aggiungi")
+    public String aggiungiLibro(
+            @RequestParam Long libroId,
+            @RequestParam String stato,
+            @AuthenticationPrincipal UserDetails userDetails) {
 
-	        return "redirect:/libreria";
-	  }
-	  
-	  @PostMapping("/rimuovi")
-	  public String rimuoviLibro(
-		        @RequestParam Long libroId,
-		        @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+		 // Recupera l'username dell'utente.
+        Utente utente = utenteRepo.findByUsername(username);
+		 // Trova l'oggetto Utente.
 
-		    String username = userDetails.getUsername();
-		    Utente utente = utenteRepo.findByUsername(username);
+        libreriaService.aggiungiLibro(utente.getId(), libroId, stato); 
+		// Chiama il servizio per aggiungere il libro.
 
-		    libreriaService.rimuoviLibro(utente.getId(), libroId);
+        return "redirect:/libreria"; 
+		// Reindirizza alla pagina della libreria per mostrare i cambiamenti.
+    }
 
-		    return "redirect:/libreria";
-	  }
-	 
+    /**
+     * Rimuove un libro dalla libreria personale dell'utente.
+     */
+    @PostMapping("/rimuovi")
+    public String rimuoviLibro(
+            @RequestParam Long libroId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        String username = userDetails.getUsername(); 
+		// Recupera l'username dell'utente.
+        Utente utente = utenteRepo.findByUsername(username);
+		 // Trova l'oggetto Utente.
+
+        libreriaService.rimuoviLibro(utente.getId(), libroId);
+		 // Chiama il servizio per rimuovere il libro.
+
+        return "redirect:/libreria"; 
+		// Reindirizza alla pagina della libreria per mostrare i cambiamenti.
+    }
 }
+
+
+
+
+
+
+
+
+
+
+

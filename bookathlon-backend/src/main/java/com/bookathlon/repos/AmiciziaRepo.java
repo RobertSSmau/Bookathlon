@@ -12,34 +12,51 @@ import org.springframework.stereotype.Repository;
 import com.bookathlon.entities.Amicizia;
 import com.bookathlon.entities.AmiciziaId;
 
-@Repository
-public interface AmiciziaRepo extends JpaRepository<Amicizia, AmiciziaId>{
+/**
+ * Repository per l'entità Amicizia.
+ * Estende JpaRepository per fornire operazioni CRUD di base
+ * e definisce query personalizzate per la gestione delle relazioni di amicizia.
+ */
+@Repository 
+public interface AmiciziaRepo extends JpaRepository<Amicizia, AmiciziaId> {
 
-	// fare le select in base a questi contesti
-	
-			// gli amici che sono amici
-	 		@Query(value = """
-		      SELECT * FROM "better-mockup-schema".amicizia
+    /**
+     * Trova tutte le relazioni di amicizia con stato 'ACCEPTED'
+     * in cui l'utente specificato è uno dei due partecipanti.
+     */
+    @Query(value = """
+            SELECT * FROM "better-mockup-schema".amicizia
         WHERE stato = 'ACCEPTED'
           AND (id_utente1 = :userId OR id_utente2 = :userId)
-		        """, nativeQuery = true)
-		    List<Amicizia> trovaAmiciAccettati(@Param("userId") Long userId);
+                """, nativeQuery = true) // nativeQuery = true indica che la query è SQL nativo.
+    List<Amicizia> trovaAmiciAccettati(@Param("userId") Long userId); // @Param collega il parametro del metodo al placeholder nella query.
 
-	 		// le richieste di amicizia ricevute
-		    @Query(value = """
-				SELECT * FROM "better-mockup-schema".amicizia
+    /**
+     * Trova tutte le richieste di amicizia con stato 'PENDING'
+     * che sono state ricevute dall'utente specificato (id_utente2).
+     */
+    @Query(value = """
+                SELECT * FROM "better-mockup-schema".amicizia
         WHERE stato = 'PENDING'
           AND id_utente2 = :userId
-		        """, nativeQuery = true)
-		    List<Amicizia> trovaRichiesteRicevute(@Param("userId") Long userId);
+                """, nativeQuery = true)
+    List<Amicizia> trovaRichiesteRicevute(@Param("userId") Long userId);
 
-		    // le richieste che sono state inviate
-		    @Query(value = """
-				SELECT * FROM "better-mockup-schema".amicizia
+    /**
+     * Trova tutte le richieste di amicizia con stato 'PENDING'
+     * che sono state inviate dall'utente specificato (id_utente1).
+     */
+    @Query(value = """
+                SELECT * FROM "better-mockup-schema".amicizia
         WHERE stato = 'PENDING'
           AND id_utente1 = :userId
-		        """, nativeQuery = true)
-		    List<Amicizia> trovaRichiesteInviate(@Param("userId") Long userId);
+                """, nativeQuery = true)
+    List<Amicizia> trovaRichiesteInviate(@Param("userId") Long userId);
 
 }
+
+
+
+
+
 

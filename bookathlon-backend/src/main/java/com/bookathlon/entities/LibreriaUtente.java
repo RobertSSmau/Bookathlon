@@ -10,61 +10,81 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity
+/**
+ * Rappresenta l'entità 'LibreriaUtente' nel database,
+ * che gestisce la relazione molti-a-molti tra Utente e Libro,
+ * con attributi aggiuntivi come lo stato del libro per l'utente.
+ * Utilizza una chiave composta definita da LibreriaUtenteId.
+ */
+@Entity 
+// Indica che questa classe è un'entità JPA.
 @Table(name = "libreria_utente")
-@IdClass(LibreriaUtenteId.class)
+ // Specifica il nome della tabella nel database.
+@IdClass(LibreriaUtenteId.class) 
+// Definisce la classe che rappresenta la chiave primaria composta.
 public class LibreriaUtente {
 
-	@Id
-	@ManyToOne
-	@JoinColumn(name= "utente_id")
-	private Utente utente;
-	
-	@Id
-    @ManyToOne
-    @JoinColumn(name = "libro_id")
-    private Libro libro;
-	
-	@Column(nullable = false)
-    private String stato;
-	
-	@Column(name = "data_aggiunta")
-    private LocalDate dataAggiunta = LocalDate.now();
+    @Id 
+    @ManyToOne 
+    @JoinColumn(name= "utente_id")
+    private Utente utente; 
+    @Id 
+    @ManyToOne 
+    @JoinColumn(name = "libro_id") 
+    private Libro libro; 
+    @Column(nullable = false) 
+    private String stato; 
 
-	public LibreriaUtente() {}
-	
-	public Utente getUtente() {
-		return utente;
-	}
+    @Column(name = "data_aggiunta") 
+    private LocalDate dataAggiunta = LocalDate.now(); 
+    /**
+     * Costruttore di default.
+     */
+    public LibreriaUtente() {}
 
-	public void setUtente(Utente utente) {
-		this.utente = utente;
-	}
+    // Getters e Setters 
+    public Utente getUtente() {
+        return utente;
+    }
 
-	public Libro getLibro() {
-		return libro;
-	}
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
 
-	public void setLibro(Libro libro) {
-		this.libro = libro;
-	}
+    public Libro getLibro() {
+        return libro;
+    }
 
-	public String getStato() {
-		return stato;
-	}
+    public void setLibro(Libro libro) {
+        this.libro = libro;
+    }
 
-	public void setStato(String stato) {
-		this.stato = stato;
-	}
+    public String getStato() {
+        return stato;
+    }
 
-	public LocalDate getDataAggiunta() {
-		return dataAggiunta;
-	}
+    public void setStato(String stato) {
+        this.stato = stato;
+    }
 
-	public void setDataAggiunta(LocalDate dataAggiunta) {
-		this.dataAggiunta = dataAggiunta;
-	}
-	
-	
-	
+    public LocalDate getDataAggiunta() {
+        return dataAggiunta;
+    }
+
+    public void setDataAggiunta(LocalDate dataAggiunta) {
+        this.dataAggiunta = dataAggiunta;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

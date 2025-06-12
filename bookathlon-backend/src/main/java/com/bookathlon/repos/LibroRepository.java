@@ -18,10 +18,10 @@ public interface LibroRepository extends JpaRepository<Libro, Long>{
 	 * La ricerca avviene su titolo e autore usando il confronto case insensitive (ILIKE).
 	 * È una query SQL nativa compatibile con PostgreSQL.
 	 *
-	 * Esempio, se keyword "ciccio", trova tutti i libri il cui titolo o autore contiene "ciccio".
+	 * Esempio, se keyword "x", trova tutti i libri il cui titolo o autore contiene "x".
 	 *
-	 * @param keyword La parola chiave da cercare
-	 * @return Una lista di libri che corrispondono alla ricerca.
+	 * esempio: keyword La parola chiave da cercare
+	 * return: Una lista di libri che corrispondono alla ricerca.
 	 */
 	@Query(
 		    value = """

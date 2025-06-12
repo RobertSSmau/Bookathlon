@@ -9,12 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+/**
+ * Questa classe configura la sicurezza dell'applicazione Spring Boot.
+ * Definisce le regole di autorizzazione HTTP, la gestione del login e del logout,
+ * e i bean per la cifratura delle password e la gestione dell'autenticazione.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
-	
-	@Bean //raga sto usando i beans
+	/**
+     */
+	@Bean 
 	 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
           .authorizeHttpRequests(auth -> auth
@@ -34,8 +39,13 @@ public class SecurityConfig{
 
         return http.build();
     }
-
+/**
+     * Questo metodo fornisce un'istanza di `BCryptPasswordEncoder` per la cifratura delle password.
+     */
     @Bean
+     /**
+     * Questo metodo espone il Bean `AuthenticationManager`, necessario per l'autenticazione.
+     */
     public PasswordEncoder passwordEncoder() {	//cifra le password nel DB
         return new BCryptPasswordEncoder();
     }

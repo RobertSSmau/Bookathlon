@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.Amicizia;
 import com.bookathlon.repos.AmiciziaRepo;
-
+/**
+ * Implementazione del servizio {@link AmiciziaService} per la gestione delle relazioni di amicizia.
+ * Fornisce la logica di business per recuperare lo stato delle amicizie e gestire le richieste.
+ */
 @Service 
 public class AmiciziaServiceImpl implements AmiciziaService {
 
