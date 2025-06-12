@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
-    <h2>
-        <img src="logo.png" alt="Logo" width="200">
-    </h2>
+        <div class="logo">
+            <img th:src="@{/images/logo.png}" alt="Logo" width="200">
+
+        </div>
     <h3>Accedi</h3>
     <form th:action="@{/login}" method="post">
         <label>Username:</label>

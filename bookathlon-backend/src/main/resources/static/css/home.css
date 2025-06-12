@@ -1,8 +1,18 @@
 /* @file home.css */
+/* ===== Reset di base ===== */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fdfdfd;
+  background-color: #0D2639;
   color: #222;
 }
 

@@ -1,0 +1,94 @@
+<!-- @file home.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookathlon - Home</title>
+   <link rel="stylesheet" href="./styles/home.css">
+</head>
+<body>
+
+  <header>
+    <h1>Bookathlon</h1>
+    <nav>
+      <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <button onclick="location.href='/libreria'">La mia Libreria</button>
+        <form th:action="@{/logout}" method="post">
+          <button type="submit">Esci</button>
+        </form>
+      </div>
+      <div th:if="${#authorization.expression('isAnonymous()')}">
+        <button onclick="location.href='/login'"> Accedi</button>
+        <button onclick="location.href='/register'">Registrati</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="ricerca-libri">
+      <h2>Cerca un libro</h2>
+      <form action="/cerca" method="get">
+        <input type="text" name="q" placeholder="Titolo o autore" required />
+        <button type="submit">Cerca</button>
+      </form>
+    </section>
+
+    <section id="risultati-ricerca" th:if="${filtrati != null}">
+      <h2>Risultati</h2>
+      <ul>
+        <li th:each="libro : ${filtrati}">
+          <strong th:text="${libro.titolo}">Titolo</strong> di
+          <em th:text="${libro.autore}">Autore</em>
+        </li>
+      </ul>
+    </section>
+
+    <section id="sezione-tendenze">
+      <h2>Libri di Tendenza</h2>
+      <div class="card-container">
+        <div class="card" th:each="libro : ${tendenze}">
+          <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+          <div class="info">
+            <h3 th:text="${libro.titolo}">Titolo</h3>
+            <p th:text="${libro.autore}">Autore</p>
+            <p th:text="${libro.genere}">Genere</p>
+            <form th:action="@{/libreria/aggiungi}" method="post">
+              <input type="hidden" name="libroId" th:value="${libro.id}" />
+              <input type="hidden" name="stato" value="DA_LEGGERE" />
+              <button type="submit">Aggiungi</button>
+            </form>
+            <form th:action="@{/libreria/rimuovi}" method="post">
+              <input type="hidden" name="libroId" th:value="${libro.id}" />
+              <button type="submit">Rimuovi</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sezione-generi">
+      <h2>Esplora per Genere</h2>
+      <div th:each="entry : ${libriPerGenere}">
+        <h3 th:text="${entry.key}">Genere</h3>
+        <div class="card-container">
+          <div class="card" th:each="libro : ${entry.value}">
+            <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+            <div class="info">
+              <h4 th:text="${libro.titolo}">Titolo</h4>
+              <p th:text="${libro.autore}">Autore</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Bookathlon &copy; 2025</p>
+  </footer>
+
+</body>
+</html>
