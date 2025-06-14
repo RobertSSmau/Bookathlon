@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookathlon.entities.Amicizia;
 import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Utente;
 import com.bookathlon.repos.UtenteRepository;
+import com.bookathlon.service.AmiciziaService;
 import com.bookathlon.service.LibreriaUtenteService;
 
 /**
@@ -34,7 +36,9 @@ public class AreaPersonaleController {
     @Autowired
     private UtenteRepository utenteRepo; 
 	// Repository per l'accesso ai dati dell'utente.
-
+    
+    @Autowired
+    private AmiciziaService amiciziaService;
     /**
      * Mostra la libreria personale dell'utente autenticato.
      * Recupera i libri letti e da leggere per l'utente corrente e li aggiunge al modello.
@@ -49,11 +53,22 @@ public class AreaPersonaleController {
         List<LibreriaUtente> letti = libreriaService.getLibriByStato(utenteId, "LETTO");
         List<LibreriaUtente> daLeggere = libreriaService.getLibriByStato(utenteId, "DA_LEGGERE");
 
+        // Amicizie
+        List<Amicizia> amici = amiciziaService.getAmici(utenteId);
+        List<Amicizia> richiesteRicevute = amiciziaService.getRichiesteRicevute(utenteId);
+        List<Amicizia> richiesteInviate = amiciziaService.getRichiesteInviate(utenteId);
+        
         // Aggiunge le liste al modello per la visualizzazione nella vista.
         m.addAttribute("letti", letti);
         m.addAttribute("daLeggere", daLeggere);
+        
+        m.addAttribute("amici", amici);
+        m.addAttribute("richiesteRicevute", richiesteRicevute);
+        m.addAttribute("richiesteInviate", richiesteInviate);
+        
+        
         return "area-personale";
-		 // Ritorna il nome della vista.
+
     }
 
     /**
