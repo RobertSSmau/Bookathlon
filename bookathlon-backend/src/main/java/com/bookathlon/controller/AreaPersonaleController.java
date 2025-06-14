@@ -1,5 +1,6 @@
 package com.bookathlon.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookathlon.dto.AmicoDTO;
 import com.bookathlon.entities.Amicizia;
 import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Utente;
@@ -55,16 +57,38 @@ public class AreaPersonaleController {
 
         // Amicizie
         List<Amicizia> amici = amiciziaService.getAmici(utenteId);
-        List<Amicizia> richiesteRicevute = amiciziaService.getRichiesteRicevute(utenteId);
-        List<Amicizia> richiesteInviate = amiciziaService.getRichiesteInviate(utenteId);
+        List<Amicizia> ricevute = amiciziaService.getRichiesteRicevute(utenteId);
+        List<Amicizia> inviate = amiciziaService.getRichiesteInviate(utenteId);
+        
+        List<AmicoDTO> amiciDTO = new ArrayList<>();
+        for (Amicizia a : amici) {
+            Long utente1 = a.getUtente1();
+            Long utente2 = a.getUtente2();
+
+            // trovo l'altro utente (non il mio)
+            Long altroId;
+            if (utente1.equals(utenteId)) {
+                altroId = utente2;
+            } else {
+                altroId = utente1;
+            }
+
+            // recupero l'utente dal DB e creo il DTO
+            Utente altroUtente = utenteRepo.findById(altroId).orElse(null);
+            if (altroUtente != null) {
+                AmicoDTO dto = new AmicoDTO(altroUtente.getId(),
+                		altroUtente.getUsername());
+                amiciDTO.add(dto);
+            }
+        }
         
         // Aggiunge le liste al modello per la visualizzazione nella vista.
         m.addAttribute("letti", letti);
         m.addAttribute("daLeggere", daLeggere);
-        
-        m.addAttribute("amici", amici);
-        m.addAttribute("richiesteRicevute", richiesteRicevute);
-        m.addAttribute("richiesteInviate", richiesteInviate);
+        m.addAttribute("amici", amiciDTO);
+        m.addAttribute("richiesteRicevute", ricevute);
+        m.addAttribute("richiesteInviate", inviate);
+        m.addAttribute("loggedId", utenteId); // per i form Thytmeleaf
         
         
         return "area-personale";
@@ -111,6 +135,28 @@ public class AreaPersonaleController {
         return "redirect:/area-personale"; 
 		// Reindirizza alla pagina della libreria per mostrare i cambiamenti.
     }
+    
+    @PostMapping("/amici/invia")
+    public String inviaRichiestaAmicizia(@RequestParam Long destinatarioId,
+                                         @AuthenticationPrincipal UserDetails userDetails) {
+    	//
+    	return "redirect:/area-personale";
+    }
+    
+    @PostMapping("/amici/accetta")
+    public String accettaRichiestaAmicizia(@RequestParam Long utente1,
+                                           @AuthenticationPrincipal UserDetails userDetails) {
+    	//
+        return "redirect:/area-personale";
+    }
+    
+    @PostMapping("/amici/rifiuta")
+    public String rifiutaRichiestaAmicizia(@RequestParam Long utente1,
+                                           @AuthenticationPrincipal UserDetails userDetails) {
+    	//
+        return "redirect:/area-personale";
+    }
+    
 }
 
 
