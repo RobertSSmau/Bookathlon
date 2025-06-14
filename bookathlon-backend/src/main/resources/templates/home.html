@@ -16,7 +16,7 @@
     <nav>
   		<!-- se sono loggato -->
  		 <div th:if="${#authorization.expression('isAuthenticated()')}">
-    		<button onclick="location.href='/libreria'">La mia Libreria</button>
+    		<button onclick="location.href='/area-personale'">Area Personale</button>
 
    			 <form th:action="@{/logout}" method="post" style="display:inline;">
       		<button type="submit">Esci</button>
@@ -62,12 +62,12 @@
           <h3 th:text="${libro.titolo}">Titolo</h3>
           <p th:text="${libro.autore}">Autore</p>
           <p th:text="${libro.genere}">Genere</p>
-           <form method="post" th:action="@{/libreria/aggiungi}">
+           <form method="post" th:action="@{/area-personale/aggiungi}">
    			 <input type="hidden" name="libroId" th:value="${libro.id}" />
     		 <input type="hidden" name="stato" value="DA_LEGGERE" />
    			 <button type="submit">Aggiungi</button>
   		   </form>
-  		   <form method="post" th:action="@{/libreria/rimuovi}">
+  		   <form method="post" th:action="@{/area-personale/rimuovi}">
   				<input type="hidden" name="libroId" th:value="${libro.id}" />
   				<button type="submit">Rimuovi</button>
 			</form>

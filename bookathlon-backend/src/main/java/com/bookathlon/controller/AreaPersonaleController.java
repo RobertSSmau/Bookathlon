@@ -23,9 +23,9 @@ import com.bookathlon.service.LibreriaUtenteService;
  * dalla libreria di un utente autenticato.
  */
 @Controller
-@RequestMapping("/libreria")
+@RequestMapping("/area-personale")
  // Tutte le richieste a questo controller iniziano con libreria
-public class LibreriaController {
+public class AreaPersonaleController {
 
     @Autowired
     private LibreriaUtenteService libreriaService;
@@ -52,7 +52,7 @@ public class LibreriaController {
         // Aggiunge le liste al modello per la visualizzazione nella vista.
         m.addAttribute("letti", letti);
         m.addAttribute("daLeggere", daLeggere);
-        return "libreria";
+        return "area-personale";
 		 // Ritorna il nome della vista.
     }
 
@@ -73,7 +73,7 @@ public class LibreriaController {
         libreriaService.aggiungiLibro(utente.getId(), libroId, stato); 
 		// Chiama il servizio per aggiungere il libro.
 
-        return "redirect:/libreria"; 
+        return "redirect:/area-personale"; 
 		// Reindirizza alla pagina della libreria per mostrare i cambiamenti.
     }
 
@@ -93,7 +93,7 @@ public class LibreriaController {
         libreriaService.rimuoviLibro(utente.getId(), libroId);
 		 // Chiama il servizio per rimuovere il libro.
 
-        return "redirect:/libreria"; 
+        return "redirect:/area-personale"; 
 		// Reindirizza alla pagina della libreria per mostrare i cambiamenti.
     }
 }
