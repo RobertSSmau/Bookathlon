@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.Amicizia;
+import com.bookathlon.entities.AmiciziaId;
 import com.bookathlon.repos.AmiciziaRepo;
 /**
  * Implementazione del servizio {@link AmiciziaService} per la gestione delle relazioni di amicizia.
@@ -41,13 +42,21 @@ public class AmiciziaServiceImpl implements AmiciziaService {
 
 	@Override
 	public void accettaRichiesta(Long daUtenteId, Long aUtenteId) {
-		// TODO Auto-generated method stub
+		AmiciziaId id = new AmiciziaId();
+        id.setUtente1(daUtenteId);
+        id.setUtente2(aUtenteId);
+        Amicizia a = repo.findById(id).orElseThrow();
+        a.setStato("ACCEPTED");
+        repo.save(a);
 
 	}
 
 	@Override
 	public void rifiutaRichiesta(Long daUtenteId, Long aUtenteId) {
-		// TODO Auto-generated method stub
+		AmiciziaId id = new AmiciziaId();
+        id.setUtente1(daUtenteId);
+        id.setUtente2(aUtenteId);
+        repo.deleteById(id);
 
 	}
 
