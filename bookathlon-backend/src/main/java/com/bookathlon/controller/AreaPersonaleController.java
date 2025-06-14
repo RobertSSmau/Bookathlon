@@ -139,21 +139,24 @@ public class AreaPersonaleController {
     @PostMapping("/amici/invia")
     public String inviaRichiestaAmicizia(@RequestParam Long destinatarioId,
                                          @AuthenticationPrincipal UserDetails userDetails) {
-    	//
+    	Utente utente = utenteRepo.findByUsername(userDetails.getUsername());
+        amiciziaService.inviaRichiesta(utente.getId(), destinatarioId);
     	return "redirect:/area-personale";
     }
     
     @PostMapping("/amici/accetta")
     public String accettaRichiestaAmicizia(@RequestParam Long utente1,
                                            @AuthenticationPrincipal UserDetails userDetails) {
-    	//
+    	Utente utente2 = utenteRepo.findByUsername(userDetails.getUsername());
+        amiciziaService.accettaRichiesta(utente1, utente2.getId());
         return "redirect:/area-personale";
     }
     
     @PostMapping("/amici/rifiuta")
     public String rifiutaRichiestaAmicizia(@RequestParam Long utente1,
                                            @AuthenticationPrincipal UserDetails userDetails) {
-    	//
+    	Utente utente2 = utenteRepo.findByUsername(userDetails.getUsername());
+        amiciziaService.rifiutaRichiesta(utente1, utente2.getId());
         return "redirect:/area-personale";
     }
     

@@ -2,6 +2,7 @@ package com.bookathlon.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.Amicizia;
@@ -14,6 +15,7 @@ import com.bookathlon.repos.AmiciziaRepo;
 @Service 
 public class AmiciziaServiceImpl implements AmiciziaService {
 
+	@Autowired
 	private AmiciziaRepo repo;
 	
 	@Override
