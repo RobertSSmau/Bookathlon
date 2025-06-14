@@ -10,7 +10,9 @@
 <body>
 
   <header>
-    <h1>Bookathlon</h1>
+        <div class="logo">
+            <img th:src="@{/images/logoverde.png}" alt="Logo" width="200">
+    </div>
     <nav>
   		<!-- se sono loggato -->
  		 <div th:if="${#authorization.expression('isAuthenticated()')}">
@@ -21,12 +23,12 @@
    			 </form>
   		</div>
 
-  		<!-- se enbtro come anonimo -->
+  		<!-- se entro come anonimo -->
   		<div th:if="${#authorization.expression('isAnonymous()')}">
     		<button onclick="location.href='/login'">Accedi</button>
     		<button onclick="location.href='/register'">Registrati</button>
   		</div>
-		</nav>
+	    	</nav>
   		</header>
 
   <main>
@@ -39,6 +41,7 @@
         <button type="submit">Cerca</button>
       </form>
     </section>
+
 
     <!-- risultati della ricerca -->
     <section id="risultati-ricerca" th:if="${filtrati != null}">

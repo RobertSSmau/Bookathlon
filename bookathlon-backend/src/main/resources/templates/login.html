@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - Bookathlon</title>
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+   <link rel="stylesheet" th:href="@{/css/login.css}">
+
 </head>
 <body>
+    <div class="logo">
+            <img th:src="@{/images/logoverde.png}" alt="Logo" width="150">
+    </div>
     <h2>Accedi</h2>
 
     <form th:action="@{/login}" method="post">
