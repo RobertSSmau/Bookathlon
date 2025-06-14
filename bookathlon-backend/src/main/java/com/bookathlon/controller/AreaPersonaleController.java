@@ -160,6 +160,14 @@ public class AreaPersonaleController {
         return "redirect:/area-personale";
     }
     
+    @PostMapping("/amici/rimuovi")
+    public String rimuoviAmicizia(@RequestParam Long altroUtenteId,
+                                  @AuthenticationPrincipal UserDetails userDetails) {
+        Utente utente = utenteRepo.findByUsername(userDetails.getUsername());
+        amiciziaService.rimuoviAmicizia(utente.getId(), altroUtenteId);
+        return "redirect:/area-personale";
+    }
+    
 }
 
 

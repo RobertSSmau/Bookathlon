@@ -17,5 +17,6 @@ public interface AmiciziaService {
 	    void inviaRichiesta(Long daUtenteId, Long aUtenteId);
 	    void accettaRichiesta(Long daUtenteId, Long aUtenteId);
 	    void rifiutaRichiesta(Long daUtenteId, Long aUtenteId);
+	    void rimuoviAmicizia(Long utenteA, Long utenteB);
 	
 }
