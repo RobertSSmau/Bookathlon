@@ -46,54 +46,67 @@ public class AreaPersonaleController {
      * Recupera i libri letti e da leggere per l'utente corrente e li aggiunge al modello.
      */
     @GetMapping
-    public String mostraLibreria(Model m, @AuthenticationPrincipal UserDetails userDetails) {
-        String username = userDetails.getUsername(); 
+    public String mostraAreaPersonale(Model m, @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
         Utente utente = utenteRepo.findByUsername(username);
-        Long utenteId = utente.getId(); 
+        Long utenteId = utente.getId();
 
-        // Recupera i libri con stato "LETTO" e "DA_LEGGERE" per l'utente.
+        caricaLibreria(m, utenteId);
+        caricaAmicizie(m, utenteId);
+
+        m.addAttribute("loggedId", utenteId);
+        return "area-personale";
+    }
+    
+    private void caricaLibreria(Model m, Long utenteId) {
         List<LibreriaUtente> letti = libreriaService.getLibriByStato(utenteId, "LETTO");
         List<LibreriaUtente> daLeggere = libreriaService.getLibriByStato(utenteId, "DA_LEGGERE");
+        m.addAttribute("letti", letti);
+        m.addAttribute("daLeggere", daLeggere);
+    }
+    
+    private void caricaAmicizie(Model model, Long mioId) {
 
-        // Amicizie
-        List<Amicizia> amici = amiciziaService.getAmici(utenteId);
-        List<Amicizia> ricevute = amiciziaService.getRichiesteRicevute(utenteId);
-        List<Amicizia> inviate = amiciziaService.getRichiesteInviate(utenteId);
-        
+        // Recupero le liste di amicizie
+        List<Amicizia> listaAmici = amiciziaService.getAmici(mioId);
+        List<Amicizia> richiesteRicevute = amiciziaService.getRichiesteRicevute(mioId);
+        List<Amicizia> richiesteInviate = amiciziaService.getRichiesteInviate(mioId);
+
+        // Preparo la lista dei miei amici come DTO
         List<AmicoDTO> amiciDTO = new ArrayList<>();
-        for (Amicizia a : amici) {
-            Long utente1 = a.getUtente1();
-            Long utente2 = a.getUtente2();
+        for (Amicizia amicizia : listaAmici) {
+            Long idAltroUtente = null;
 
-            // trovo l'altro utente (non il mio)
-            Long altroId;
-            if (utente1.equals(utenteId)) {
-                altroId = utente2;
+            if (amicizia.getUtente1().equals(mioId)) {
+                idAltroUtente = amicizia.getUtente2();
             } else {
-                altroId = utente1;
+                idAltroUtente = amicizia.getUtente1();
             }
 
-            // recupero l'utente dal DB e creo il DTO
-            Utente altroUtente = utenteRepo.findById(altroId).orElse(null);
+            Utente altroUtente = utenteRepo.findById(idAltroUtente).orElse(null);
             if (altroUtente != null) {
-                AmicoDTO dto = new AmicoDTO(altroUtente.getId(),
-                		altroUtente.getUsername());
+                AmicoDTO dto = new AmicoDTO(altroUtente.getId(), altroUtente.getUsername());
                 amiciDTO.add(dto);
             }
         }
-        
-        // Aggiunge le liste al modello per la visualizzazione nella vista.
-        m.addAttribute("letti", letti);
-        m.addAttribute("daLeggere", daLeggere);
-        m.addAttribute("amici", amiciDTO);
-        m.addAttribute("richiesteRicevute", ricevute);
-        m.addAttribute("richiesteInviate", inviate);
-        m.addAttribute("loggedId", utenteId); // per i form Thytmeleaf
-        
-        
-        return "area-personale";
 
+        // Preparo la lista delle richieste inviate come DTO
+        List<AmicoDTO> inviateDTO = new ArrayList<>();
+        for (Amicizia richiesta : richiesteInviate) {
+            Long idDestinatario = richiesta.getUtente2();
+            Utente destinatario = utenteRepo.findById(idDestinatario).orElse(null);
+            if (destinatario != null) {
+                AmicoDTO dto = new AmicoDTO(destinatario.getId(), destinatario.getUsername());
+                inviateDTO.add(dto);
+            }
+        }
+
+        // Aggiungo tutto al model
+        model.addAttribute("amici", amiciDTO);
+        model.addAttribute("richiesteRicevute", richiesteRicevute);
+        model.addAttribute("richiesteInviate", inviateDTO);
     }
+
 
     /**
      * Aggiunge un libro alla libreria personale dell'utente con uno stato specifico.
@@ -134,6 +147,41 @@ public class AreaPersonaleController {
 
         return "redirect:/area-personale"; 
 		// Reindirizza alla pagina della libreria per mostrare i cambiamenti.
+    }
+    
+    @GetMapping("/cerca-utente")
+    public String cercaUtente(@RequestParam String q,
+                              Model m,
+                              @AuthenticationPrincipal UserDetails userDetails) {
+        Utente utente = utenteRepo.findByUsername(userDetails.getUsername());
+        Long mioId = utente.getId();
+
+        List<Utente> risultati = utenteRepo.cercaPerUsername(q);
+        List<Utente> filtrati = new ArrayList<>();
+
+        for (int i = 0; i < risultati.size(); i++) {
+            Utente utenteCorrente = risultati.get(i);
+
+            Long idUtenteCorrente = utenteCorrente.getId();
+            boolean idNonNullo = idUtenteCorrente != null;
+
+            boolean nonSonoIo = false;
+            if (idNonNullo) {
+                nonSonoIo = !idUtenteCorrente.equals(mioId);
+            }
+
+            if (nonSonoIo) {
+                filtrati.add(utenteCorrente);
+            }
+        }
+        caricaLibreria(m, mioId);
+        caricaAmicizie(m, mioId);
+
+        m.addAttribute("risultatiUtenti", filtrati);
+        m.addAttribute("query", q);
+        m.addAttribute("loggedId", mioId);
+
+        return "area-personale";
     }
     
     @PostMapping("/amici/invia")
