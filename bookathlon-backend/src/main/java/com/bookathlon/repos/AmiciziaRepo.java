@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bookathlon.entities.Amicizia;
 import com.bookathlon.entities.AmiciziaId;
+import com.bookathlon.entities.Utente;
 
 /**
  * Repository per l'entità Amicizia.
@@ -52,6 +53,9 @@ public interface AmiciziaRepo extends JpaRepository<Amicizia, AmiciziaId> {
           AND id_utente1 = :userId
                 """, nativeQuery = true)
     List<Amicizia> trovaRichiesteInviate(@Param("userId") Long userId);
+    
+    @Query()
+    	List<Utente> cercaPerUsername(@Param("username") String username);
 
 }
 
