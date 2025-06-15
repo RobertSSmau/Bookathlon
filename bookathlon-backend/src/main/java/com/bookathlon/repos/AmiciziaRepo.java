@@ -54,8 +54,7 @@ public interface AmiciziaRepo extends JpaRepository<Amicizia, AmiciziaId> {
                 """, nativeQuery = true)
     List<Amicizia> trovaRichiesteInviate(@Param("userId") Long userId);
     
-    @Query()
-    	List<Utente> cercaPerUsername(@Param("username") String username);
+    
 
 }
 
