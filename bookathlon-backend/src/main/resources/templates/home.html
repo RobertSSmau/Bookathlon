@@ -8,59 +8,73 @@
   <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
+<header>
+  <div class="logo">
+    <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
+  </div>
 
-  <header>
-        <div class="logo">
-            <img th:src="@{/images/logoverde.png}" alt="Logo" width="200">
+  <nav>
+    <div th:if="${#authorization.expression('isAuthenticated()')}" class="dropdown">
+      <button class="dropbtn">Account ▾</button>
+      <div class="dropdown-content">
+        <a href="/area-personale">Area Personale</a>
+        <form th:action="@{/logout}" method="post">
+          <button type="submit">Esci</button>
+        </form>
+      </div>
     </div>
+<<<<<<< Updated upstream
     <nav>
   		<!-- se sono loggato -->
  		 <div th:if="${#authorization.expression('isAuthenticated()')}">
     		<button onclick="location.href='/area-personale'">Area Personale</button>
+=======
+>>>>>>> Stashed changes
 
-   			 <form th:action="@{/logout}" method="post" style="display:inline;">
-      		<button type="submit">Esci</button>
-   			 </form>
-  		</div>
+    <div th:if="${#authorization.expression('isAnonymous()')}">
+      <a href="/login">Accedi</a>
+      <a href="/register">Registrati</a>
+    </div>
+  </nav>
+</header>
 
-  		<!-- se entro come anonimo -->
-  		<div th:if="${#authorization.expression('isAnonymous()')}">
-    		<button onclick="location.href='/login'">Accedi</button>
-    		<button onclick="location.href='/register'">Registrati</button>
-  		</div>
-	    	</nav>
-  		</header>
+<main>
 
-  <main>
-  
-  	<!-- barra di ricerca -->
-    <section id="ricerca-libri">
-      <h2>Cerca un libro</h2>
-      <form action="/cerca" method="get">
-        <input type="text" name="q" placeholder="Titolo o autore" required />
-        <button type="submit">Cerca</button>
-      </form>
-    </section>
+  <section class="search-section">
+    <h2>Cerca un libro</h2>
+    <form action="/cerca" method="get">
+      <input type="text" name="q" placeholder="Titolo o autore" required />
+      <button type="submit">Cerca</button>
+    </form>
+  </section>
 
+  <section>
+    <h2>Libri di Tendenza</h2>
+    <div class="card-container">
+      <div th:each="libro : ${tendenze}" class="card">
+        <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+        <h3 th:text="${libro.titolo}">Titolo</h3>
+        <p th:text="${libro.autore}">Autore</p>
+        <p th:text="${libro.genere}">Genere</p>
+        <form method="post" th:action="@{/area-personale/aggiungi}">
+          <input type="hidden" name="libroId" th:value="${libro.id}" />
+          <input type="hidden" name="stato" value="DA_LEGGERE" />
+          <button type="submit">Aggiungi</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-    <!-- risultati della ricerca -->
-    <section id="risultati-ricerca" th:if="${filtrati != null}">
-      <h2>Risultati</h2>
-      <ul>
-        <li th:each="libro : ${filtrati}">
-          <strong th:text="${libro.titolo}">Titolo</strong> di
-          <em th:text="${libro.autore}">Autore</em>
-        </li>
-      </ul>
-    </section>
-
-    <!-- libir di tendenza -->
-    <section id="sezione-tendenze">
-      <h2>Libri di Tendenza</h2>
+  <section>
+    <h2>Esplora per Genere</h2>
+    <div th:each="entry : ${libriPerGenere}">
+      <h3 th:text="${entry.key}">Genere</h3>
       <div class="card-container">
-        <div th:each="libro : ${tendenze}" class="card">
-          <h3 th:text="${libro.titolo}">Titolo</h3>
+        <div th:each="libro : ${entry.value}" class="card">
+          <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+          <h4 th:text="${libro.titolo}">Titolo</h4>
           <p th:text="${libro.autore}">Autore</p>
+<<<<<<< Updated upstream
           <p th:text="${libro.genere}">Genere</p>
            <form method="post" th:action="@{/area-personale/aggiungi}">
    			 <input type="hidden" name="libroId" th:value="${libro.id}" />
@@ -71,29 +85,23 @@
   				<input type="hidden" name="libroId" th:value="${libro.id}" />
   				<button type="submit">Rimuovi</button>
 			</form>
+=======
+          <form method="post" th:action="@{/area-personale/aggiungi}">
+            <input type="hidden" name="libroId" th:value="${libro.id}" />
+            <input type="hidden" name="stato" value="DA_LEGGERE" />
+            <button type="submit">Aggiungi</button>
+          </form>
+>>>>>>> Stashed changes
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- card per i generi -->
-    <section id="sezione-generi">
-      <h2>Esplora per Genere</h2>
-      <div th:each="entry : ${libriPerGenere}">
-        <h3 th:text="${entry.key}">Genere</h3>
-        <div class="card-container">
-          <div th:each="libro : ${entry.value}" class="card">
-            <h4 th:text="${libro.titolo}">Titolo</h4>
-            <p th:text="${libro.autore}">Autore</p>
-          </div>
-        </div>
-      </div>
-    </section>
+</main>
 
-  </main>
-
-  <footer>
-    <p>Bookathlon</p>
-  </footer>
+<footer>
+  <p>© 2025 Bookathlon</p>
+</footer>
 
 </body>
 </html>
