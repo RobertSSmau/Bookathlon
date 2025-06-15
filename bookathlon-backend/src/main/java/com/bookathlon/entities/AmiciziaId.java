@@ -11,6 +11,11 @@ public class AmiciziaId implements Serializable {
     private Long utente2;
 
     public AmiciziaId() {}
+    
+    public AmiciziaId(Long utente1, Long utente2) {
+        this.utente1 = utente1;
+        this.utente2 = utente2;
+    }
 
     public Long getUtente1() {
         return utente1;

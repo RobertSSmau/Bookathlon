@@ -75,14 +75,14 @@
     <h2>Richieste Ricevute</h2>
     <ul>
         <li th:each="r : ${richiesteRicevute}">
-            <span th:text="${r.utente1}">Mittente (ID)</span>
+            <span th:text="${r.username}">Username</span>
             <form method="post" th:action="@{/area-personale/amici/accetta}" style="display:inline;">
-                <input type="hidden" name="utente1" th:value="${r.utente1}" />
+                <input type="hidden" name="utente1" th:value="${r.id}" />
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <button type="submit">Accetta</button>
             </form>
             <form method="post" th:action="@{/area-personale/amici/rifiuta}" style="display:inline;">
-                <input type="hidden" name="utente1" th:value="${r.utente1}" />
+                <input type="hidden" name="utente1" th:value="${r.id}" />
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <button type="submit">Rifiuta</button>
             </form>

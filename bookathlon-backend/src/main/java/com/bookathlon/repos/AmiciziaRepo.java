@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.bookathlon.entities.Amicizia;
 import com.bookathlon.entities.AmiciziaId;
-import com.bookathlon.entities.Utente;
 
 /**
  * Repository per l'entità Amicizia.
@@ -26,7 +25,7 @@ public interface AmiciziaRepo extends JpaRepository<Amicizia, AmiciziaId> {
      * in cui l'utente specificato è uno dei due partecipanti.
      */
     @Query(value = """
-            SELECT * FROM "better-mockup-schema".amicizia
+            SELECT * FROM "better-mockup-schema-2".amicizia
         WHERE stato = 'ACCEPTED'
           AND (id_utente1 = :userId OR id_utente2 = :userId)
                 """, nativeQuery = true) // nativeQuery = true indica che la query è SQL nativo.
@@ -37,7 +36,7 @@ public interface AmiciziaRepo extends JpaRepository<Amicizia, AmiciziaId> {
      * che sono state ricevute dall'utente specificato (id_utente2).
      */
     @Query(value = """
-                SELECT * FROM "better-mockup-schema".amicizia
+                SELECT * FROM "better-mockup-schema-2".amicizia
         WHERE stato = 'PENDING'
           AND id_utente2 = :userId
                 """, nativeQuery = true)
@@ -48,7 +47,7 @@ public interface AmiciziaRepo extends JpaRepository<Amicizia, AmiciziaId> {
      * che sono state inviate dall'utente specificato (id_utente1).
      */
     @Query(value = """
-                SELECT * FROM "better-mockup-schema".amicizia
+                SELECT * FROM "better-mockup-schema-2".amicizia
         WHERE stato = 'PENDING'
           AND id_utente1 = :userId
                 """, nativeQuery = true)

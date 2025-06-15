@@ -67,7 +67,7 @@ public class AreaPersonaleController {
     
     private void caricaAmicizie(Model model, Long mioId) {
 
-        // Recupero le liste di amicizie
+        // Recupero le liste di amicizie dal servizio
         List<Amicizia> listaAmici = amiciziaService.getAmici(mioId);
         List<Amicizia> richiesteRicevute = amiciziaService.getRichiesteRicevute(mioId);
         List<Amicizia> richiesteInviate = amiciziaService.getRichiesteInviate(mioId);
@@ -101,9 +101,20 @@ public class AreaPersonaleController {
             }
         }
 
-        // Aggiungo tutto al model
+        // Preparo la lista delle richieste ricevute come DTO
+        List<AmicoDTO> ricevuteDTO = new ArrayList<>();
+        for (Amicizia richiesta : richiesteRicevute) {
+            Long idMittente = richiesta.getUtente1();
+            Utente mittente = utenteRepo.findById(idMittente).orElse(null);
+            if (mittente != null) {
+                AmicoDTO dto = new AmicoDTO(mittente.getId(), mittente.getUsername());
+                ricevuteDTO.add(dto);
+            }
+        }
+
+        // Aggiungo le liste al model
         model.addAttribute("amici", amiciDTO);
-        model.addAttribute("richiesteRicevute", richiesteRicevute);
+        model.addAttribute("richiesteRicevute", ricevuteDTO);
         model.addAttribute("richiesteInviate", inviateDTO);
     }
 
@@ -174,6 +185,7 @@ public class AreaPersonaleController {
                 filtrati.add(utenteCorrente);
             }
         }
+        
         caricaLibreria(m, mioId);
         caricaAmicizie(m, mioId);
 

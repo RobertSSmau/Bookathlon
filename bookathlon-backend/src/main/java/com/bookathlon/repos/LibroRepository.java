@@ -26,7 +26,7 @@ public interface LibroRepository extends JpaRepository<Libro, Long>{
 	@Query(
 		    value = """
 		        SELECT *
-		        FROM "better-mockup-schema".libro
+		        FROM "better-mockup-schema-2".libro
 		        WHERE titolo ILIKE CONCAT('%', :kw, '%')
 		           OR autore ILIKE CONCAT('%', :kw, '%')
 		    """,
