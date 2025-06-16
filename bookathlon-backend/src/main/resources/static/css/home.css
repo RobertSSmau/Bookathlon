@@ -46,7 +46,7 @@ h3, h4 {
 
 /* HEADER E NAV */
 header {
-  background-color: #103048;
+  background-color: #163d5c;
   padding: 2.5rem 5rem;
   display: flex;
   justify-content: space-between;
@@ -55,8 +55,9 @@ header {
 }
 
 .logo img {
-  width: 250px;
+  width: 400px;
   height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
 
 nav {
@@ -77,6 +78,12 @@ nav button {
   text-decoration: none;
   font-size: 1rem;
   cursor: pointer;
+  display: inline-block;          
+  min-width: 150px;               
+  text-align: center;            
+  line-height: 1.2;               
+  padding: 0.5rem 1rem;           
+  font-size: 1rem;
 }
 nav a:hover,
 nav button:hover {

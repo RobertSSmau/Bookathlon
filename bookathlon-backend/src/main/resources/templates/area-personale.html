@@ -9,19 +9,30 @@
 </head>
 <body>
 
-<header class="main-header">
+<header>
+
   <div class="logo">
     <a th:href="@{/}">
-      <img src="/images/logoverde.png" alt="Bookathlon Logo">
+      <img th:src="@{/images/logoverde.png}" alt="Bookathlon Logo" />
     </a>
   </div>
 
   <nav class="nav-buttons">
-    <a href="/" class="btn">Home</a>
-    <form th:action="@{/logout}" method="post" style="display:inline;">
-      <button type="submit" class="btn">Esci</button>
-    </form>
+    <!-- SE LOGGATO -->
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+      <a href="/" class="btn">Home</a>
+      <form th:action="@{/logout}" method="post" style="display:inline;">
+        <button type="submit" class="btn">Esci</button>
+      </form>
+    </div>
+
+    <!-- SE NON LOGGATO -->
+    <div th:if="${#authorization.expression('isAnonymous()')}">
+      <a href="/login" class="btn">Accedi</a>
+      <a href="/register" class="btn">Registrati</a>
+    </div>
   </nav>
+
 </header>
 
 <div class="user-greeting-box">

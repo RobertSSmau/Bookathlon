@@ -13,22 +13,22 @@
   <div class="logo">
     <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
   </div>
-  <nav>
-  <div th:if="${#authorization.expression('isAuthenticated()')}" class="dropdown">
-    <button class="dropbtn">Account ▾</button>
-    <div class="dropdown-content">
-      <a href="/area-personale">Area Personale</a>
-      <form th:action="@{/logout}" method="post">
-        <button type="submit">Esci</button>
+
+  <nav class="nav-buttons">
+    <!-- SE LOGGATO -->
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+      <a href="/area-personale" class="btn">Area Personale</a>
+      <form th:action="@{/logout}" method="post" style="display:inline;">
+        <button type="submit" class="btn">Esci</button>
       </form>
     </div>
-  </div>
 
-  <div th:if="${#authorization.expression('isAnonymous()')}">
-    <a href="/login">Accedi</a>
-    <a href="/register">Registrati</a>
-  </div>
-</nav>
+    <!-- SE NON LOGGATO -->
+    <div th:if="${#authorization.expression('isAnonymous()')}">
+      <a href="/login" class="btn">Accedi</a>
+      <a href="/register" class="btn">Registrati</a>
+    </div>
+  </nav>
 
 </header>
 
@@ -36,14 +36,17 @@
 
   <section class="search-section">
     <h2>Cerca un libro</h2>
+    <div class="card-section-wrapper">
     <form action="/cerca" method="get">
       <input type="text" name="q" placeholder="Titolo o autore" required />
       <button type="submit">Cerca</button>
     </form>
+    </div>
   </section>
 
   <section>
     <h2>Libri di Tendenza</h2>
+    <div class="card-section-wrapper">
     <div class="card-container">
       <div th:each="libro : ${tendenze}" class="card">
         <img th:src="${libro.url_copertina}" alt="Copertina libro" />
@@ -62,6 +65,7 @@
 </div>
       </div>
     </div>
+    </div>
   </section>
 
   <section>
@@ -75,8 +79,10 @@
   </select>
 
   <!-- Blocchi per ciascun genere -->
+   
   <div th:each="entry : ${libriPerGenere}" th:attr="data-genere=${entry.key}" class="genere-section">
     <h3 th:text="${entry.key}">Genere</h3>
+    <div class="card-section-wrapper">
     <div class="card-container">
       <div th:each="libro : ${entry.value}" class="card">
         <img th:src="${libro.url_copertina}" alt="Copertina libro" />
@@ -95,7 +101,8 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
+  </div>  
 </section>
 
 </main>
@@ -104,26 +111,7 @@
   <p>© 2025 Bookathlon</p>
 </footer>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const select = document.getElementById('genereSelect');
-    const sezioni = document.querySelectorAll('.genere-section');
-
-    select.addEventListener('change', function () {
-      const valore = this.value;
-
-      sezioni.forEach(section => {
-        const genere = section.getAttribute('data-genere');
-
-        if (valore === 'all' || valore === genere) {
-          section.style.display = 'block';
-        } else {
-          section.style.display = 'none';
-        }
-      });
-    });
-  });
-</script>
+<script src="/js/home.js"></script>
 
 </body>
 </html>
