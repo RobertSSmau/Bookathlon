@@ -49,11 +49,16 @@
         <h3 th:text="${libro.titolo}">Titolo</h3>
         <p th:text="${libro.autore}">Autore</p>
         <p th:text="${libro.genere}">Genere</p>
-        <form method="post" th:action="@{/area-personale/aggiungi}">
-          <input type="hidden" name="libroId" th:value="${libro.id}" />
-          <input type="hidden" name="stato" value="DA_LEGGERE" />
-          <button type="submit">Aggiungi</button>
-        </form>
+        <div th:if="${idLibriUtente == null or !idLibriUtente.contains(libro.id)}">
+  <form method="post" th:action="@{/area-personale/aggiungi}">
+    <input type="hidden" name="libroId" th:value="${libro.id}" />
+    <input type="hidden" name="stato" value="DA_LEGGERE" />
+    <button type="submit">Aggiungi</button>
+  </form>
+</div>
+<div th:if="${idLibriUtente != null and idLibriUtente.contains(libro.id)}">
+  <button disabled>Aggiunto</button>
+</div>
       </div>
     </div>
   </section>
@@ -67,11 +72,16 @@
           <img th:src="${libro.url_copertina}" alt="Copertina libro" />
           <h4 th:text="${libro.titolo}">Titolo</h4>
           <p th:text="${libro.autore}">Autore</p>
-          <form method="post" th:action="@{/area-personale/aggiungi}">
-            <input type="hidden" name="libroId" th:value="${libro.id}" />
-            <input type="hidden" name="stato" value="DA_LEGGERE" />
-            <button type="submit">Aggiungi</button>
-          </form>
+          <div th:if="${idLibriUtente == null or !idLibriUtente.contains(libro.id)}">
+  <form method="post" th:action="@{/area-personale/aggiungi}">
+    <input type="hidden" name="libroId" th:value="${libro.id}" />
+    <input type="hidden" name="stato" value="DA_LEGGERE" />
+    <button type="submit">Aggiungi</button>
+  </form>
+</div>
+<div th:if="${idLibriUtente != null and idLibriUtente.contains(libro.id)}">
+  <button disabled>Aggiunto</button>
+</div>
         </div>
       </div>
     </div>

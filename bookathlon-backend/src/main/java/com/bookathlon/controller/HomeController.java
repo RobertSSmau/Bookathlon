@@ -6,13 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Libro;
+import com.bookathlon.entities.Utente;
+import com.bookathlon.repos.UtenteRepository;
+import com.bookathlon.service.LibreriaUtenteService;
 import com.bookathlon.service.LibroService;
+import com.bookathlon.service.UtenteService;
 
 /**
  * Controller per la gestione della homepage e della funzionalità di ricerca libri.
@@ -23,6 +30,13 @@ public class HomeController {
 
     @Autowired
     private LibroService libroService;
+    
+    @Autowired
+    private UtenteRepository utenteRepo;
+    
+    @Autowired
+    private LibreriaUtenteService libreriaService;
+    
 
  /**
      * Gestisce la richiesta per la homepage dell'applicazione.
@@ -30,7 +44,7 @@ public class HomeController {
      * e li aggiunge al modello per la visualizzazione sulla pagina "home".
      */
     @GetMapping("/")
-    public String homePage(Model m) {
+    public String homePage(Model m, @AuthenticationPrincipal UserDetails userDetails) {
         // Recupera i libri più letti (i primi 5 almeno)
         List<Libro> libriTendenza = libroService.getLibriDiTendenza();
 
@@ -51,6 +65,25 @@ public class HomeController {
         m.addAttribute("tendenze", libriTendenza);
         m.addAttribute("libriPerGenere", libriPerGenere);
 
+        if (userDetails != null) {
+            // Recupera l'utente loggato
+            String username = userDetails.getUsername();
+            Utente utente = utenteRepo.findByUsername(username);
+            
+            // Recupera la libreria dell'utente
+            List<LibreriaUtente> libreria = libreriaService.getLibreriaUtente(utente.getId());
+
+            // Estrai gli ID dei libri nella libreria
+            List<Long> idLibriUtente = new ArrayList<>();
+            for (LibreriaUtente entry : libreria) {
+                Long idLibro = entry.getLibro().getId();
+                idLibriUtente.add(idLibro);
+            }
+
+            // Passa la lista al template
+            m.addAttribute("idLibriUtente", idLibriUtente);
+        }
+        
         return "home";
          // Ritorna il nome della vista "home".
     }
