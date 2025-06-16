@@ -17,7 +17,12 @@ body {
   line-height: 1.6;
 }
 
-
+section h2 {
+  text-align: center;
+  font-size: 1.8rem; 
+  margin-bottom: 1rem;
+  color: #A3D5B6; 
+}
 
 main {
   padding: 1rem 2rem;
@@ -78,6 +83,37 @@ nav button:hover {
   background-color: #a8dcbc;
   color: #153c59;
 } 
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: transparent;
+}
+
+.user-greeting-box {
+  background-color: #06131d;
+  border-radius: 15px;
+  padding: 1.5rem 2rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.user-welcome {
+  font-size: 2.2rem;
+  color: #A3D5B6;
+  margin-bottom: 0.5rem;
+}
+
+.user-score {
+  font-size: 1.5rem;
+  color: #A3D5B6;
+}
+
+
 
 /* DROPDOWN MENU */
 .dropdown {
@@ -155,10 +191,12 @@ nav button:hover {
 
 /* CARD GRID */
 .card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
-  margin: 1rem 0;
+  margin: 1rem auto;
+  max-width: 1200px;
 }
 
 /* CARD STILE */
@@ -169,17 +207,23 @@ nav button:hover {
   text-align: center;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   transition: transform 0.2s ease;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 3px solid transparent;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: scale(1.05);
+  border: 3px solid #A3D5B6;
 }
 
 .card img {
   width: 120px;
   height: auto;
+  margin: 0 auto 0.5rem auto;
   border-radius: 5px;
-  margin-bottom: 0.5rem;
 }
 
 .card button {
@@ -190,6 +234,14 @@ nav button:hover {
   padding: 0.4rem 0.8rem;
   margin-top: 0.5rem;
   cursor: pointer;
+}
+
+.card-section-wrapper {
+  background-color: #06131d;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* FOOTER */
