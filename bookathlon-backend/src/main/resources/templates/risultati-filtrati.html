@@ -37,19 +37,28 @@
 
   <main>
     <section th:if="${filtrati != null}">
-      <div class="card-container">
-        <div th:each="libro : ${filtrati}" class="card">
-          <h3 th:text="${libro.titolo}">Titolo</h3>
-          <p th:text="${libro.autore}">Autore</p>
-          <p th:text="${libro.genere}">Genere</p>
-          <form method="post" th:action="@{/libreria/aggiungi}">
+  <h2>Risultati della Ricerca</h2>
+  <div class="card-section-wrapper">
+    <div class="card-container">
+      <div th:each="libro : ${filtrati}" class="card">
+        <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+        <h3 th:text="${libro.titolo}">Titolo</h3>
+        <p th:text="${libro.autore}">Autore</p>
+        <p th:text="${libro.genere}">Genere</p>
+        <div th:if="${idLibriUtente == null or !idLibriUtente.contains(libro.id)}">
+          <form method="post" th:action="@{/area-personale/aggiungi}">
             <input type="hidden" name="libroId" th:value="${libro.id}" />
             <input type="hidden" name="stato" value="DA_LEGGERE" />
-            <button type="submit">Aggiungi alla Libreria</button>
+            <button type="submit">Aggiungi</button>
           </form>
         </div>
+        <div th:if="${idLibriUtente != null and idLibriUtente.contains(libro.id)}">
+          <button disabled>Aggiunto</button>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <section th:if="${filtrati.size() == 0}">
       <p>Nessun libro trovato con i criteri specificati.</p>
