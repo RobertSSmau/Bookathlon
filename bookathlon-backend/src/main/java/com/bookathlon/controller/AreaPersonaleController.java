@@ -178,7 +178,14 @@ public class AreaPersonaleController {
         return "redirect:/area-personale";
     }
     
-    
+    @GetMapping("/cerca")
+    public String paginaCercaUtente(Model m,
+                                    @AuthenticationPrincipal UserDetails userDetails) {
+        Utente utente = utenteRepo.findByUsername(userDetails.getUsername());
+        m.addAttribute("loggedId", utente.getId());
+        return "cerca-utente";
+    }
+
     
     @GetMapping("/cerca-utente")
     public String cercaUtente(@RequestParam String q,
@@ -213,7 +220,7 @@ public class AreaPersonaleController {
         m.addAttribute("query", q);
         m.addAttribute("loggedId", mioId);
 
-        return "area-personale";
+        return "cerca-utente";
     }
     
     @PostMapping("/amici/invia")

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Cerca un amico</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+  <div class="logo">
+    <a th:href="@{/}">
+      <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
+    </a>
+  </div>
+  <nav class="nav-buttons">
+    <a href="/" class="btn">Home</a>
+    <form th:action="@{/logout}" method="post" style="display:inline;">
+      <button type="submit" class="btn">Esci</button>
+    </form>
+  </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2>Cerca un amico</h2>
+    <form method="get" th:action="@{/area-personale/cerca-utente}">
+      <input type="text" name="q" placeholder="Inserisci uno username" required />
+      <button type="submit">Cerca</button>
+    </form>
+  </section>
+
+  <section th:if="${risultatiUtenti != null}">
+    <h3 th:text="'Risultati per: ' + ${query}"></h3>
+
+    <p th:if="${risultatiUtenti.size() == 0}">Nessun utente trovato.</p>
+
+    <ul th:if="${risultatiUtenti.size() > 0}">
+      <li th:each="utente : ${risultatiUtenti}">
+        <span th:text="${utente.username}">Username</span>
+        <form method="post" th:action="@{/area-personale/amici/invia}" style="display:inline;">
+          <input type="hidden" name="destinatarioId" th:value="${utente.id}" />
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <button type="submit">Invia richiesta</button>
+        </form>
+      </li>
+    </ul>
+  </section>
+</main>
+
+</body>
+</html>

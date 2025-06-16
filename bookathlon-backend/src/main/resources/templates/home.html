@@ -9,7 +9,7 @@
 </head>
 <body>
 <header>
-
+  <div class="header-content">
   <div class="logo">
     <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
   </div>
@@ -27,6 +27,7 @@
     <div th:if="${#authorization.expression('isAnonymous()')}">
       <a href="/login" class="btn">Accedi</a>
       <a href="/register" class="btn">Registrati</a>
+    </div>
     </div>
   </nav>
 
