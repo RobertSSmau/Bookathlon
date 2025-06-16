@@ -11,6 +11,7 @@
 
 <header>
     <h1>Benvenuto nella tua Area Personale</h1>
+    <p>Il tuo punteggio: <strong th:text="${score != null ? score : 0}">0</strong> punti</p>
     <nav>
         <a href="/" class="button">Home</a>
         <form th:action="@{/logout}" method="post" style="display:inline;">
@@ -48,15 +49,18 @@
 	</li>
     </ul>
 
-    <h2>Da Leggere</h2>
-    <ul>
-        <li th:each="entry : ${daLeggere}">
+    <li th:each="entry : ${daLeggere}">
     <strong th:text="${entry.libro.titolo}">Titolo</strong> -
     <em th:text="${entry.libro.autore}">Autore</em>
     <br/>
-    
-    <!-- Bottone "Inizia Lettura" -->
-    <form method="post" th:action="@{/area-personale/inizia}" style="display:inline;">
+
+    <!-- Mostra data inizio lettura se presente -->
+    <span th:if="${entry.dataInizioLettura != null}">
+        Iniziato a leggere il: <span th:text="${entry.dataInizioLettura}">data</span>
+    </span>
+
+    <!-- Altrimenti mostra il bottone "Inizia Lettura" -->
+    <form th:if="${entry.dataInizioLettura == null}" method="post" th:action="@{/area-personale/inizia}" style="display:inline;">
         <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
         <input type="hidden" name="stato" value="DA_LEGGERE" />
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -86,13 +90,14 @@
     <h2>I miei Amici</h2>
     <ul>
         <li th:each="a : ${amici}">
-            <span th:text="${a.username}">Username</span>
-            <form method="post" th:action="@{/area-personale/amici/rimuovi}" style="display:inline;">
-                <input type="hidden" name="altroUtenteId" th:value="${a.id}" />
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit">Rimuovi</button>
-            </form>
-        </li>
+    <span th:text="${a.username}">Username</span> —
+    <span th:text="'Punti: ' + ${a.score}">Punti</span>
+    <form method="post" th:action="@{/area-personale/amici/rimuovi}" style="display:inline;">
+        <input type="hidden" name="altroUtenteId" th:value="${a.id}" />
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">Rimuovi</button>
+    </form>
+</li>
     </ul>
 </section>
 

@@ -44,6 +44,9 @@ public class Utente {
 
     @Column(nullable = false)  // Campo obbligatorio
     private String ruolo;
+    
+    @Column(nullable = false)
+    private int score;
 
 
 
@@ -87,5 +90,14 @@ public class Utente {
         this.email = email;
     }
 
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+    
 
 }

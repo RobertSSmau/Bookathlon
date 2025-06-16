@@ -76,11 +76,20 @@ public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
         }
 
         if (stato.equals("LETTO")) {
-            // se non ho ancora una data di inizio, lo metto ora
+            // Se era da leggere, aggiorna la data di inizio se mancante
             if (entry.getDataInizioLettura() == null) {
                 entry.setDataInizioLettura(LocalDate.now());
             }
-            entry.setDataFineLettura(LocalDate.now());
+
+            // Se il libro non era ancora stato letto (no dataFine), aggiorno punteggio
+            if (entry.getDataFineLettura() == null) {
+                entry.setDataFineLettura(LocalDate.now());
+
+                // Incrementa lo score dell'utente
+                int punteggioAttuale = utente.getScore();
+                utente.setScore(punteggioAttuale + 1);
+                utenteRepo.save(utente);  // salva il nuovo punteggio
+            }
         }
         
         // Salva la nuova entry nel database.

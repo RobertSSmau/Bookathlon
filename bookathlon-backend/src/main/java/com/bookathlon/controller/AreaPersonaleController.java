@@ -55,6 +55,7 @@ public class AreaPersonaleController {
         caricaAmicizie(m, utenteId);
 
         m.addAttribute("loggedId", utenteId);
+        m.addAttribute("score", utente.getScore());
         return "area-personale";
     }
     
@@ -85,7 +86,11 @@ public class AreaPersonaleController {
 
             Utente altroUtente = utenteRepo.findById(idAltroUtente).orElse(null);
             if (altroUtente != null) {
-                AmicoDTO dto = new AmicoDTO(altroUtente.getId(), altroUtente.getUsername());
+            	AmicoDTO dto = new AmicoDTO(
+            		    altroUtente.getId(),
+            		    altroUtente.getUsername(),
+            		    altroUtente.getScore()
+            		);
                 amiciDTO.add(dto);
             }
         }
