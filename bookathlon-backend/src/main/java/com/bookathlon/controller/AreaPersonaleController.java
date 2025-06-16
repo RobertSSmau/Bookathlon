@@ -160,6 +160,21 @@ public class AreaPersonaleController {
 		// Reindirizza alla pagina della libreria per mostrare i cambiamenti.
     }
     
+    @PostMapping("/inizia")
+    public String iniziaLettura(
+            @RequestParam Long libroId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        String username = userDetails.getUsername();
+        Utente utente = utenteRepo.findByUsername(username);
+
+        libreriaService.iniziaLettura(utente.getId(), libroId);
+
+        return "redirect:/area-personale";
+    }
+    
+    
+    
     @GetMapping("/cerca-utente")
     public String cercaUtente(@RequestParam String q,
                               Model m,

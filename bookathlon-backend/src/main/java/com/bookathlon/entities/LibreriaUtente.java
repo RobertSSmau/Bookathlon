@@ -37,6 +37,13 @@ public class LibreriaUtente {
 
     @Column(name = "data_aggiunta") 
     private LocalDate dataAggiunta = LocalDate.now(); 
+    
+    @Column(name = "data_inizio_lettura")
+    private LocalDate dataInizioLettura;
+
+    @Column(name = "data_fine_lettura")
+    private LocalDate dataFineLettura;
+    
     /**
      * Costruttore di default.
      */
@@ -74,6 +81,24 @@ public class LibreriaUtente {
     public void setDataAggiunta(LocalDate dataAggiunta) {
         this.dataAggiunta = dataAggiunta;
     }
+
+	public LocalDate getDataInizioLettura() {
+		return dataInizioLettura;
+	}
+
+	public void setDataInizioLettura(LocalDate dataInizioLettura) {
+		this.dataInizioLettura = dataInizioLettura;
+	}
+
+	public LocalDate getDataFineLettura() {
+		return dataFineLettura;
+	}
+
+	public void setDataFineLettura(LocalDate dataFineLettura) {
+		this.dataFineLettura = dataFineLettura;
+	}
+    
+    
 }
 
 

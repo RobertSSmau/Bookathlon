@@ -26,33 +26,58 @@
     <h2>Libri Letti</h2>
     <ul>
         <li th:each="entry : ${letti}">
-            <span th:text="${entry.libro.titolo}">Titolo</span> -
-            <span th:text="${entry.libro.autore}">Autore</span>
-            <form method="post" th:action="@{/area-personale/rimuovi}" style="display:inline;">
-                <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit">Rimuovi</button>
-            </form>
-        </li>
+    <strong th:text="${entry.libro.titolo}">Titolo</strong> -
+    <em th:text="${entry.libro.autore}">Autore</em>
+    <br/>
+    <span th:if="${entry.dataInizioLettura != null}">
+        Inizio: <span th:text="${entry.dataInizioLettura}">data</span>
+    </span>
+    <span th:if="${entry.dataFineLettura != null}">
+        — Fine: <span th:text="${entry.dataFineLettura}">data</span>
+    </span>
+    <span th:if="${entry.dataInizioLettura != null and entry.dataFineLettura != null}">
+        — Letto in: 
+        <span th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(entry.dataInizioLettura, entry.dataFineLettura)}">X</span> giorni
+    </span>
+    <br/>
+    <form method="post" th:action="@{/area-personale/rimuovi}" style="display:inline;">
+        <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">Rimuovi</button>
+    </form>
+	</li>
     </ul>
 
     <h2>Da Leggere</h2>
     <ul>
         <li th:each="entry : ${daLeggere}">
-            <span th:text="${entry.libro.titolo}">Titolo</span> -
-            <span th:text="${entry.libro.autore}">Autore</span>
-            <form method="post" th:action="@{/area-personale/aggiungi}" style="display:inline;">
-                <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
-                <input type="hidden" name="stato" value="LETTO" />
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit">Segna come Letto</button>
-            </form>
-            <form method="post" th:action="@{/area-personale/rimuovi}" style="display:inline;">
-                <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit">Rimuovi</button>
-            </form>
-        </li>
+    <strong th:text="${entry.libro.titolo}">Titolo</strong> -
+    <em th:text="${entry.libro.autore}">Autore</em>
+    <br/>
+    
+    <!-- Bottone "Inizia Lettura" -->
+    <form method="post" th:action="@{/area-personale/inizia}" style="display:inline;">
+        <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
+        <input type="hidden" name="stato" value="DA_LEGGERE" />
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">Inizia Lettura</button>
+    </form>
+
+    <!-- Bottone "Segna come Letto" -->
+    <form method="post" th:action="@{/area-personale/aggiungi}" style="display:inline;">
+        <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
+        <input type="hidden" name="stato" value="LETTO" />
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">Segna come Letto</button>
+    </form>
+
+    <!-- Bottone "Rimuovi" -->
+    <form method="post" th:action="@{/area-personale/rimuovi}" style="display:inline;">
+        <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">Rimuovi</button>
+    </form>
+</li>
     </ul>
 </section>
 

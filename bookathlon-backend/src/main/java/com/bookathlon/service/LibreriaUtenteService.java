@@ -33,6 +33,8 @@ public interface LibreriaUtenteService {
      * Rimuove un libro specifico dalla libreria di un utente.
      */
     void rimuoviLibro(Long utenteId, Long libroId);
+    
+    void iniziaLettura(Long utenteId, Long libroId);
 
 }
 

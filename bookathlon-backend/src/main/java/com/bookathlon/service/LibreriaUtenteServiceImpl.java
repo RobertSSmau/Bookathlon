@@ -69,6 +69,20 @@ public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
         entry.setStato(stato);
         entry.setDataAggiunta(LocalDate.now()); // Imposta la data di aggiunta corrente.
 
+        if (stato.equals("DA_LEGGERE")) {
+            // Prima aggiunta, inizia lettura da oggi
+            entry.setDataInizioLettura(LocalDate.now());
+            entry.setDataFineLettura(null);
+        }
+
+        if (stato.equals("LETTO")) {
+            // se non ho ancora una data di inizio, lo metto ora
+            if (entry.getDataInizioLettura() == null) {
+                entry.setDataInizioLettura(LocalDate.now());
+            }
+            entry.setDataFineLettura(LocalDate.now());
+        }
+        
         // Salva la nuova entry nel database.
         return repo.save(entry);
     }
@@ -90,5 +104,29 @@ public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
 
         // Elimina l'entry dal database usando l'ID composto.
         repo.deleteById(id);
+    }
+    
+    @Override
+    public void iniziaLettura(Long utenteId, Long libroId) {
+
+        Utente utente = utenteRepo.findById(utenteId).orElseThrow();
+        Libro libro = libroRepo.findById(libroId).orElseThrow();
+
+        LibreriaUtenteId id = new LibreriaUtenteId();
+        id.setUtente(utente);
+        id.setLibro(libro);
+
+        // cerco la voce della libreria
+        LibreriaUtente entry = repo.findById(id).orElse(null);
+
+        if (entry == null) return;
+
+        if (!"DA_LEGGERE".equals(entry.getStato())) return;
+
+        if (entry.getDataInizioLettura() != null) return;
+
+        entry.setDataInizioLettura(LocalDate.now());
+
+        repo.save(entry);
     }
 }

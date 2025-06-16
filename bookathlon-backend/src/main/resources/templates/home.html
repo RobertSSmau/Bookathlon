@@ -23,13 +23,6 @@
         </form>
       </div>
     </div>
-<<<<<<< Updated upstream
-    <nav>
-  		<!-- se sono loggato -->
- 		 <div th:if="${#authorization.expression('isAuthenticated()')}">
-    		<button onclick="location.href='/area-personale'">Area Personale</button>
-=======
->>>>>>> Stashed changes
 
     <div th:if="${#authorization.expression('isAnonymous()')}">
       <a href="/login">Accedi</a>
@@ -74,24 +67,11 @@
           <img th:src="${libro.url_copertina}" alt="Copertina libro" />
           <h4 th:text="${libro.titolo}">Titolo</h4>
           <p th:text="${libro.autore}">Autore</p>
-<<<<<<< Updated upstream
-          <p th:text="${libro.genere}">Genere</p>
-           <form method="post" th:action="@{/area-personale/aggiungi}">
-   			 <input type="hidden" name="libroId" th:value="${libro.id}" />
-    		 <input type="hidden" name="stato" value="DA_LEGGERE" />
-   			 <button type="submit">Aggiungi</button>
-  		   </form>
-  		   <form method="post" th:action="@{/area-personale/rimuovi}">
-  				<input type="hidden" name="libroId" th:value="${libro.id}" />
-  				<button type="submit">Rimuovi</button>
-			</form>
-=======
           <form method="post" th:action="@{/area-personale/aggiungi}">
             <input type="hidden" name="libroId" th:value="${libro.id}" />
             <input type="hidden" name="stato" value="DA_LEGGERE" />
             <button type="submit">Aggiungi</button>
           </form>
->>>>>>> Stashed changes
         </div>
       </div>
     </div>

@@ -69,8 +69,14 @@ public class AmiciziaServiceImpl implements AmiciziaService {
 	
 	@Override
 	public void rimuoviAmicizia(Long utenteA, Long utenteB) {
-		AmiciziaId id = new AmiciziaId(utenteA, utenteB);
-        repo.deleteById(id);
+		AmiciziaId id1 = new AmiciziaId(utenteA, utenteB);
+	    AmiciziaId id2 = new AmiciziaId(utenteB, utenteA);
+
+	    if (repo.existsById(id1)) {
+	        repo.deleteById(id1);
+	    } else if (repo.existsById(id2)) {
+	        repo.deleteById(id2);
+	    }
 	}
 
 }
