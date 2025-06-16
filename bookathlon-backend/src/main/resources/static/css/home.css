@@ -17,6 +17,8 @@ body {
   line-height: 1.6;
 }
 
+
+
 main {
   padding: 1rem 2rem;
   max-width: 1200px;
@@ -27,6 +29,11 @@ h2 {
   margin-bottom: 0.5rem;
 }
 
+label {
+  color: #A3D5B6;
+  font-size: 1.2rem;
+}
+
 h3, h4 {
   margin: 0.5rem 0;
   color: #A3D5B6;
@@ -34,15 +41,17 @@ h3, h4 {
 
 /* HEADER E NAV */
 header {
-  background-color: #0D2639;
-  padding: 1rem 2rem;
+  background-color: #103048;
+  padding: 2.5rem 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+   border-bottom: 5px solid #A3D5B6;
 }
 
 .logo img {
-  width: 180px;
+  width: 250px;
+  height: auto;
 }
 
 nav {
@@ -56,12 +65,19 @@ nav button {
   background: #103048;
   color: #A3D5B6;
   padding: 0.5rem 1rem;
-  border: none;
+  margin: 20px;
+  border: #A3D5B6 2px solid;
   border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   text-decoration: none;
   font-size: 1rem;
   cursor: pointer;
 }
+nav a:hover,
+nav button:hover {
+  background-color: #a8dcbc;
+  color: #153c59;
+} 
 
 /* DROPDOWN MENU */
 .dropdown {
@@ -184,5 +200,15 @@ footer {
   font-size: 0.9rem;
   margin-top: 2rem;
 }
+#genereSelect {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #103048;
+  color: #A3D5B6;
+}
+
 
 

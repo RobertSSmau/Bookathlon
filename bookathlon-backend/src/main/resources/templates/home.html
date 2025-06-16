@@ -9,26 +9,27 @@
 </head>
 <body>
 <header>
+
   <div class="logo">
     <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
   </div>
-
   <nav>
-    <div th:if="${#authorization.expression('isAuthenticated()')}" class="dropdown">
-      <button class="dropbtn">Account ▾</button>
-      <div class="dropdown-content">
-        <a href="/area-personale">Area Personale</a>
-        <form th:action="@{/logout}" method="post">
-          <button type="submit">Esci</button>
-        </form>
-      </div>
+  <div th:if="${#authorization.expression('isAuthenticated()')}" class="dropdown">
+    <button class="dropbtn">Account ▾</button>
+    <div class="dropdown-content">
+      <a href="/area-personale">Area Personale</a>
+      <form th:action="@{/logout}" method="post">
+        <button type="submit">Esci</button>
+      </form>
     </div>
+  </div>
 
-    <div th:if="${#authorization.expression('isAnonymous()')}">
-      <a href="/login">Accedi</a>
-      <a href="/register">Registrati</a>
-    </div>
-  </nav>
+  <div th:if="${#authorization.expression('isAnonymous()')}">
+    <a href="/login">Accedi</a>
+    <a href="/register">Registrati</a>
+  </div>
+</nav>
+
 </header>
 
 <main>
@@ -64,34 +65,65 @@
   </section>
 
   <section>
-    <h2>Esplora per Genere</h2>
-    <div th:each="entry : ${libriPerGenere}">
-      <h3 th:text="${entry.key}">Genere</h3>
-      <div class="card-container">
-        <div th:each="libro : ${entry.value}" class="card">
-          <img th:src="${libro.url_copertina}" alt="Copertina libro" />
-          <h4 th:text="${libro.titolo}">Titolo</h4>
-          <p th:text="${libro.autore}">Autore</p>
-          <div th:if="${idLibriUtente == null or !idLibriUtente.contains(libro.id)}">
-  <form method="post" th:action="@{/area-personale/aggiungi}">
-    <input type="hidden" name="libroId" th:value="${libro.id}" />
-    <input type="hidden" name="stato" value="DA_LEGGERE" />
-    <button type="submit">Aggiungi</button>
-  </form>
-</div>
-<div th:if="${idLibriUtente != null and idLibriUtente.contains(libro.id)}">
-  <button disabled>Aggiunto</button>
-</div>
+  <h2>Esplora per Genere</h2>
+
+  <!-- Menù a tendina -->
+  <label for="genereSelect">Scegli un genere:</label>
+  <select id="genereSelect">
+    <option value="all">Tutti</option>
+    <option th:each="entry : ${libriPerGenere}" th:value="${entry.key}" th:text="${entry.key}">Genere</option>
+  </select>
+
+  <!-- Blocchi per ciascun genere -->
+  <div th:each="entry : ${libriPerGenere}" th:attr="data-genere=${entry.key}" class="genere-section">
+    <h3 th:text="${entry.key}">Genere</h3>
+    <div class="card-container">
+      <div th:each="libro : ${entry.value}" class="card">
+        <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+        <h4 th:text="${libro.titolo}">Titolo</h4>
+        <p th:text="${libro.autore}">Autore</p>
+
+        <div th:if="${idLibriUtente == null or !idLibriUtente.contains(libro.id)}">
+          <form method="post" th:action="@{/area-personale/aggiungi}">
+            <input type="hidden" name="libroId" th:value="${libro.id}" />
+            <input type="hidden" name="stato" value="DA_LEGGERE" />
+            <button type="submit">Aggiungi</button>
+          </form>
+        </div>
+        <div th:if="${idLibriUtente != null and idLibriUtente.contains(libro.id)}">
+          <button disabled>Aggiunto</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 </main>
 
 <footer>
   <p>© 2025 Bookathlon</p>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('genereSelect');
+    const sezioni = document.querySelectorAll('.genere-section');
+
+    select.addEventListener('change', function () {
+      const valore = this.value;
+
+      sezioni.forEach(section => {
+        const genere = section.getAttribute('data-genere');
+
+        if (valore === 'all' || valore === genere) {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
