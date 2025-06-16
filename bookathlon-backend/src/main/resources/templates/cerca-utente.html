@@ -9,17 +9,19 @@
 
 <header>
   <div class="header-content">
-  <div class="logo">
-    <a th:href="@{/}">
-      <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
-    </a>
-  </div>
-  <nav class="nav-buttons">
-    <a href="/" class="btn">Home</a>
-    <form th:action="@{/logout}" method="post" style="display:inline;">
-      <button type="submit" class="btn">Esci</button>
-    </form>
-  </nav>
+    <div class="logo">
+      <a th:href="@{/}">
+        <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
+      </a>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav class="nav-buttons">
+      <a href="/" class="btn">Home</a>
+      <form th:action="@{/logout}" method="post" style="display:inline;">
+        <button type="submit" class="btn">Esci</button>
+      </form>
+    </nav>
+
   </div>
 </header>
 
@@ -49,6 +51,10 @@
     </ul>
   </section>
 </main>
-
+<script>
+  function toggleMenu() {
+    document.querySelector('.nav-buttons').classList.toggle('show');
+  }
+</script>
 </body>
 </html>

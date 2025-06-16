@@ -10,27 +10,30 @@
 <body>
 <header>
   <div class="header-content">
-  <div class="logo">
-    <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
+
+    <div class="logo">
+      <a th:href="@{/}">
+        <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
+      </a>
+    </div>
+
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+    <nav class="nav-buttons">
+      <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <a href="/area-personale" class="btn">Area Personale</a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+          <button type="submit" class="btn">Esci</button>
+        </form>
+      </div>
+
+      <div th:if="${#authorization.expression('isAnonymous()')}">
+        <a href="/login" class="btn">Accedi</a>
+        <a href="/register" class="btn">Registrati</a>
+      </div>
+    </nav>
+
   </div>
-
-  <nav class="nav-buttons">
-    <!-- SE LOGGATO -->
-    <div th:if="${#authorization.expression('isAuthenticated()')}">
-      <a href="/area-personale" class="btn">Area Personale</a>
-      <form th:action="@{/logout}" method="post" style="display:inline;">
-        <button type="submit" class="btn">Esci</button>
-      </form>
-    </div>
-
-    <!-- SE NON LOGGATO -->
-    <div th:if="${#authorization.expression('isAnonymous()')}">
-      <a href="/login" class="btn">Accedi</a>
-      <a href="/register" class="btn">Registrati</a>
-    </div>
-    </div>
-  </nav>
-
 </header>
 
 <main>
@@ -111,7 +114,11 @@
 <footer>
   <p>© 2025 Bookathlon</p>
 </footer>
-
+<script>
+  function toggleMenu() {
+    document.querySelector('.nav-buttons').classList.toggle('show');
+  }
+</script>
 <script src="/js/home.js"></script>
 
 </body>
