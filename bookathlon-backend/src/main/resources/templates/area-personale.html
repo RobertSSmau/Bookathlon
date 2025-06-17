@@ -21,10 +21,11 @@
     <nav class="nav-buttons">
       <div th:if="${#authorization.expression('isAuthenticated()')}">
         <a href="/" class="btn">Home</a>
-        <a href="/area-personale/cerca" class="btn">Cerca Bookathloner</a>
-        <form th:action="@{/logout}" method="post" style="display:inline;">
-          <button type="submit" class="btn">Esci</button>
-        </form>
+      <a href="/area-personale/cerca" class="btn">Cerca Bookathloner</a>
+          
+          <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn">Esci</button>
+          </form>
       </div>
       <div th:if="${#authorization.expression('isAnonymous()')}">
         <a href="/login" class="btn">Accedi</a>
@@ -34,6 +35,11 @@
   </div>
 </header>
 
+<div class="view-toggle-buttons" style="text-align: center; margin-top: 1rem;">
+  <button type="button" class="nav-btn"  onclick="mostraLibreria()">La mia Libreria</button>
+  <button type="button" class="nav-btn"  onclick="mostraSezione('amici')">Bookathloners</button>
+</div>
+
 <div class="user-greeting-box">
   <h1 class="user-welcome">Ciao <span th:text="${#authentication.name}">Utente</span>!</h1>
   <p class="user-score" th:text="'Hai ' + ${score != null ? score : 0} + ' punti!'">Hai 0 punti!</p>
@@ -41,7 +47,7 @@
 
 <main>
 
-<section>
+<section id="sezione-da-leggere">
   <h2>Libri da leggere</h2>
     <div class="card-section-wrapper">
     <div class="card-container" th:if="${daLeggere.size() > 0}">
@@ -83,7 +89,7 @@
   </div>
 </section>
 
-<section>
+<section id="sezione-letti">
   <h2>Libri Letti</h2>
     <div class="card-section-wrapper">
   <div class="card-container" th:if="${letti.size() > 0}">
@@ -118,47 +124,63 @@
 </section>
 
 <!-- === AMICI === -->
-<section>
-    <h2>I miei Bookathloners</h2>
-    <ul>
-        <li th:each="a : ${amici}">
-    <span th:text="${a.username}">Username</span> —
-    <span th:text="'Punti: ' + ${a.score}">Punti</span>
-    <form method="post" th:action="@{/area-personale/amici/rimuovi}" style="display:inline;">
-        <input type="hidden" name="altroUtenteId" th:value="${a.id}" />
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <button type="submit">Rimuovi</button>
-    </form>
-</li>
-    </ul>
+<section id="sezione-amici" class="d-none">
+  <h2>I miei Bookathloners</h2>
+  <div class="card-section-wrapper">
+    <div class="card-container" th:if="${amici.size() > 0}">
+      <div class="card" th:each="a : ${amici}">
+        <img src="/images/avatar.png" alt="Avatar" class="card-img shadowed-avatar">
+        <div class="card-content">
+          <h3 th:text="${a.username}">Username</h3>
+          <p th:text="'Punti: ' + ${a.score}">Punti</p>
+          <form method="post" th:action="@{/area-personale/amici/rimuovi}">
+            <input type="hidden" name="altroUtenteId" th:value="${a.id}" />
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit">Rimuovi</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-    <h2>Richieste Ricevute</h2>
-    <ul>
-        <li th:each="r : ${richiesteRicevute}">
-            <span th:text="${r.username}">Username</span>
-            <form method="post" th:action="@{/area-personale/amici/accetta}" style="display:inline;">
-                <input type="hidden" name="utente1" th:value="${r.id}" />
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit">Accetta</button>
-            </form>
-            <form method="post" th:action="@{/area-personale/amici/rifiuta}" style="display:inline;">
-                <input type="hidden" name="utente1" th:value="${r.id}" />
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit">Rifiuta</button>
-            </form>
-        </li>
-    </ul>
+<section id="sezione-amici" class="d-none">
+  <h2>Richieste Ricevute</h2>
+  <div class="card-section-wrapper">
+    <div class="card-container" th:if="${richiesteRicevute.size() > 0}">
+      <div class="card" th:each="r : ${richiesteRicevute}">
+        <img src="/images/avatar.png" alt="Avatar" class="card-img shadowed-avatar">
+        <div class="card-content">
+          <h3 th:text="${r.username}">Username</h3>
+          <form method="post" th:action="@{/area-personale/amici/accetta}">
+            <input type="hidden" name="utente1" th:value="${r.id}" />
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit">Accetta</button>
+          </form>
+          <form method="post" th:action="@{/area-personale/amici/rifiuta}">
+            <input type="hidden" name="utente1" th:value="${r.id}" />
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit">Rifiuta</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-    <h2>Richieste Inviate</h2>
-    <ul>
-        <li th:each="s : ${richiesteInviate}">
-            <span th:text="${s.username}">Username</span> <em>(in attesa)</em>
-        </li>
-    </ul>
+<section id="sezione-amici" class="d-none">
+  <h2>Richieste Inviate</h2>
+  <div class="card-section-wrapper">
+    <div class="card-container" th:if="${richiesteInviate.size() > 0}">
+      <div class="card" th:each="s : ${richiesteInviate}">
+        <img src="/images/avatar.png" alt="Avatar" class="card-img shadowed-avatar">
+        <div class="card-content">
+          <h3 th:text="${s.username}">Username</h3>
+          <p><em>Richiesta in attesa</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 </main>
@@ -171,5 +193,6 @@
     document.querySelector('.nav-buttons').classList.toggle('show');
   }
 </script>
+<script th:src="@{/js/area-personale.js}"></script>
 </body>
 </html>

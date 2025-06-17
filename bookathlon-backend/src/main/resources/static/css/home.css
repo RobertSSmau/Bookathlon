@@ -94,6 +94,28 @@ nav button {
   padding: 0.5rem 1rem;           
   font-size: 1rem;
 }
+
+.shadowed-avatar {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.nav-btn {
+  background: #103048;
+  color: #A3D5B6;
+  padding: 0.5rem 1rem;
+  border: #A3D5B6 2px solid;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-block;
+  min-width: 150px;
+  text-align: center;
+  line-height: 1.2;
+  margin: 0.5rem;
+}
+
 nav a:hover,
 nav button:hover {
   background-color: #a8dcbc;
@@ -251,6 +273,11 @@ nav button:hover {
   margin-top: 0.5rem;
   cursor: pointer;
 }
+.card .btn-aggiunto {
+  background-color: #d3d3d3 !important;
+  color: #555 !important;
+  cursor: not-allowed;
+}
 
 .card-section-wrapper {
   background-color: #06131d;
@@ -352,4 +379,8 @@ footer {
       transform: translateY(0);
     }
   }
+}
+
+.d-none {
+  display: none !important;
 }

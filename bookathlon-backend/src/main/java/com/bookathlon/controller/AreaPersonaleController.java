@@ -1,7 +1,9 @@
 package com.bookathlon.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -195,24 +197,14 @@ public class AreaPersonaleController {
         Long mioId = utente.getId();
 
         List<Utente> risultati = utenteRepo.cercaPerUsername(q);
-        List<Utente> filtrati = new ArrayList<>();
-
-        for (int i = 0; i < risultati.size(); i++) {
-            Utente utenteCorrente = risultati.get(i);
-
-            Long idUtenteCorrente = utenteCorrente.getId();
-            boolean idNonNullo = idUtenteCorrente != null;
-
-            boolean nonSonoIo = false;
-            if (idNonNullo) {
-                nonSonoIo = !idUtenteCorrente.equals(mioId);
-            }
-
-            if (nonSonoIo) {
-                filtrati.add(utenteCorrente);
-            }
-        }
+        List<Amicizia> amici = amiciziaService.getAmici(mioId);
+        List<Amicizia> richiesteInviate = amiciziaService.getRichiesteInviate(mioId);
+        List<Amicizia> richiesteRicevute = amiciziaService.getRichiesteRicevute(mioId);
         
+        Set<Long> idEscludi = getIdUtentiEsclusi(mioId, amici, richiesteInviate, richiesteRicevute);
+        
+        List<Utente> filtrati = filtraUtenti(risultati, mioId, idEscludi);
+             
         caricaLibreria(m, mioId);
         caricaAmicizie(m, mioId);
 
@@ -222,6 +214,47 @@ public class AreaPersonaleController {
 
         return "cerca-utente";
     }
+    
+    private List<Utente> filtraUtenti(List<Utente> candidati, Long mioId, Set<Long> idEscludi) {
+        List<Utente> filtrati = new ArrayList<>();
+
+        for (Utente u : candidati) {
+            Long idUtente = u.getId();
+            if (!idUtente.equals(mioId) && 
+            		!idEscludi.contains(idUtente)) {
+                filtrati.add(u);
+            }
+        }
+
+        return filtrati;
+    }
+    
+    // uso set perchè non accetta duplicati ee è molto veloce nel fare contins()
+    
+    private Set<Long> getIdUtentiEsclusi(Long mioId,
+            List<Amicizia> amici,
+            List<Amicizia> richiesteInviate,
+            List<Amicizia> richiesteRicevute) {
+
+	Set<Long> idEscludi = new HashSet<>();
+	
+	for (Amicizia a : amici) {
+	Long altro = a.getUtente1().equals(mioId) ? a.getUtente2() : a.getUtente1();
+	idEscludi.add(altro);
+	}
+	
+	for (Amicizia a : richiesteInviate) {
+	idEscludi.add(a.getUtente2());
+	}
+	
+	for (Amicizia a : richiesteRicevute) {
+	idEscludi.add(a.getUtente1());
+	}
+	
+	return idEscludi;
+	}
+    
+    
     
     @PostMapping("/amici/invia")
     public String inviaRichiestaAmicizia(@RequestParam Long destinatarioId,
