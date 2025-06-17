@@ -45,18 +45,13 @@ public class LibroServiceImpl implements LibroService {
         return repo.save(l); // Salva il libro nel database.
     }
 
-    /**
-     * Recupera una lista dei primi 5 libri considerati "di tendenza".
-     * Attualmente, recupera tutti i libri e limita il risultato ai primi 5.
-     * La logica di "tendenza" è qui semplificata.
-     */
+    
     @Override
-    public List<Libro> getLibriDiTendenza() {
-        List<Libro> tutti = repo.findAll(); // Recupera tutti i libri.
-        // Limita la lista ai primi 5 elementi.
-        return tutti.stream().limit(5).toList();
-    }
+public List<Libro> getLibriDiTendenza() {
+    return repo.trovaLibriPopolari();
+}
 
+    
     /**
      * Esegue una ricerca di libri basata su una parola chiave.
      * Delega la ricerca al metodo `ricercaSQL()` del repository.

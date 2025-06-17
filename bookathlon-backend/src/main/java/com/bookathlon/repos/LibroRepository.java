@@ -33,6 +33,14 @@ public interface LibroRepository extends JpaRepository<Libro, Long>{
 		    nativeQuery = true
 		)
 		List<Libro> ricercaSQL(@Param("kw") String keyword);
-
+	@Query(value = """
+    SELECT l.* 
+    FROM "better-mockup-schema-2".libreria_utente lu
+    JOIN "better-mockup-schema-2".libro l ON lu.libro_id = l.id
+    GROUP BY l.id, l.isbn, l.titolo, l.autore, l.genere, l.data_pubblicazione, l.url_copertina
+    ORDER BY COUNT(*) DESC
+    LIMIT 10
+""", nativeQuery = true)
+List<Libro> trovaLibriPopolari();
 	
 }
