@@ -20,6 +20,8 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
     Utente findByUsername(String username);
     Utente findByEmail(String email);
 
-   
-
+    @Query(value = "SELECT * FROM utente ORDER BY score DESC", nativeQuery = true)
+    List<Utente> trovaClassificaGlobale();
+    @Query(value = "SELECT * FROM utente WHERE id IN (:ids) ORDER BY score DESC", nativeQuery = true)
+    List<Utente> trovaClassificaAmici(@Param("ids") List<Long> amiciIds);
 }
