@@ -2,7 +2,10 @@ FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 
-COPY target/bookathlon-backend-0.0.1-SNAPSHOT.jar app.jar
+COPY . .
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+WORKDIR /app/bookathlon-backend
 
+RUN ./mvnw clean package -DskipTests
+
+ENTRYPOINT ["java", "-jar", "target/bookathlon-backend-0.0.1-SNAPSHOT.jar"]
