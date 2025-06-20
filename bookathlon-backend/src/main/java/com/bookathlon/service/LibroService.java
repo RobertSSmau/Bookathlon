@@ -5,10 +5,7 @@ import java.util.List;
 import com.bookathlon.entities.Libro;
 
 /**
- * Interfaccia per il servizio di gestione dei libri.
- * Definisce le operazioni disponibili per interagire con i dati dei libri,
- * inclusi il recupero di tutti i libri, la ricerca per ID, l'aggiunta di nuovi libri,
- * il recupero dei libri di tendenza e la ricerca tramite parola chiave.
+ * Questa interfaccia definisce le operazioni per la gestione dei libri, includendo il recupero, la ricerca per ID, l'aggiunta, il recupero dei libri di tendenza e la ricerca per parola chiave.
  */
 public interface LibroService {
 
@@ -28,14 +25,12 @@ public interface LibroService {
     Libro addLibro(Libro l);
 
     /**
-     * Recupera una lista di libri considerati "di tendenza".
-     * La logica per definire un libro di tendenza è implementata nel servizio.
+     * Recupera una lista di libri considerati "di tendenza" secondo la logica implementata nel servizio.
      */
     List<Libro> getLibriDiTendenza();
 
     /**
-     * Esegue una ricerca di libri basata su una parola chiave.
-     * La ricerca può essere effettuata su vari campi del libro (es. titolo, autore, genere).
+     * Esegue una ricerca di libri basata su una parola chiave, filtrando su vari campi come titolo, autore o genere.
      */
     List<Libro> cerca(String keyword);
 

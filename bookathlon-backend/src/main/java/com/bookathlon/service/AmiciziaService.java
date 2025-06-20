@@ -4,10 +4,8 @@ import java.util.List;
 
 import com.bookathlon.entities.Amicizia;
 /**
- * Interfaccia per il servizio di gestione delle relazioni di amicizia.
- * Definisce le operazioni disponibili per interagire con le amicizie tra utenti,
- * inclusa la visualizzazione degli amici, la gestione delle richieste
- * e l'invio/accettazione/rifiuto delle stesse.
+ * Questa interfaccia definisce le operazioni per la gestione delle amicizie tra utenti. 
+ * Include la visualizzazione degli amici e la gestione (invio, accettazione, rifiuto) delle richieste di amicizia.
  */
 public interface AmiciziaService {
 

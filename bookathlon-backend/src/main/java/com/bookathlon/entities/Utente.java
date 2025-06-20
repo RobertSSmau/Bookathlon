@@ -12,15 +12,15 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity   
- // Indica che questa classe rappresenta una tabella nel database
+ 
 @Table(name = "utente")   
-// Specifica che è collegata alla tabella chiamata "utente"
+
 public class Utente {
 
     @Id  
-    // Questo campo è la chiave primaria
+   
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    // Il valore viene generato automaticamente dal DB,autoincremento
+  
     @Column(name = "id")
     private Long id;
 
@@ -42,7 +42,7 @@ public class Utente {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)  // Campo obbligatorio
+    @Column(nullable = false)  
     private String ruolo;
     
     @Column(nullable = false)
