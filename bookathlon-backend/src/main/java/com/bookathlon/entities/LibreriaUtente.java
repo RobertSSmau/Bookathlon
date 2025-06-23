@@ -11,17 +11,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Rappresenta l'entità 'LibreriaUtente' nel database,
- * che gestisce la relazione molti-a-molti tra Utente e Libro,
- * con attributi aggiuntivi come lo stato del libro per l'utente.
- * Utilizza una chiave composta definita da LibreriaUtenteId.
+ * Questa entità LibreriaUtente gestisce la relazione molti-a-molti tra Utente e Libro, includendo lo stato del libro per ogni utente.
+ *  Utilizza una chiave composta definita da LibreriaUtenteId.
  */
 @Entity 
-// Indica che questa classe è un'entità JPA.
+
 @Table(name = "libreria_utente")
- // Specifica il nome della tabella nel database.
+ 
 @IdClass(LibreriaUtenteId.class) 
-// Definisce la classe che rappresenta la chiave primaria composta.
+
 public class LibreriaUtente {
 
     @Id 
@@ -100,7 +98,6 @@ public class LibreriaUtente {
     
     
 }
-
 
 
 

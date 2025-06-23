@@ -8,9 +8,7 @@ import com.bookathlon.entities.Libro;
 import com.bookathlon.repos.LibroRepository;
 
 /**
- * Implementazione del servizio {@link LibroService} per la gestione dei libri.
- * Fornisce la logica di business per interagire con i dati dei libri,
- * inclusi il recupero, l'aggiunta e la ricerca di libri.
+ * Questa classe implementa LibroService  e fornisce la logica di business per gestire i dati dei libri, inclusi recupero, aggiunta e ricerca.
  */
 @Service 
 public class LibroServiceImpl implements LibroService {
@@ -19,8 +17,7 @@ public class LibroServiceImpl implements LibroService {
     private LibroRepository repo;
 
     /**
-     * Recupera una lista di tutti i libri presenti nel sistema.
-     * Delega la chiamata al metodo `findAll()` del repository.
+     * Recupera tutti i libri presenti nel sistema delegando la chiamata al metodo findAll() del repository.
      */
     @Override
     public List<Libro> getLibri() {
@@ -45,18 +42,13 @@ public class LibroServiceImpl implements LibroService {
         return repo.save(l); // Salva il libro nel database.
     }
 
-    /**
-     * Recupera una lista dei primi 5 libri considerati "di tendenza".
-     * Attualmente, recupera tutti i libri e limita il risultato ai primi 5.
-     * La logica di "tendenza" è qui semplificata.
-     */
+    
     @Override
-    public List<Libro> getLibriDiTendenza() {
-        List<Libro> tutti = repo.findAll(); // Recupera tutti i libri.
-        // Limita la lista ai primi 5 elementi.
-        return tutti.stream().limit(5).toList();
-    }
+public List<Libro> getLibriDiTendenza() {
+    return repo.trovaLibriPopolari();
+}
 
+    
     /**
      * Esegue una ricerca di libri basata su una parola chiave.
      * Delega la ricerca al metodo `ricercaSQL()` del repository.

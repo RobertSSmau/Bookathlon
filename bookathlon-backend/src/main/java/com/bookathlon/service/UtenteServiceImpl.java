@@ -16,8 +16,7 @@ public class UtenteServiceImpl implements UtenteService {
     private UtenteRepository dao;
     
     @Autowired
-    private PasswordEncoder passwordEncoder;	//crittatore di password
-
+    private PasswordEncoder passwordEncoder;	
     @Override
     public List<Utente> getUtenti() {
         return dao

@@ -1,8 +1,6 @@
 package com.bookathlon.entities;
 
 import java.time.LocalDate;
-
-// Importa le annotazioni JPA che permettono di collegare la classe Java a una tabella del database.
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,9 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity 
-  // Indica a Spring che questa classe rappresenta una tabella del database
 @Table(name="libro")
-  // Specifica che è collegata alla tabella 'libro' nel database
+  
 
 public class Libro {
 	
@@ -26,6 +23,7 @@ public class Libro {
 	private String genere;
 	private LocalDate data_pubblicazione;
 	private String url_copertina;
+	private String descrizione;
 
 	public Long getId() {
 		return id;
@@ -68,6 +66,12 @@ public class Libro {
 	}
 	public void setUrl_copertina(String url_copertina) {
 		this.url_copertina = url_copertina;
+	}
+	public String getDescrizione() {
+		return descrizione;
+	}
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 	
 	
