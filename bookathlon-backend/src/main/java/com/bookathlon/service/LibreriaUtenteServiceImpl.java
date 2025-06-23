@@ -15,9 +15,8 @@ import com.bookathlon.repos.LibroRepository;
 import com.bookathlon.repos.UtenteRepository;
 
 /**
- * Implementazione del servizio {@link LibreriaUtenteService} per la gestione della libreria personale dell'utente.
- * Fornisce la logica di business per interagire con i libri all'interno della libreria di un utente,
- * inclusa la visualizzazione, l'aggiunta e la rimozione di libri con specifici stati.
+ * Questa classe implementa LibreriaUtenteService e gestisce la logica di business per la libreria personale dell'utente. 
+ * Permette di visualizzare, aggiungere e rimuovere libri, gestendone gli stati.
  */
 @Service 
 public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
@@ -50,9 +49,7 @@ public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
     }
 
     /**
-     * Aggiunge un libro alla libreria di un utente con uno stato iniziale.
-     * Recupera gli oggetti Utente e Libro e crea una nuova entry in LibreriaUtente,
-     * quindi la salva nel database.
+     * Questo metodo aggiunge un libro alla libreria di un utente, creando e salvando una nuova entry LibreriaUtente dopo aver recuperato gli oggetti Utente e Libro corrispondenti.
      */
     @Override
     public LibreriaUtente aggiungiLibro(Long utenteId, Long libroId, String stato) {

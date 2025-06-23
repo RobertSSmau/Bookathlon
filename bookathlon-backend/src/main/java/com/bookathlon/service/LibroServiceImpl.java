@@ -8,9 +8,7 @@ import com.bookathlon.entities.Libro;
 import com.bookathlon.repos.LibroRepository;
 
 /**
- * Implementazione del servizio {@link LibroService} per la gestione dei libri.
- * Fornisce la logica di business per interagire con i dati dei libri,
- * inclusi il recupero, l'aggiunta e la ricerca di libri.
+ * Questa classe implementa LibroService  e fornisce la logica di business per gestire i dati dei libri, inclusi recupero, aggiunta e ricerca.
  */
 @Service 
 public class LibroServiceImpl implements LibroService {
@@ -19,8 +17,7 @@ public class LibroServiceImpl implements LibroService {
     private LibroRepository repo;
 
     /**
-     * Recupera una lista di tutti i libri presenti nel sistema.
-     * Delega la chiamata al metodo `findAll()` del repository.
+     * Recupera tutti i libri presenti nel sistema delegando la chiamata al metodo findAll() del repository.
      */
     @Override
     public List<Libro> getLibri() {

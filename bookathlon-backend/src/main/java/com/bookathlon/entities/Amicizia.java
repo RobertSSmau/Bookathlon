@@ -14,19 +14,19 @@ import jakarta.persistence.Table;
  * utilizzando una chiave composta definita da {@link AmiciziaId}.
  */
 @Entity 
-// Indica che questa classe è un'entità JPA.
+
 @Table(name="amicizia")
- // Specifica il nome della tabella nel database.
+ 
 @IdClass(AmiciziaId.class)
- // Definisce la classe che rappresenta la chiave primaria composta.
+ 
 public class Amicizia {
 
     @Id 
-	// Indica che questa colonna fa parte della chiave primaria.
+	
     @Column(name = "id_utente1")
-	 // Specifica il nome della colonna nel database.
+	 
     private Long utente1;
-	 // ID del primo utente coinvolto nell'amicizia.
+	 
 
     @Id
     @Column(name = "id_utente2") 
@@ -37,16 +37,16 @@ public class Amicizia {
 	 // Stato dell'amicizia: PENDING, ACCEPTED, DECLINED.
 
     @Column(name = "data_richiesta")
-	 // Specifica il nome della colonna nel database.
+	 
     private LocalDateTime dataRichiesta = LocalDateTime.now(); 
-	// Data e ora della richiesta di amicizia, inizializzata automaticamente.
+	
 
     /**
      * Costruttore di default.
      */
     public Amicizia() {}
 
-    // Getters e Setters 
+    
     public Long getUtente1() {
         return utente1;
     }
