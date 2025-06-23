@@ -100,4 +100,14 @@ public class HomeController {
         return "risultati-filtrati"; 
         // Questo HTML dovrà esistere nella cartella dei template.
     }
+    
+    @GetMapping("/libro")
+    public String mostraDettaglioLibro(@RequestParam Long id, Model m) {
+        Libro libro = libroService.getLibroById(id);
+        if (libro == null) {
+            return "redirect:/"; // fallback se l'id non esiste
+        }
+        m.addAttribute("libro", libro);
+        return "dettaglio-libro";
+    }
 }

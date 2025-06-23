@@ -53,7 +53,9 @@
     <div class="card-section-wrapper">
     <div class="card-container">
       <div th:each="libro : ${tendenze}" class="card">
-        <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+        <a th:href="@{'/libro'(id=${libro.id})}">
+  <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+</a>
         <h3 th:text="${libro.titolo}">Titolo</h3>
         <p th:text="${libro.autore}">Autore</p>
         <p th:text="${libro.genere}">Genere</p>
@@ -89,7 +91,9 @@
     <div class="card-section-wrapper">
     <div class="card-container">
       <div th:each="libro : ${entry.value}" class="card">
-        <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+        <a th:href="@{'/libro'(id=${libro.id})}">
+  <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+</a>
         <h4 th:text="${libro.titolo}">Titolo</h4>
         <p th:text="${libro.autore}">Autore</p>
 
