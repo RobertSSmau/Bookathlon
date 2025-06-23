@@ -12,6 +12,8 @@ import com.bookathlon.entities.Utente;
 import com.bookathlon.service.UtenteService;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class ControllerAutenticazione {
@@ -50,24 +52,33 @@ public class ControllerAutenticazione {
         // Verifica se un utente con un determinato username esiste già nel sistema. 
         result.rejectValue("username", "error.utente", "Username già esistente");
     }
+        // Controllo che le password coincidano
+    if (!utente.getPassword().equals(utente.getConfermaPassword())) {
+        result.rejectValue("confermaPassword", "error.utente", "Le password non coincidono");
+    }
 
     if (result.hasErrors()) {
 
         return "register";
     }
 
+    
      utente.setRuolo("USER");
     utenteService.addUtente(utente);
     return "redirect:/login";
+
+  }
 /**
      * Questo metodo mostra il form di login.
      *
      * @return Il nome della vista "login".
      */
+    @GetMapping("/login")
+    public String showFormLogin() {
+        return "login";
+    }
+
 }
+
+    
 	 
-	 @GetMapping("/login")
-	    public String showLoginForm() {
-	        return "login";
-	 }
-}

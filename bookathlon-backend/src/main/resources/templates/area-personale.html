@@ -84,9 +84,12 @@
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
           <button type="submit">Rimuovi</button>
         </form>
+        
       </div>
     </div>
+    
   </div>
+  <p th:if="${daLeggere.size() == 0}">Non hai libri da leggere.</p>
   </div>
 </section>
 
@@ -120,7 +123,9 @@
         </form>
       </div>
     </div>
+    
   </div>
+  <p th:if="${letti.size() == 0}">Non hai ancora libri letti.</p>
   </div>
 </section>
 
@@ -195,5 +200,17 @@
   }
 </script>
 <script th:src="@{/js/area-personale.js}"></script>
+
+<div id="remove-modal" class="modal d-none">
+  <div class="modal-content">
+    <img id="remove-cover" src="" alt="Copertina libro" style="max-width: 120px; margin: 1rem auto; display: block; border-radius: 5px;">
+    <p>Vuoi davvero rimuovere questo libro dalla tua libreria?</p>
+    <div class="modal-buttons">
+      <button id="remove-yes" class="nav-btn">Rimuovi</button>
+      <button id="remove-no" class="nav-btn">Annulla</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

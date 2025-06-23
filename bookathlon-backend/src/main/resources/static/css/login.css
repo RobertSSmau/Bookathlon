@@ -101,6 +101,57 @@ div[th\:if] p {
   font-weight: bold;
   text-align: center;
 }
+.input-with-info {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+
+
+.info-container {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+}
+
+.info-icon {
+  cursor: pointer;
+  color: #333;
+  margin-left: 5px;
+  transform: translateY(-8px);
+  
+  
+}
+
+.info-text {
+  display: none;
+  position: absolute;
+  top: 120%;
+  left: 0;
+  width: 300px;
+  background-color: #163d5c;
+  color: #A3D5B6; 
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 1em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 10;
+  white-space: normal;
+  
+}
+
+.info-container:hover .info-text {
+    display: block;
+
+}
+
+
+
+
 
 /* ===== Responsive: Tablet (min-width: 600px) ===== */
 @media (min-width: 600px) {

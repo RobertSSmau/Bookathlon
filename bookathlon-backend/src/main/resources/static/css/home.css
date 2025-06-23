@@ -8,6 +8,104 @@ html {
   margin: 0;
   padding: 0;
 }
+/* === CARD GENERICA === */
+.card {
+  background-color: #103048;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+  flex: 0 1 calc(24% - 1rem);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 3px solid transparent;
+}
+.card:hover {
+  transform: scale(1.05);
+  border: 3px solid #A3D5B6;
+}
+
+.card-content {
+  margin-top: 0.5rem;
+}
+
+.card-img {
+  width: 120px;
+  height: auto;
+  margin: 0 auto 0.5rem;
+  border-radius: 5px;
+}
+
+/* === CONTAINER FLESSIBILE === */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* === WRAPPER DI SEZIONE === */
+.card-section-wrapper {
+  background-color: #06131d;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* === BOTTONI STILE NAV E CARD === */
+.nav-btn,
+.search-btn,
+.confirm-add-button {
+  background: #103048;
+  color: #A3D5B6;
+  padding: 0.5rem 1rem;
+  border: 2px solid #A3D5B6;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* === BOTTONI BLOCCATI === */
+.btn-aggiunto {
+  background-color: #d3d3d3 !important;
+  color: #555 !important;
+  cursor: not-allowed;
+}
+
+/* === PILL PER CLASSIFICHE === */
+.pill {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid #28a745;
+  color: #28a745;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.punteggio {
+  background-color: #28a745;
+  color: white;
+}
+
+/* === UTILITY === */
+.d-none {
+  display: none !important;
+}
+
+.shadowed-avatar {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
 
 /* LAYOUT BASE */
 body {
@@ -68,6 +166,7 @@ header {
   height: auto;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
+
 
 @media (max-width: 768px) {
   header {
@@ -281,8 +380,15 @@ nav button:hover {
   font-size: 0.9rem;
   padding: 0.4rem 0.7rem;
 }
-
-/* 📱 MOBILE: 2 card più larghe */
+footer {
+  background-color: #163d5c;
+  padding-top: 3rem;
+  color: #A3D5B6;
+  text-align: center;
+  font-size: 1.2rem;
+  border-top: 5px solid #A3D5B6;
+}
+/* MOBILE: 2 card più larghe */
 @media (max-width: 576px) {
   .card {
     flex: 0 1 calc(48% - 0.5rem); /* 2 per riga */
@@ -303,7 +409,8 @@ nav button:hover {
   }
 }
 
-/* 📲 TABLET MEDIO: 3-4 per riga */
+
+/*  TABLET MEDIO: 3-4 per riga */
 @media (min-width: 577px) and (max-width: 991px) {
   .card {
     flex: 0 1 calc(23% - 0.5rem); /* 4 per riga anche su tablet */
@@ -520,4 +627,40 @@ footer {
 .punteggio {
   background-color: #28a745;
   color: white;
+}
+
+/* Modale di conferma */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal-content {
+  background-color: #103048;
+  padding: 2rem;
+  border-radius: 12px;
+  color: #A3D5B6;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.modal-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.d-none {
+  display: none;
 }

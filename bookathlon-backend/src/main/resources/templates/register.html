@@ -8,7 +8,7 @@
 <body>
         <div class="logo">
         <a th:href="@{/}">
-            <img th:src="@{/images/logoverde.png}" alt="Logo" width="200">
+            <img th:src="@{/images/logoverde.png}" alt="Logo" width="300">
         </a>
     </div>
     <h2>Crea un nuovo account</h2>
@@ -19,9 +19,27 @@
         <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         <br/>
 
-        <label>Password:</label>
+    <label>Password:</label>
+    <div class="input-with-info">
         <input type="password" th:field="*{password}" />
-        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        <div class="info-container">
+            <div class="info-icon">
+                <img th:src="@{/images/info.png}" alt="Info" width="30">
+            </div>
+            <div class="info-text">
+                La password deve essere composta da almeno 8 caratteri, deve contenere almeno una lettera maiuscola, una minuscola, un carattere speciale e un numero.
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <br/>
+
+
+
+        <label>Conferma Password:</label>
+        <input type="password" th:field="*{confermaPassword}" />
+        <div th:if="${#fields.hasErrors('confermaPassword')}" th:errors="*{confermaPassword}"></div>
         <br/>
 
         <label>Email:</label>
