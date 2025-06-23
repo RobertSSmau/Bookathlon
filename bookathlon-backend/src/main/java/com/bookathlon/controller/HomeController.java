@@ -13,9 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookathlon.entities.Commento;
 import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Libro;
 import com.bookathlon.entities.Utente;
+import com.bookathlon.repos.CommentoRepository;
+import com.bookathlon.repos.LikeCommentoRepository;
 import com.bookathlon.repos.UtenteRepository;
 import com.bookathlon.service.LibreriaUtenteService;
 import com.bookathlon.service.LibroService;
@@ -36,6 +39,12 @@ public class HomeController {
     
     @Autowired
     private LibreriaUtenteService libreriaService;
+    
+    @Autowired
+    private CommentoRepository commentoRepository;
+    
+    @Autowired
+    private LikeCommentoRepository likeCommentoRepository;
     
 
  /**
@@ -102,12 +111,34 @@ public class HomeController {
     }
     
     @GetMapping("/libro")
-    public String mostraDettaglioLibro(@RequestParam Long id, Model m) {
+    public String mostraDettaglioLibro(@RequestParam Long id, Model m,
+                                       @AuthenticationPrincipal UserDetails userDetails) {
+
         Libro libro = libroService.getLibroById(id);
         if (libro == null) {
-            return "redirect:/"; // fallback se l'id non esiste
+            return "redirect:/";
         }
+
         m.addAttribute("libro", libro);
+
+        // Commenti del libro
+        List<Commento> commenti = commentoRepository.trovaPerLibro(id);
+        m.addAttribute("commenti", commenti);
+
+        // Solo se loggato
+        if (userDetails != null) {
+        	Long utenteId = utenteRepo.findByUsername(userDetails.getUsername()).getId();
+            m.addAttribute("utenteId", utenteId);
+
+            // Prepara mappa dei like per ogni commento (es. per mettere bottone già "attivo")
+            Map<Long, Boolean> haMessoLike = new HashMap<>();
+            for (Commento c : commenti) {
+                boolean liked = likeCommentoRepository.haGiaMessoLike(c.getId(), utenteId);
+                haMessoLike.put(c.getId(), liked);
+            }
+            m.addAttribute("haMessoLike", haMessoLike);
+        }
+
         return "dettaglio-libro";
     }
 }
