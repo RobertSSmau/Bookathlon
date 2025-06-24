@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookathlon.entities.Commento;
@@ -20,8 +21,10 @@ import com.bookathlon.entities.Utente;
 import com.bookathlon.repos.CommentoRepository;
 import com.bookathlon.repos.LikeCommentoRepository;
 import com.bookathlon.repos.UtenteRepository;
+import com.bookathlon.service.CommentoService;
 import com.bookathlon.service.LibreriaUtenteService;
 import com.bookathlon.service.LibroService;
+import com.bookathlon.service.LikeCommentoService;
 import com.bookathlon.service.UtenteService;
 
 /**
@@ -41,10 +44,13 @@ public class HomeController {
     private LibreriaUtenteService libreriaService;
     
     @Autowired
-    private CommentoRepository commentoRepository;
+    private CommentoRepository commentoRepo;
     
     @Autowired
-    private LikeCommentoRepository likeCommentoRepository;
+    private CommentoService commentoService;
+    
+    @Autowired
+    private LikeCommentoService likeCommentoService;
     
 
  /**
@@ -115,30 +121,55 @@ public class HomeController {
                                        @AuthenticationPrincipal UserDetails userDetails) {
 
         Libro libro = libroService.getLibroById(id);
-        if (libro == null) {
-            return "redirect:/";
-        }
-
         m.addAttribute("libro", libro);
 
-        // Commenti del libro
-        List<Commento> commenti = commentoRepository.trovaPerLibro(id);
+        List<Commento> commenti = commentoService.trovaPerLibro(id);
         m.addAttribute("commenti", commenti);
 
-        // Solo se loggato
         if (userDetails != null) {
-        	Long utenteId = utenteRepo.findByUsername(userDetails.getUsername()).getId();
-            m.addAttribute("utenteId", utenteId);
-
-            // Prepara mappa dei like per ogni commento (es. per mettere bottone già "attivo")
-            Map<Long, Boolean> haMessoLike = new HashMap<>();
-            for (Commento c : commenti) {
-                boolean liked = likeCommentoRepository.haGiaMessoLike(c.getId(), utenteId);
-                haMessoLike.put(c.getId(), liked);
-            }
-            m.addAttribute("haMessoLike", haMessoLike);
+            Utente utente = utenteRepo.findByUsername(userDetails.getUsername());
+            m.addAttribute("utenteLoggatoId", utente.getId());
         }
 
+        m.addAttribute("likeService", likeCommentoService); 
         return "dettaglio-libro";
+    }
+    
+    @PostMapping("/libro/commenta")
+    public String salvaCommento(@RequestParam Long libroId,
+                                @RequestParam String contenuto,
+                                @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+
+        Utente utente = utenteRepo.findByUsername(userDetails.getUsername());
+
+        Commento nuovo = new Commento();
+        nuovo.setLibroId(libroId);
+        nuovo.setUtenteId(utente.getId());
+        nuovo.setContenuto(contenuto);
+
+        commentoService.salva(nuovo);
+
+        return "redirect:/libro?id=" + libroId;
+    }
+    
+    @PostMapping("/libro/commento/like")
+    public String toggleLike(@RequestParam Long commentoId,
+                             @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) return "redirect:/login";
+
+        Utente utente = utenteRepo.findByUsername(userDetails.getUsername());
+        Long utenteId = utente.getId();
+
+        if (likeCommentoService.haGiaMessoLike(commentoId, utenteId)) {
+            likeCommentoService.rimuoviLike(commentoId, utenteId);
+        } else {
+            likeCommentoService.mettiLike(commentoId, utenteId);
+        }
+
+        Long libroId = commentoRepo.findById(commentoId).get().getLibroId();
+        return "redirect:/libro?id=" + libroId;
     }
 }
