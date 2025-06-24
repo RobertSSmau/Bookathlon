@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookathlon.dto.UtenteDTO;
 import com.bookathlon.entities.Commento;
 import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Libro;
@@ -125,6 +126,17 @@ public class HomeController {
 
         List<Commento> commenti = commentoService.trovaPerLibro(id);
         m.addAttribute("commenti", commenti);
+        
+        List<UtenteDTO> autoriCommenti = new ArrayList<>();
+        for (Commento c : commenti) {
+            Utente u = utenteRepo.findById(c.getUtenteId()).orElse(null);
+            if (u != null) {
+                autoriCommenti.add(new UtenteDTO(u.getId(), u.getUsername(), u.getScore()));
+            } else {
+                autoriCommenti.add(new UtenteDTO(0L, "Utente sconosciuto"));
+            }
+        }
+        m.addAttribute("autoriCommenti", autoriCommenti);
 
         if (userDetails != null) {
             Utente utente = utenteRepo.findByUsername(userDetails.getUsername());

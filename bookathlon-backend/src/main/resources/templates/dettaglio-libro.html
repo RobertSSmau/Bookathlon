@@ -49,8 +49,11 @@
     <p>Nessun commento per questo libro.</p>
   </div>
 
-  <div th:each="c : ${commenti}" class="card" style="margin-bottom: 1rem; position: relative;">
-    <p><strong th:text="'Utente #' + ${c.utenteId}">Utente</strong></p>
+  <div th:each="c, iter : ${commenti}" class="card" style="margin-bottom: 1rem; position: relative;">
+   <p>
+  <strong th:text="${autoriCommenti[iter.index].username}">Utente</strong>
+  <span th:text="'🏆 ' + ${autoriCommenti[iter.index].score}">🏆 0</span>
+  </p>
     <p th:text="${c.contenuto}">Testo del commento</p>
     <p style="font-size: 0.8rem; color: #aaa;" th:text="${#temporals.format(c.dataCreazione, 'dd/MM/yyyy HH:mm')}">Data</p>
 

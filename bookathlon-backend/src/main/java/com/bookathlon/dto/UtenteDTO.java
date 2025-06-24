@@ -12,11 +12,10 @@ public class UtenteDTO {
         this.score = score;
     }
 
-    // Costruttore compatibile con vecchio codice
     public UtenteDTO(Long id, String username) {
         this.id = id;
         this.username = username;
-        this.score = 0; // default
+        this.score = 0;
     }
 
     public Long getId() { return id; }
