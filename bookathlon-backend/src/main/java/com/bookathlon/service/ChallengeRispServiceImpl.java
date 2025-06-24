@@ -2,20 +2,26 @@ package com.bookathlon.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bookathlon.entities.ChallengeRisp;
 
+import com.bookathlon.repos.ChallengeRispRepository;
+
+@Service
 public class ChallengeRispServiceImpl implements ChallengeRispService {
 
-	@Override
-	public ChallengeRisp salva(ChallengeRisp risposta) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Autowired
+    private ChallengeRispRepository repo;
 
-	@Override
-	public List<ChallengeRisp> getByChallengeId(Long challengeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ChallengeRisp salva(ChallengeRisp risposta) {
+        return repo.save(risposta);
+    }
 
+    @Override
+    public List<ChallengeRisp> getByChallengeId(Long challengeId) {
+        return repo.findByChallengeId(challengeId);
+    }
 }
