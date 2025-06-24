@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bookathlon.dto.AmicoDTO;
+import com.bookathlon.dto.UtenteDTO;
 import com.bookathlon.entities.Amicizia;
 import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Utente;
@@ -76,7 +76,7 @@ public class AreaPersonaleController {
         List<Amicizia> richiesteInviate = amiciziaService.getRichiesteInviate(mioId);
 
         // Preparo la lista dei miei amici come DTO
-        List<AmicoDTO> amiciDTO = new ArrayList<>();
+        List<UtenteDTO> amiciDTO = new ArrayList<>();
         for (Amicizia amicizia : listaAmici) {
             Long idAltroUtente = null;
 
@@ -88,7 +88,7 @@ public class AreaPersonaleController {
 
             Utente altroUtente = utenteRepo.findById(idAltroUtente).orElse(null);
             if (altroUtente != null) {
-            	AmicoDTO dto = new AmicoDTO(
+            	UtenteDTO dto = new UtenteDTO(
             		    altroUtente.getId(),
             		    altroUtente.getUsername(),
             		    altroUtente.getScore()
@@ -98,23 +98,23 @@ public class AreaPersonaleController {
         }
 
         // Preparo la lista delle richieste inviate come DTO
-        List<AmicoDTO> inviateDTO = new ArrayList<>();
+        List<UtenteDTO> inviateDTO = new ArrayList<>();
         for (Amicizia richiesta : richiesteInviate) {
             Long idDestinatario = richiesta.getUtente2();
             Utente destinatario = utenteRepo.findById(idDestinatario).orElse(null);
             if (destinatario != null) {
-                AmicoDTO dto = new AmicoDTO(destinatario.getId(), destinatario.getUsername());
+                UtenteDTO dto = new UtenteDTO(destinatario.getId(), destinatario.getUsername());
                 inviateDTO.add(dto);
             }
         }
 
         // Preparo la lista delle richieste ricevute come DTO
-        List<AmicoDTO> ricevuteDTO = new ArrayList<>();
+        List<UtenteDTO> ricevuteDTO = new ArrayList<>();
         for (Amicizia richiesta : richiesteRicevute) {
             Long idMittente = richiesta.getUtente1();
             Utente mittente = utenteRepo.findById(idMittente).orElse(null);
             if (mittente != null) {
-                AmicoDTO dto = new AmicoDTO(mittente.getId(), mittente.getUsername());
+                UtenteDTO dto = new UtenteDTO(mittente.getId(), mittente.getUsername());
                 ricevuteDTO.add(dto);
             }
         }
