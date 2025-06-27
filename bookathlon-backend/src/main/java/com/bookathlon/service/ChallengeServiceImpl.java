@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.Challenge;
+import com.bookathlon.repos.ChallengeRepository;
 
 @Service
 public class ChallengeServiceImpl implements ChallengeService {
