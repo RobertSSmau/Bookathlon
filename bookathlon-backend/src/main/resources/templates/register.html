@@ -54,5 +54,16 @@
     </form>
 
     <p>Hai già un account? <a th:href="@{/login}">Accedi</a></p>
+    <script>
+document.querySelector("form").addEventListener("submit", function(e) {
+  const password = document.querySelector('[name="password"]').value;
+  const conferma = document.querySelector('[name="confermaPassword"]').value;
+
+  if (password !== conferma) {
+    e.preventDefault();
+    alert("Le password non coincidono");
+  }
+});
+</script>
 </body>
 </html>
