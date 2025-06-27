@@ -24,7 +24,6 @@ html {
   border: 3px solid transparent;
 }
 .card:hover {
-  transform: scale(1.05);
   border: 3px solid #A3D5B6;
 }
 
@@ -378,6 +377,7 @@ nav button:hover {
   flex-direction: column;
   justify-content: space-between;
   border: 3px solid transparent;
+  height: 500px;
 }
 
 .card img {
@@ -390,6 +390,7 @@ nav button:hover {
 .card h3, .card p {
   font-size: 1rem;
   margin: 0.3rem 0;
+
 }
 
 .card button {
@@ -398,12 +399,31 @@ nav button:hover {
 }
 footer {
   background-color: #163d5c;
-  padding-top: 3rem;
+  margin-top: 3rem;
+  padding: 3rem 2rem 3rem 2rem;
   color: #A3D5B6;
   text-align: center;
   font-size: 1.2rem;
   border-top: 5px solid #A3D5B6;
 }
+.glide-arrow {
+  display: inline-block;
+  background: none;
+  border: none;
+  color: #A3D5B6;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+
+}
+
+.glide-controls {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 1rem;
+}
+
 /* MOBILE: 2 card più larghe */
 @media (max-width: 576px) {
   .card {
@@ -434,7 +454,6 @@ footer {
 }
 
 .card:hover {
-  transform: scale(1.05);
   border: 3px solid #A3D5B6;
 }
 
@@ -468,14 +487,7 @@ footer {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 1rem;
-  color: #888;
-  font-size: 0.9rem;
-  margin-top: 2rem;
-}
+
 #genereSelect {
   margin-bottom: 1rem;
   padding: 0.5rem;
@@ -519,6 +531,13 @@ footer {
   .nav-buttons.show {
     display: flex;
     animation: fadeDown 0.3s ease-out;
+    height: 280px;
+    width: 200px;
+    background-color: rgba(16, 48, 72, 0.7); /* stesso colore con 70% opacità */
+    backdrop-filter: blur(4px);             /* effetto glass (opzionale) */
+   border: 1px solid rgba(163, 213, 182, 0.2); /* bordo soft */
+    border-radius: 8px;
+    
   }
 
   .nav-buttons .btn {
