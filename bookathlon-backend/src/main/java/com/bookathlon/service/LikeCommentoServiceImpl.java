@@ -27,6 +27,8 @@ public class LikeCommentoServiceImpl implements LikeCommentoService {
 	    public boolean haGiaMessoLike(Long commentoId, Long utenteId) {
 	        return likeRepo.haGiaMessoLike(commentoId, utenteId); 
 	    }
+	    
+	    
 	    @Override
 	    @Transactional
 	    public void mettiLike(Long commentoId, Long utenteId) {
