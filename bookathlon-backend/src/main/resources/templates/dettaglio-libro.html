@@ -14,20 +14,51 @@
         <img th:src="@{/images/logoverde.png}" alt="Bookathlon Logo" />
       </a>
     </div>
-  </div>
+
+<nav class="nav-buttons">
+      <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <a href="/area-personale" class="btn">Area Personale</a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+          <button type="submit" class="btn">Esci</button>
+        </form>
+      </div>
+
+      <div th:if="${#authorization.expression('isAnonymous()')}">
+        <a href="/login" class="btn">Accedi</a>
+        <a href="/register" class="btn">Registrati</a>
+      </div>
+    </nav>
+    </div>
 </header>
 
 <main>
-  <div class="user-greeting-box">
-    <h1 th:text="${libro.titolo}">Titolo</h1>
-    <img th:src="${libro.url_copertina}" alt="Copertina libro" style="max-width:200px; margin:1rem auto;" />
-    <p><strong>Autore:</strong> <span th:text="${libro.autore}">Autore</span></p>
-    <p><strong>Genere:</strong> <span th:text="${libro.genere}">Genere</span></p>
-    <p><strong>Data pubblicazione:</strong> <span th:text="${libro.data_pubblicazione}">Data</span></p>
-    <p><strong>Descrizione:</strong></p><p th:text="${libro.descrizione}">Trama libro</p>
-    <p><strong>ISBN:</strong> <span th:text="${libro.isbn}">ISBN</span></p>
-    <a href="/" class="nav-btn">Torna alla Home</a>
+  <main>
+  <div class="book-detail-wrapper">
+  
+    <!-- Copertina del libro -->
+    <div class="book-cover">
+      <img th:src="${libro.url_copertina}" alt="Copertina libro" />
+    </div>
+
+    <!-- Informazioni libro -->
+    <div class="book-info">
+      <h1 class="user-welcome" th:text="${libro.titolo}">Titolo</h1>
+      <p><strong>Autore:</strong> <span th:text="${libro.autore}">Autore</span></p>
+      <p><strong>Genere:</strong> <span th:text="${libro.genere}">Genere</span></p>
+      <p><strong>Data pubblicazione:</strong> <span th:text="${libro.data_pubblicazione}">Data</span></p>
+      <p><strong>ISBN:</strong> <span th:text="${libro.isbn}">ISBN</span></p>
+
+      <div class="book-description">
+        <p><strong>Descrizione:</strong></p>
+        <p th:text="${libro.descrizione}">Trama libro</p>
+      </div>
+
+     
+    </div>
+
   </div>
+</main>
+
 </main>
 
 <!-- FORM COMMENTO -->
@@ -35,7 +66,7 @@
   <h2>Scrivi un commento</h2>
   <form th:action="@{/libro/commenta}" method="post">
     <input type="hidden" name="libroId" th:value="${libro.id}" />
-    <textarea name="contenuto" placeholder="Scrivi qui il tuo commento..." required
+    <textarea class="text-area" name="contenuto" placeholder="Scrivi qui il tuo commento..." required
               style="width: 100%; height: 100px; padding: 0.5rem; margin-bottom: 1rem;"></textarea>
     <button type="submit" class="nav-btn">Invia Commento</button>
   </form>
@@ -48,30 +79,54 @@
   <div th:if="${commenti.size() == 0}">
     <p>Nessun commento per questo libro.</p>
   </div>
+<div th:each="c, iter : ${commenti}" 
+     class="commento-card"
+     style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 12px; background-color: #103048; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
 
-  <div th:each="c, iter : ${commenti}" class="card" style="margin-bottom: 1rem; position: relative;">
-   <p>
-  <strong th:text="${autoriCommenti[iter.index].username}">Utente</strong>
-  <span th:text="'🏆 ' + ${autoriCommenti[iter.index].score}">🏆 0</span>
-  </p>
-    <p th:text="${c.contenuto}">Testo del commento</p>
-    <p style="font-size: 0.8rem; color: #aaa;" th:text="${#temporals.format(c.dataCreazione, 'dd/MM/yyyy HH:mm')}">Data</p>
+  <!-- Avatar -->
+  <img th:src="@{/images/avatar.png}" alt="Profilo"
+       class="shadowed-avatar"
+       style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" />
 
-    <!-- SEZIONE LIKE -->
-    <div style="position: absolute; top: 1rem; right: 1rem;">
-      <span th:text="${likeService.contaLike(c.id)} + ' ❤️'">0 ❤️</span>
+  <!-- Contenuto -->
+  <div style="flex: 1; display: flex; flex-direction: column; gap: 0.4rem;">
 
-      <form th:if="${#authorization.expression('isAuthenticated()')}" 
-            th:action="@{/libro/commento/like}" method="post" style="display:inline">
-        <input type="hidden" name="commentoId" th:value="${c.id}" />
-        <button type="submit" 
-                th:text="${likeService.haGiaMessoLike(c.id, utenteLoggatoId) ? 'Dislike' : 'Like'}" 
-                class="nav-btn" 
-                style="margin-left: 0.5rem;"></button>
-      </form>
+    <!-- Nome e punteggio -->
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <strong th:text="${autoriCommenti[iter.index].username}" style="font-size: 1.1rem; color: #b9fbc0;">Utente</strong>
+      <span th:text="'🏆 ' + ${autoriCommenti[iter.index].score}" style="font-size: 1rem; color: #ffd166;">🏆 0</span>
     </div>
+
+    <!-- Testo commento -->
+    <p th:text="${c.contenuto}" style="margin: 0; color: #e6f1f6;">Testo del commento</p>
+
+    <!-- Data e like -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      
+      <span th:text="${#temporals.format(c.dataCreazione, 'dd/MM/yyyy HH:mm')}" 
+            style="font-size: 0.85rem; color: #9fbfcf;">Data</span>
+
+      <!-- Like / Dislike -->
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span th:text="${likeService.contaLike(c.id)}" style="font-size: 1rem; color: #A3D5B6;">0</span>
+        <form th:if="${#authorization.expression('isAuthenticated()')}" 
+              th:action="@{/libro/commento/like}" method="post">
+          <input type="hidden" name="commentoId" th:value="${c.id}" />
+          <button type="submit"
+                  th:utext="${likeService.haGiaMessoLike(c.id, utenteLoggatoId) ? '&#128078;' : '&#128077;'}"
+                  class="nav-btn"
+                  style="padding: 0.3rem 0.7rem; font-size: 1.1rem; border-radius: 8px;">
+          </button>
+        </form>
+      </div>
+    </div>
+
   </div>
+</div>
+
+
 </section>
+
 
 </body>
 </html>
