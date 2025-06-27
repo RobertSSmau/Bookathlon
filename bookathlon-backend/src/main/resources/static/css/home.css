@@ -166,6 +166,22 @@ header {
   height: auto;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
+.carosello-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  scroll-behavior: smooth;
+}
+
+.carosello-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.carosello-scroll::-webkit-scrollbar-thumb {
+  background: #A3D5B6;
+  border-radius: 4px;
+}
+
 
 
 @media (max-width: 768px) {

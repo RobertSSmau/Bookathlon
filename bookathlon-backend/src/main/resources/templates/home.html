@@ -51,7 +51,7 @@
   <section>
     <h2>Libri di Tendenza</h2>
     <div class="card-section-wrapper">
-    <div class="card-container">
+    <div class="carosello-scroll">
       <div th:each="libro : ${tendenze}" class="card">
         <img th:src="${libro.url_copertina}" alt="Copertina libro" class="card-img"> 
         <div class="card-content">
@@ -86,9 +86,9 @@
 
   <!-- Blocchi per ciascun genere -->
    
-  <div th:each="entry : ${libriPerGenere}" th:attr="data-genere=${entry.key}" class="card-section-wrapper">
+<div th:each="entry : ${libriPerGenere}" th:attr="data-genere=${entry.key}" class="card-section-wrapper genere-section">
     <h3 th:text="${entry.key}">Genere</h3>
-    <div class="card-container">
+    <div class="carosello-scroll">
       <div th:each="libro : ${entry.value}" class="card">
         <img th:src="${libro.url_copertina}" alt="Copertina libro"  class="card-img" />
         <div class="card-content">
@@ -151,7 +151,22 @@
     </div>
   </div>
 </div> 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const select = document.getElementById('genereSelect');
+  const sezioni = document.querySelectorAll('.genere-section');
 
+  if (select) {
+    select.addEventListener('change', function () {
+      const valore = this.value;
+      sezioni.forEach(section => {
+        const genere = section.getAttribute('data-genere');
+        section.style.display = (valore === 'all' || valore === genere) ? 'block' : 'none';
+      });
+    });
+  }
+});
+</script>
 
 </body>
 </html>
