@@ -1,6 +1,4 @@
 
-
-
   document.addEventListener("DOMContentLoaded", function () {
     let currentForm = null;
 
