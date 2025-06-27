@@ -53,9 +53,8 @@
     <div class="card-section-wrapper">
     <div class="card-container">
       <div th:each="libro : ${tendenze}" class="card">
-        <a th:href="@{'/libro'(id=${libro.id})}">
-  <img th:src="${libro.url_copertina}" alt="Copertina libro" />
-</a>
+        <img th:src="${libro.url_copertina}" alt="Copertina libro" class="card-img"> 
+        <div class="card-content">
         <h3 th:text="${libro.titolo}">Titolo</h3>
         <p th:text="${libro.autore}">Autore</p>
         <p th:text="${libro.genere}">Genere</p>
@@ -72,6 +71,7 @@
       </div>
     </div>
     </div>
+    </div>
   </section>
 
   <section>
@@ -86,14 +86,12 @@
 
   <!-- Blocchi per ciascun genere -->
    
-  <div th:each="entry : ${libriPerGenere}" th:attr="data-genere=${entry.key}" class="genere-section">
+  <div th:each="entry : ${libriPerGenere}" th:attr="data-genere=${entry.key}" class="card-section-wrapper">
     <h3 th:text="${entry.key}">Genere</h3>
-    <div class="card-section-wrapper">
     <div class="card-container">
       <div th:each="libro : ${entry.value}" class="card">
-        <a th:href="@{'/libro'(id=${libro.id})}">
-  <img th:src="${libro.url_copertina}" alt="Copertina libro" />
-</a>
+        <img th:src="${libro.url_copertina}" alt="Copertina libro"  class="card-img" />
+        <div class="card-content">
         <h4 th:text="${libro.titolo}">Titolo</h4>
         <p th:text="${libro.autore}">Autore</p>
 
@@ -105,7 +103,7 @@
           </form>
         </div>
         <div th:if="${idLibriUtente != null and idLibriUtente.contains(libro.id)}">
-          <button class="btn-aggiunto" disabled>Aggiunto</button>
+          <button class="btn-aggiunto"disabled>Aggiunto</button>
         </div>
       </div>
     </div>
@@ -118,12 +116,42 @@
 <footer>
   <p>© 2025 Bookathlon</p>
 </footer>
+
+<script th:src="@{/js/home.js}">
+  document.addEventListener('DOMContentLoaded', function () {
+  const select = document.getElementById('genereSelect');
+  const sezioni = document.querySelectorAll('.genere-section');
+
+  if (select) {
+    select.addEventListener('change', function () {
+      const valore = this.value;
+
+      sezioni.forEach(section => {
+        const genere = section.getAttribute('data-genere');
+        section.style.display = (valore === 'all' || valore === genere) ? 'block' : 'none';
+      });
+    });
+  }
+});
+</script>
+
 <script>
   function toggleMenu() {
     document.querySelector('.nav-buttons').classList.toggle('show');
   }
 </script>
-<script src="/js/home.js"></script>
+
+<div id="confirm-modal" class="modal d-none">
+  <div class="modal-content" >
+    <img id="modal-cover" src="" alt="Copertina libro" style="max-width: 120px; margin: 1rem auto; display: block; border-radius: 5px;">
+    <p>Vuoi davvero aggiungere questo libro alla tua libreria?</p>
+    <div class="modal-buttons">
+      <button id="confirm-yes" class="nav-btn">Aggiungi</button>
+      <button id="confirm-no" class="nav-btn ">Annulla</button>
+    </div>
+  </div>
+</div> 
+
 
 </body>
 </html>

@@ -3,9 +3,12 @@ package com.bookathlon.repos;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.bookathlon.entities.Utente;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface UtenteRepository extends JpaRepository<Utente, Long> {
@@ -26,4 +29,9 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
     @Query(value = 
     		"SELECT * FROM utente WHERE id IN (:ids) ORDER BY score DESC LIMIT 20", nativeQuery = true)
     List<Utente> trovaClassificaAmici(@Param("ids") List<Long> amiciIds);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE utente SET score = score + 1 WHERE id = :userId", nativeQuery = true)
+    void incrementaScore(@Param("userId") Long userId);
 }

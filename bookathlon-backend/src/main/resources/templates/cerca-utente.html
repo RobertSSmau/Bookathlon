@@ -48,6 +48,7 @@
 
     <div class="card-container" th:if="${risultatiUtenti.size() > 0}">
       <div class="card" th:each="utente : ${risultatiUtenti}">
+        <img src="/images/avatar.png" alt="Avatar" class="card-img shadowed-avatar">
         <h3 th:text="${utente.username}">Username</h3>
         <form method="post" th:action="@{/area-personale/amici/invia}">
           <input type="hidden" name="destinatarioId" th:value="${utente.id}" />
