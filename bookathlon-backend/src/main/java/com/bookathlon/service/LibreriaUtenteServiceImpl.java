@@ -96,7 +96,16 @@ public class LibreriaUtenteServiceImpl implements LibreriaUtenteService {
         id.setLibro(libro);
 
         LibreriaUtente entry = repo.findById(id).orElse(null);
-        if (entry == null || !"DA_LEGGERE".equals(entry.getStato()) || entry.getDataInizioLettura() != null) return;
+
+        if (entry == null) {
+            return;
+        }
+        if (!"DA_LEGGERE".equals(entry.getStato())) {
+            return;
+        }
+        if (entry.getDataInizioLettura() != null) {
+            return;
+        }
 
         entry.setDataInizioLettura(LocalDate.now());
         repo.save(entry);

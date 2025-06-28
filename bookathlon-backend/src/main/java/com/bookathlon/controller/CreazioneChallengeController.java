@@ -51,6 +51,8 @@ public class CreazioneChallengeController {
 	        }
 	    }
 	 
+	 
+	 	//FA SCHIFO
 		 @PostMapping("/crea")
 		 public String creaChallenge(@RequestParam Long libroId,
 		                             @RequestParam String tipo,
@@ -126,5 +128,7 @@ public class CreazioneChallengeController {
 	     
 	     return "seleziona-amici";
 		 }
+		 
+		 
 	 
 }
