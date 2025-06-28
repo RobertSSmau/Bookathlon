@@ -57,7 +57,7 @@ public class Challenge {
     private LocalDateTime dataCreazione = LocalDateTime.now();
     
     
-    // autore_id e destinatario_id sonofkey verso utente e non scrive su DB
+    // autore_id e destinatario_id sono fkey verso utente e non scrive su DB
     @ManyToOne
     @JoinColumn(name = "destinatario_id", insertable = false, updatable = false)
     private Utente destinatario;

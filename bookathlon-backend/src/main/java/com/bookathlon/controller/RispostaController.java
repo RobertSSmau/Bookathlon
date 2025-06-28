@@ -67,8 +67,7 @@ public class RispostaController {
         challServ.salvaChallenge(c);
 
         if (corretta) {
-            u.setScore(u.getScore() + 1);
-            uRepo.save(u);
+        	uRepo.incrementaScore(u.getId());
         }
         
     	return "redirect:/challenge";
@@ -92,7 +91,8 @@ public class RispostaController {
                                      @AuthenticationPrincipal UserDetails user) {
     	
     	Challenge c = passaDomandavalida(challengeId);
-        if (c == null) return "redirect:/challenge";
+        if (c == null) 
+        	return "redirect:/challenge";
 
         Utente u = uRepo.findByUsername(user.getUsername());
 

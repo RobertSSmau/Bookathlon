@@ -1,0 +1,36 @@
+<!--debug-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Rispondi al Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+  <header>
+    <h1>Rispondi al Quiz</h1>
+  </header>
+
+  <main>
+    <p><strong>Domanda:</strong> <span th:text="${challenge.domanda}">Domanda</span></p>
+
+    <form th:action="@{/challenge/risposta-quiz}" method="post">
+      <input type="hidden" name="challengeId" th:value="${challenge.id}" />
+
+      <div>
+        <label><input type="radio" name="risposta" value="A" required /> <span th:text="${challenge.opzioneA}">Opzione A</span></label>
+      </div>
+      <div>
+        <label><input type="radio" name="risposta" value="B" /> <span th:text="${challenge.opzioneB}">Opzione B</span></label>
+      </div>
+      <div>
+        <label><input type="radio" name="risposta" value="C" /> <span th:text="${challenge.opzioneC}">Opzione C</span></label>
+      </div>
+
+      <button type="submit" class="nav-btn">Invia Risposta</button>
+    </form>
+  </main>
+</body>
+</html>
