@@ -9,6 +9,8 @@ import com.bookathlon.entities.ChallengeRisp;
 public interface ChallengeRispRepository extends JpaRepository<ChallengeRisp, Long> {
 
     List<ChallengeRisp> findByChallengeId(Long challengeId);
+    
+    List<ChallengeRisp> findByUtenteId(Long utenteId);
 }
 
 

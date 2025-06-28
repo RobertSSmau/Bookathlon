@@ -1,7 +1,9 @@
 package com.bookathlon.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,7 +38,6 @@ public class ChallengeController {
 
 	    List<Challenge> ricevute = challRepo.findByDestinatarioId(utente.getId());
 	    List<Challenge> inviate = challRepo.findByAutoreId(utente.getId());
-		
         model.addAttribute("classificaGlobale", classificaService.getClassificaGlobale());
         model.addAttribute("classificaAmici", classificaService.getClassificaAmici(userDetails));
         model.addAttribute("challengeRicevute", ricevute);

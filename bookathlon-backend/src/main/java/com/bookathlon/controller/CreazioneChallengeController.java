@@ -39,28 +39,24 @@ public class CreazioneChallengeController {
 	
 	 @GetMapping("/nuova")
 	    public String mostraFormChallenge(@RequestParam Long libroId,
-	                                      @RequestParam String tipo,
 	                                      Model model,
 	                                      @AuthenticationPrincipal UserDetails userDetails) {
 	        model.addAttribute("libro", libroService.getLibroById(libroId));
-	        model.addAttribute("tipo", tipo);
-	        if (tipo.equalsIgnoreCase("QUIZ")) {
-	            return "form-challenge-quiz";
-	        } else {
-	            return "form-challenge-aperta";
-	        }
+
+	        return "form-challenge-quiz";
+	        
 	    }
 	 
 	 
 	 	//FA SCHIFO
 		 @PostMapping("/crea")
 		 public String creaChallenge(@RequestParam Long libroId,
-		                             @RequestParam String tipo,
 		                             @RequestParam String domanda,
-		                             @RequestParam(required = false) String opzioneA,
-		                             @RequestParam(required = false) String opzioneB,
-		                             @RequestParam(required = false) String opzioneC,
-		                             @RequestParam(required = false) String rispostaCorretta,
+		                             @RequestParam String opzioneA,
+		                             @RequestParam String opzioneB,
+		                             @RequestParam String opzioneC,
+		                             @RequestParam String opzioneD,
+		                             @RequestParam String rispostaCorretta,
 		                             @AuthenticationPrincipal UserDetails userDetails,
 		                             Model model) {
 	
@@ -69,17 +65,14 @@ public class CreazioneChallengeController {
 		     Challenge newchall = new Challenge();
 		     newchall.setLibroId(libroId);
 		     newchall.setAutoreId(autore.getId());
-		     newchall.setTipo(tipo.toUpperCase());
 		     newchall.setDomanda(domanda);
+		     newchall.setOpzioneA(opzioneA);
+		     newchall.setOpzioneB(opzioneB);
+		     newchall.setOpzioneC(opzioneC);
+		     newchall.setOpzioneD(opzioneD);
+		     newchall.setRispostaCorretta(rispostaCorretta);
 		     newchall.setStato("PENDING");
-		     newchall.setApprovata(null);
-	
-		     if (tipo.equalsIgnoreCase("QUIZ")) {
-		    	 newchall.setOpzioneA(opzioneA);
-		    	 newchall.setOpzioneB(opzioneB);
-		    	 newchall.setOpzioneC(opzioneC);
-		         newchall.setRispostaCorretta(rispostaCorretta);
-		     }
+
 	
 		     Challenge salvata = challengeService.salvaChallenge(newchall);
 		     return "redirect:/challenge/seleziona-amici?id=" + salvata.getId();
@@ -147,14 +140,13 @@ public class CreazioneChallengeController {
 		         copychall.setLibroId(base.getLibroId());
 		         copychall.setAutoreId(autore.getId());
 		         copychall.setDestinatarioId(destId);
-		         copychall.setTipo(base.getTipo());
 		         copychall.setDomanda(base.getDomanda());
 		         copychall.setOpzioneA(base.getOpzioneA());
 		         copychall.setOpzioneB(base.getOpzioneB());
 		         copychall.setOpzioneC(base.getOpzioneC());
+		         copychall.setOpzioneD(base.getOpzioneD());
 		         copychall.setRispostaCorretta(base.getRispostaCorretta());
 		         copychall.setStato("PENDING");
-		         copychall.setApprovata(null);
 
 		         challengeService.salvaChallenge(copychall);
 		     }

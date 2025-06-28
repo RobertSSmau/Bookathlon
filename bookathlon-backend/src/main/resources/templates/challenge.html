@@ -85,40 +85,33 @@
 
   <!--debug-->
 <section>
-  <h3>Ricevute</h3>
+  <h3>Challenge Ricevute</h3>
   <ul th:if="${challengeRicevute.size() > 0}">
     <li th:each="c : ${challengeRicevute}">
       [#<span th:text="${c.id}"></span>] 
-      <span th:text="${c.tipo}">TIPO</span> - 
       <span th:text="${c.domanda}">DOMANDA</span> - 
       <span th:text="${c.autore.username}">AUTORE</span>
-       
-      <form th:if="${c.tipo == 'QUIZ'}" th:action="@{/challenge/risposta-quiz}" method="get" style="display:inline;">
-        <input type="hidden" name="id" th:value="${c.id}" />
-        <button>▶</button>
-      </form>
-      
-      <form th:if="${c.tipo == 'APERTO'}" th:action="@{/challenge/risposta-aperta}" method="get" style="display:inline;">
-        <input type="hidden" name="id" th:value="${c.id}" />
-        <button>▶</button>
-      </form>
-    
+
+
+      <th:block th:if="${challengeRisposte[c.id] != null}">
+        <span> - 
+          <strong th:text="${challengeRisposte[c.id].corretta 
+                            ? 'Risposta corretta' 
+                            : 'Risposta errata'}"></strong>
+        </span>
+      </th:block>
+
+
+      <th:block th:if="${challengeRisposte[c.id] == null}">
+        <form th:action="@{/challenge/risposta-quiz}" method="get" style="display:inline;">
+          <input type="hidden" name="id" th:value="${c.id}" />
+          <button>▶</button>
+        </form>
+      </th:block>
+
     </li>
   </ul>
   <p th:if="${challengeRicevute.size() == 0}">Nessuna challenge ricevuta</p>
-</section>
-
-<section>
-  <h3>Inviate</h3>
-  <ul th:if="${challengeInviate.size() > 0}">
-    <li th:each="c : ${challengeInviate}">
-      [#<span th:text="${c.id}"></span>] 
-      <span th:text="${c.tipo}">TIPO</span>
-      <span th:text="${c.destinatario.username}">DEST</span> 
-      <span th:text="${c.approvata == null ? '⏳' : (c.approvata ? '✔' : '✘')}">Stato</span>
-    </li>
-  </ul>
-  <p th:if="${challengeInviate.size() == 0}">Nessuna challenge inviata</p>
 </section>
 
 </main>

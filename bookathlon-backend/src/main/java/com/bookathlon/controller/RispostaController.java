@@ -39,7 +39,7 @@ public class RispostaController {
         
         model.addAttribute("challenge", c);
         
-        return "rispondi-quiz";
+        return "risposta-quiz";
     }
     
     @PostMapping("/risposta-quiz")
@@ -70,72 +70,29 @@ public class RispostaController {
         	uRepo.incrementaScore(u.getId());
         }
         
-    	return "redirect:/challenge";
+        return "redirect:/challenge/esito?id=" 
+        + challengeId 
+        + "&corretta=" 
+        + corretta;
     	
     }
     
-    @GetMapping("/risposta-aperta")
-    public String mostraAperta(@RequestParam Long id, 
-    							Model model) {
-    	
-    	Challenge c = challServ.getById(id);
-    	
-    	model.addAttribute("challenge", c);
-    	
-    	return "risposta-aperta";
-    }
     
-    @PostMapping("/rispondi-aperta")
-    public String inviaDomandaAperta(@RequestParam Long challengeId,
-                                     @RequestParam String risposta,
-                                     @AuthenticationPrincipal UserDetails user) {
-    	
-    	Challenge c = passaDomandavalida(challengeId);
-        if (c == null) 
-        	return "redirect:/challenge";
-
-        Utente u = uRepo.findByUsername(user.getUsername());
-
-        ChallengeRisp r = new ChallengeRisp();
-        r.setChallengeId(challengeId);
-        r.setUtenteId(u.getId());
-        r.setRisposta(risposta);	
-        r.setValutata(false);//da valutrare	
-        r.setApprovata(null);//in attesa di approvazione
-
-        challRisp.salva(r);
-        c.setStato("RISPOSTA_INVIATA");
-        challServ.salvaChallenge(c);
-    	
-    	return "redirect:/challenge";
+    @GetMapping("/esito")
+    public String esito(@RequestParam boolean corretta,
+                                  @RequestParam Long id,
+                                  Model model) {
+        model.addAttribute("corretta", corretta);
+        model.addAttribute("id", id);
+        return "esito";
     }
 
     private Challenge passaQuizvalido(Long id) {
 
         Challenge quiz = challServ.getById(id);
 
-        if (quiz == null) 
-        	return null;
-
-        if (!"QUIZ".
-        		equalsIgnoreCase(quiz.getTipo())) 
-        	return null;
-
         return quiz;
     }
     
-    private Challenge passaDomandavalida(Long id) {
-    	
-       Challenge dom = challServ.getById(id);
-       
-        if (dom == null) 
-        	return null;
-        
-        if (!"APERTO".
-        		equalsIgnoreCase(dom.getTipo())) 
-        	return null;
-        
-        return dom;
-    }
     
 }

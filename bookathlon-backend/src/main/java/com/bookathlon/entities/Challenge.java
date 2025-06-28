@@ -29,9 +29,6 @@ public class Challenge {
     @Column(name = "destinatario_id", nullable = true)
     private Long destinatarioId;
 
-    @Column(nullable = false)
-    private String tipo; // "APERTO" o "QUIZ"
-
     @Column(nullable = false, columnDefinition = "TEXT")
     private String domanda;
 
@@ -44,12 +41,13 @@ public class Challenge {
 
     @Column(name = "opzione_c")
     private String opzioneC;
+    
+    @Column(name = "opzione_d")
+    private String opzioneD;
 
     @Column(name = "risposta_corretta")
-    private String rispostaCorretta; // "A", "B", "C"
+    private String rispostaCorretta; 
 
-    // Solo per tipo APERTO
-    private Boolean approvata;
 
     private String stato; // PENDING, RISPOSTA_INVIATA, COMPLETATA
 
@@ -98,14 +96,6 @@ public class Challenge {
 		this.destinatarioId = destinatarioId;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public String getDomanda() {
 		return domanda;
 	}
@@ -146,14 +136,6 @@ public class Challenge {
 		this.rispostaCorretta = rispostaCorretta;
 	}
 
-	public Boolean getApprovata() {
-		return approvata;
-	}
-
-	public void setApprovata(Boolean approvata) {
-		this.approvata = approvata;
-	}
-
 	public String getStato() {
 		return stato;
 	}
@@ -184,6 +166,14 @@ public class Challenge {
 
 	public void setAutore(Utente autore) {
 		this.autore = autore;
+	}
+
+	public String getOpzioneD() {
+		return opzioneD;
+	}
+
+	public void setOpzioneD(String opzioneD) {
+		this.opzioneD = opzioneD;
 	}
 
     
