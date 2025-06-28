@@ -1,5 +1,8 @@
 package com.bookathlon.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookathlon.entities.Amicizia;
 import com.bookathlon.entities.Challenge;
 import com.bookathlon.entities.Utente;
 import com.bookathlon.repos.UtenteRepository;
+import com.bookathlon.service.AmiciziaService;
 import com.bookathlon.service.ChallengeService;
 import com.bookathlon.service.LibroService;
 
@@ -28,6 +33,9 @@ public class CreazioneChallengeController {
 	
 	@Autowired
 	private LibroService libroService;
+	
+	@Autowired
+	private AmiciziaService amicoService;
 	
 	 @GetMapping("/nuova")
 	    public String mostraFormChallenge(@RequestParam Long libroId,
@@ -74,6 +82,49 @@ public class CreazioneChallengeController {
 		     Challenge salvata = challengeService.salva(newchall);
 	
 		     return "redirect:/challenge/seleziona-amici?id=" + salvata.getId();
+		 }
+		 
+		 //parte dove seleziono l'amico a cui inviare la challenge
+		 @GetMapping("/seleziona-amici")
+		 public String mostraSelezioneAmici(@RequestParam Long id, 
+		                                    Model model,
+		                                    @AuthenticationPrincipal UserDetails userDetails) {
+		
+	     //recupero l'utente loggato
+	     String username = userDetails.getUsername();
+	     Utente autore = utenteRepo.findByUsername(username);
+		
+	     //qua ho tutta la lista delle mie amicizie
+	     List<Amicizia> relazioni = amicoService.getAmici(autore.getId());
+	     
+	     //e mostro la lista
+	     List<Utente> amici = new ArrayList<>();
+	     
+	     for (Amicizia relazione : relazioni) {
+	    	    Long idUtente1 = relazione.getUtente1();
+	    	    Long idUtente2 = relazione.getUtente2();
+	    	    Long idAltro;
+
+	    	    // confronto utente1 e utente2
+	    	    if (idUtente1.equals(autore.getId())) {
+	    	        idAltro = idUtente2;
+	    	        
+	    	    } else {
+	    	        idAltro = idUtente1;
+	    	        
+	    	    }
+
+	    	    // recupero l'utente se esiste
+	    	    Utente altroUtente = utenteRepo.findById(idAltro).orElse(null);
+	    	    if (altroUtente != null) {
+	    	        amici.add(altroUtente);
+	    	    }
+	    	}
+	     
+	     model.addAttribute("amici", amici);
+	     model.addAttribute("challengeId", id);
+	     
+	     return "seleziona-amici";
 		 }
 	 
 }
