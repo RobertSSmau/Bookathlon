@@ -81,7 +81,7 @@ public class CreazioneChallengeController {
 		         newchall.setRispostaCorretta(rispostaCorretta);
 		     }
 	
-		     Challenge salvata = challengeService.salva(newchall);
+		     Challenge salvata = challengeService.salvaChallenge(newchall);
 		     return "redirect:/challenge/seleziona-amici?id=" + salvata.getId();
 		 }
 		 
@@ -156,8 +156,11 @@ public class CreazioneChallengeController {
 		         copychall.setStato("PENDING");
 		         copychall.setApprovata(null);
 
-		         challengeService.salva(copychall);
+		         challengeService.salvaChallenge(copychall);
 		     }
+		     
+		     //elimina il record template che rimane nel db, spazzatura
+		     challengeService.eliminaDuplicato(challengeId);
 
 		     return "redirect:/challenge";
 		 }

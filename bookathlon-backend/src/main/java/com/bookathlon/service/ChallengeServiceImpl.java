@@ -17,7 +17,7 @@ public class ChallengeServiceImpl implements ChallengeService {
 	private ChallengeRepository repo;
 
  	@Override
-    	public Challenge salva(Challenge challenge) {
+    	public Challenge salvaChallenge(Challenge challenge) {
         
 			return repo.save(challenge);
     }
@@ -38,4 +38,9 @@ public class ChallengeServiceImpl implements ChallengeService {
     public Challenge getById(Long id) {
         return repo.findById(id).orElse(null);
     }
+	
+	@Override
+	public void eliminaDuplicato(Long id) {
+	    repo.deleteById(id);
+	}
 }
