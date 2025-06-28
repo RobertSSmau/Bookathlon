@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -53,6 +55,16 @@ public class Challenge {
 
     @Column(name = "data_creazione")
     private LocalDateTime dataCreazione = LocalDateTime.now();
+    
+    
+    // autore_id e destinatario_id sonofkey verso utente e non scrive su DB
+    @ManyToOne
+    @JoinColumn(name = "destinatario_id", insertable = false, updatable = false)
+    private Utente destinatario;
+
+    @ManyToOne
+    @JoinColumn(name = "autore_id", insertable = false, updatable = false)
+    private Utente autore;
 
 	public Long getId() {
 		return id;
@@ -156,6 +168,22 @@ public class Challenge {
 
 	public void setDataCreazione(LocalDateTime dataCreazione) {
 		this.dataCreazione = dataCreazione;
+	}
+
+	public Utente getDestinatario() {
+		return destinatario;
+	}
+
+	public void setDestinatario(Utente destinatario) {
+		this.destinatario = destinatario;
+	}
+
+	public Utente getAutore() {
+		return autore;
+	}
+
+	public void setAutore(Utente autore) {
+		this.autore = autore;
 	}
 
     

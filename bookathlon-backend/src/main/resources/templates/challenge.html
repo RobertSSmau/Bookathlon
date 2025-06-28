@@ -82,7 +82,41 @@
       <p th:if="${classificaAmici.size() == 0}">Non hai ancora amici registrati.</p>
     </div>
   </section>
+
+  <!--debug-->
+<section>
+  <h3>Ricevute</h3>
+  <ul th:if="${challengeRicevute.size() > 0}">
+    <li th:each="c : ${challengeRicevute}">
+      [#<span th:text="${c.id}"></span>] 
+      <span th:text="${c.tipo}">TIPO</span> - 
+      <span th:text="${c.domanda}">DOMANDA</span> - 
+      da <span th:text="${c.autore.username}">AUTORE</span>
+      <form th:action="@{/challenge/rispondi}" method="get" style="display:inline;">
+        <input type="hidden" name="id" th:value="${c.id}" />
+        <button>▶</button>
+      </form>
+    </li>
+  </ul>
+  <p th:if="${challengeRicevute.size() == 0}">Nessuna challenge ricevuta</p>
+</section>
+
+<section>
+  <h3>Inviate</h3>
+  <ul th:if="${challengeInviate.size() > 0}">
+    <li th:each="c : ${challengeInviate}">
+      [#<span th:text="${c.id}"></span>] 
+      <span th:text="${c.tipo}">TIPO</span> - 
+      a <span th:text="${c.destinatario.username}">DEST</span> - 
+      <span th:text="${c.approvata == null ? '⏳' : (c.approvata ? '✔' : '✘')}">Stato</span>
+    </li>
+  </ul>
+  <p th:if="${challengeInviate.size() == 0}">Nessuna challenge inviata</p>
+</section>
+
 </main>
+
+
 
 <footer>
   <p>Bookathlon</p>

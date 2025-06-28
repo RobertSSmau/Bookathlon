@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.bookathlon.entities.Challenge;
@@ -39,8 +40,10 @@ public class ChallengeServiceImpl implements ChallengeService {
         return repo.findById(id).orElse(null);
     }
 	
+	//si crea un duplicato inutile nel DB
 	@Override
 	public void eliminaDuplicato(Long id) {
 	    repo.deleteById(id);
 	}
+	
 }

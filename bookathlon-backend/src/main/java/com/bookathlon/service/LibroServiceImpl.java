@@ -43,10 +43,10 @@ public class LibroServiceImpl implements LibroService {
     }
 
     
-    @Override
-public List<Libro> getLibriDiTendenza() {
-    return repo.trovaLibriPopolari();
-}
+	    @Override
+	public List<Libro> getLibriDiTendenza() {
+	    return repo.trovaLibriPopolari();
+	}
 
     
     /**
