@@ -20,15 +20,41 @@ public class ChallengeRisp {
 	    @Column(name = "challenge_id", nullable = false)
 	    private Long challengeId;
 
+	    @Column(name = "utente_id", nullable = false)
+	    private Long utenteId;
+
 	    @Column(nullable = false, columnDefinition = "TEXT")
 	    private String risposta;
 
 	    @Column(name = "data_risposta")
 	    private LocalDateTime dataRisposta = LocalDateTime.now();
 
+	    @Column(name = "valutata")
 	    private Boolean valutata = false;
 
+	    @Column(name = "approvata")
 	    private Boolean approvata;
+	    
+	    @Column
+	    private Boolean corretta;
+	    
+	    
+	    
+		public Boolean getCorretta() {
+			return corretta;
+		}
+
+		public void setCorretta(Boolean corretta) {
+			this.corretta = corretta;
+		}
+
+		public Long getUtenteId() {
+			return utenteId;
+		}
+
+		public void setUtenteId(Long utenteId) {
+			this.utenteId = utenteId;
+		}
 
 		public Long getId() {
 			return id;
