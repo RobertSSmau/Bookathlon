@@ -85,6 +85,8 @@
           <button type="submit">Rimuovi</button>
         </form>
         
+        <button type="button" class="nav-btn" th:onclick="|apriSceltaChallenge(${entry.libro.id})|">Crea Challenge</button>
+        
       </div>
     </div>
     
@@ -200,6 +202,7 @@
   }
 </script>
 <script th:src="@{/js/area-personale.js}"></script>
+<script th:src="@{/js/area-personale-challenge.js}"></script>
 
 <div id="remove-modal" class="modal d-none">
   <div class="modal-content">
@@ -208,6 +211,16 @@
     <div class="modal-buttons">
       <button id="remove-yes" class="nav-btn">Rimuovi</button>
       <button id="remove-no" class="nav-btn">Annulla</button>
+    </div>
+  </div>
+</div>
+<div id="challenge-modal" class="modal d-none">
+  <div class="modal-content">
+    <p>Che tipo di challenge vuoi creare per questo libro?</p>
+    <div class="modal-buttons">
+      <button class="nav-btn" onclick="vaiACreazioneChallenge('QUIZ')">Quiz</button>
+      <button class="nav-btn" onclick="vaiACreazioneChallenge('APERTO')">Domanda Aperta</button>
+      <button class="nav-btn" onclick="chiudiModaleChallenge()">Annulla</button>
     </div>
   </div>
 </div>
