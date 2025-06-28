@@ -23,7 +23,8 @@ public class Challenge {
     @Column(name = "autore_id", nullable = false)
     private Long autoreId;
 
-    @Column(name = "destinatario_id", nullable = false)
+    //soluzione sporca , reso il field detinatario_id nullabile temporaneamente
+    @Column(name = "destinatario_id", nullable = true)
     private Long destinatarioId;
 
     @Column(nullable = false)

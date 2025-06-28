@@ -82,7 +82,6 @@ public class CreazioneChallengeController {
 		     }
 	
 		     Challenge salvata = challengeService.salva(newchall);
-	
 		     return "redirect:/challenge/seleziona-amici?id=" + salvata.getId();
 		 }
 		 
@@ -129,6 +128,39 @@ public class CreazioneChallengeController {
 	     return "seleziona-amici";
 		 }
 		 
+		 //workaround schifoso
+		 @PostMapping("/invia")
+		 public String inviaChallenge(@RequestParam Long challengeId,
+		                              @RequestParam(name = "destinatari") List<Long> destinatari,
+		                              @AuthenticationPrincipal UserDetails userDetails) {
+
+		     // recupero autore
+		     Utente autore = utenteRepo.findByUsername(userDetails.getUsername());
+
+		     // recupero challenge base
+		     Challenge base = challengeService.getById(challengeId);
+
+		     // copio per ogni destinatario
+		     for (Long destId : destinatari) {
+		         Challenge copychall = new Challenge();
+
+		         copychall.setLibroId(base.getLibroId());
+		         copychall.setAutoreId(autore.getId());
+		         copychall.setDestinatarioId(destId);
+		         copychall.setTipo(base.getTipo());
+		         copychall.setDomanda(base.getDomanda());
+		         copychall.setOpzioneA(base.getOpzioneA());
+		         copychall.setOpzioneB(base.getOpzioneB());
+		         copychall.setOpzioneC(base.getOpzioneC());
+		         copychall.setRispostaCorretta(base.getRispostaCorretta());
+		         copychall.setStato("PENDING");
+		         copychall.setApprovata(null);
+
+		         challengeService.salva(copychall);
+		     }
+
+		     return "redirect:/challenge";
+		 }
 		 
 	 
 }
