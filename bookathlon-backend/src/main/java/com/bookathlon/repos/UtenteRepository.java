@@ -13,10 +13,11 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface UtenteRepository extends JpaRepository<Utente, Long> {
 
-    @Query("""
-    SELECT u FROM Utente u 
-    WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', :username, '%'))
-""")
+	@Query(value = """
+		    SELECT * 
+		    FROM utente 
+		    WHERE username ILIKE CONCAT('%', :username, '%')
+		""", nativeQuery = true)
     List<Utente> cercaPerUsername(@Param("username") String username);
 
     // login 

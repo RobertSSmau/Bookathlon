@@ -20,13 +20,11 @@ import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Libro;
 import com.bookathlon.entities.Utente;
 import com.bookathlon.repos.CommentoRepository;
-import com.bookathlon.repos.LikeCommentoRepository;
 import com.bookathlon.repos.UtenteRepository;
 import com.bookathlon.service.CommentoService;
 import com.bookathlon.service.LibreriaUtenteService;
 import com.bookathlon.service.LibroService;
 import com.bookathlon.service.LikeCommentoService;
-import com.bookathlon.service.UtenteService;
 
 /**
  * Controller per la gestione della homepage e della funzionalità di ricerca libri.

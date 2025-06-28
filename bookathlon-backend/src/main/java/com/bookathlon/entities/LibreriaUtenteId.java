@@ -42,18 +42,39 @@ public class LibreriaUtenteId implements Serializable {
      * Il metodo equals confronta due LibreriaUtenteId per il corretto funzionamento delle chiavi composte in JPA. 
      * Garantisce che gli oggetti siano considerati uguali se i loro componenti (utente e libro) lo sono.
      */
+    
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (obj == null) {
             return false;
         }
-        LibreriaUtenteId other = (LibreriaUtenteId) o;
-        // Confronta gli attributi utente e libro per determinare l'uguaglianza.
-        return Objects.equals(utente, other.utente) &&
-               Objects.equals(libro, other.libro);
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        LibreriaUtenteId other = (LibreriaUtenteId) obj;
+
+        if (utente == null) {
+            if (other.utente != null) {
+                return false;
+            }
+            
+        } else if (!utente.equals(other.utente)) {
+            return false;
+        }
+
+        if (libro == null) {
+            if (other.libro != null) {
+                return false;
+            }
+        } else if (!libro.equals(other.libro)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

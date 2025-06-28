@@ -36,7 +36,11 @@ public class CreazioneChallengeController {
 	                                      @AuthenticationPrincipal UserDetails userDetails) {
 	        model.addAttribute("libro", libroService.getLibroById(libroId));
 	        model.addAttribute("tipo", tipo);
-	        return tipo.equalsIgnoreCase("QUIZ") ? "form-challenge-quiz" : "form-challenge-aperta";
+	        if (tipo.equalsIgnoreCase("QUIZ")) {
+	            return "form-challenge-quiz";
+	        } else {
+	            return "form-challenge-aperta";
+	        }
 	    }
 	 
 		 @PostMapping("/crea")

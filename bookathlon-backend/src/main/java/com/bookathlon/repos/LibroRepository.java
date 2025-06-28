@@ -27,6 +27,7 @@ public interface LibroRepository extends JpaRepository<Libro, Long>{
 		    nativeQuery = true
 		)
 	List<Libro> ricercaSQL(@Param("kw") String keyword);
+	
 	@Query(value = """
 		    SELECT l.* 
 		    FROM "better-mockup-schema-2".libreria_utente lu
