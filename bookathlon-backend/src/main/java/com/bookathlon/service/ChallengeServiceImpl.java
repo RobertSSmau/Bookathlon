@@ -46,4 +46,9 @@ public class ChallengeServiceImpl implements ChallengeService {
 	    repo.deleteById(id);
 	}
 	
+	@Override
+	public List<Challenge> getChallAttive(Long destinatarioId) {
+	    return repo.queryChallAttive(destinatarioId);
+	}
+	
 }

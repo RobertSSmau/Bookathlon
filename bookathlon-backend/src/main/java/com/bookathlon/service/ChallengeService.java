@@ -7,8 +7,7 @@ import com.bookathlon.entities.Challenge;
 public interface ChallengeService {
 
 	Challenge salvaChallenge(Challenge challenge);
-	
-	//schifo
+
 	void eliminaDuplicato(Long id);
 
     List<Challenge> getChallengeInviate(Long autoreId);
@@ -17,6 +16,6 @@ public interface ChallengeService {
 
     Challenge getById(Long id);
     
-    
+    List<Challenge> getChallAttive(Long destinatarioId);
 	
 }

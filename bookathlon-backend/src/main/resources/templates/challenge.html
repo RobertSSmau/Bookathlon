@@ -85,33 +85,52 @@
 
   <!--debug-->
 <section>
-  <h3>Challenge Ricevute</h3>
-  <ul th:if="${challengeRicevute.size() > 0}">
-    <li th:each="c : ${challengeRicevute}">
-      [#<span th:text="${c.id}"></span>] 
-      <span th:text="${c.domanda}">DOMANDA</span> - 
-      <span th:text="${c.autore.username}">AUTORE</span>
+  <h3>Challenge Inviate</h3>
+  <ul th:if="${challengeInviate != null and challengeInviate.size() > 0}">
+    <li th:each="c : ${challengeInviate}">
+      [#<span th:text="${c.id}"></span>]
+      <span th:text="${c.domanda}">DOMANDA</span> – 
+      <span th:text="${c.destinatario.username}">DESTINATARIO</span>
 
-
-      <th:block th:if="${challengeRisposte[c.id] != null}">
-        <span> - 
+      <th:block th:if="${challengeRisposte != null and challengeRisposte[c.id] != null}">
+        <span> – 
           <strong th:text="${challengeRisposte[c.id].corretta 
                             ? 'Risposta corretta' 
                             : 'Risposta errata'}"></strong>
         </span>
       </th:block>
 
-
-      <th:block th:if="${challengeRisposte[c.id] == null}">
-        <form th:action="@{/challenge/risposta-quiz}" method="get" style="display:inline;">
-          <input type="hidden" name="id" th:value="${c.id}" />
-          <button>▶</button>
-        </form>
+      <th:block th:if="${challengeRisposte == null or challengeRisposte[c.id] == null}">
+        <span> – In attesa di risposta</span>
       </th:block>
-
     </li>
   </ul>
-  <p th:if="${challengeRicevute.size() == 0}">Nessuna challenge ricevuta</p>
+  <p th:if="${challengeInviate == null or challengeInviate.size() == 0}">
+    Nessuna challenge inviata
+  </p>
+</section>
+<section>
+  <h3>Challenge Ricevute</h3>
+  <ul th:if="${challengeRicevute != null and challengeRicevute.size() > 0}">
+    <li th:each="c : ${challengeRicevute}">
+      [#<span th:text="${c.id}"></span>] 
+      <span th:text="${c.domanda}">DOMANDA</span> – 
+      <span th:text="${c.autore.username}">AUTORE</span>
+
+      <th:block th:if="${challengeRisposte[c.id] != null}">
+        <span> – <strong th:text="${challengeRisposte[c.id].corretta 
+                          ? 'Risposta corretta' 
+                          : 'Risposta errata'}"></strong></span>
+      </th:block>
+
+      <th:block th:if="${challengeRisposte[c.id] == null}">
+        <span> – <a th:href="@{/challenge/risposta-quiz(id=${c.id})}">Rispondi</a></span>
+      </th:block>
+    </li>
+  </ul>
+  <p th:if="${challengeRicevute == null or challengeRicevute.size() == 0}">
+    Nessuna challenge ricevuta
+  </p>
 </section>
 
 </main>

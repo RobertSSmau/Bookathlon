@@ -1,7 +1,6 @@
 package com.bookathlon.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.bookathlon.entities.ChallengeRisp;
 
@@ -13,5 +12,6 @@ public interface ChallengeRispService {
     
     List<ChallengeRisp> trovaRisposte(Long utenteId);
    
-	
+    List<ChallengeRisp> trovaRispId(List<Long> ids);
+    
 }

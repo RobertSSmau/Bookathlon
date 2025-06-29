@@ -28,12 +28,6 @@ public class ChallengeRisp {
 
 	    @Column(name = "data_risposta")
 	    private LocalDateTime dataRisposta = LocalDateTime.now();
-
-	    @Column(name = "valutata")
-	    private Boolean valutata = false;
-
-	    @Column(name = "approvata")
-	    private Boolean approvata;
 	    
 	    @Column
 	    private Boolean corretta;
@@ -88,21 +82,6 @@ public class ChallengeRisp {
 			this.dataRisposta = dataRisposta;
 		}
 
-		public Boolean getValutata() {
-			return valutata;
-		}
-
-		public void setValutata(Boolean valutata) {
-			this.valutata = valutata;
-		}
-
-		public Boolean getApprovata() {
-			return approvata;
-		}
-
-		public void setApprovata(Boolean approvata) {
-			this.approvata = approvata;
-		}
 	    
 	    
 	

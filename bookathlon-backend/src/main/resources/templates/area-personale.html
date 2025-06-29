@@ -204,26 +204,31 @@
 <script th:src="@{/js/area-personale.js}"></script>
 <script th:src="@{/js/area-personale-challenge.js}"></script>
 
-<div id="remove-modal" class="modal d-none">
-  <div class="modal-content">
-    <img id="remove-cover" src="" alt="Copertina libro" style="max-width: 120px; margin: 1rem auto; display: block; border-radius: 5px;">
-    <p>Vuoi davvero rimuovere questo libro dalla tua libreria?</p>
-    <div class="modal-buttons">
-      <button id="remove-yes" class="nav-btn">Rimuovi</button>
-      <button id="remove-no" class="nav-btn">Annulla</button>
-    </div>
-  </div>
-</div>
-<div id="challenge-modal" class="modal d-none">
-  <div class="modal-content">
-    <p>Che tipo di challenge vuoi creare per questo libro?</p>
-    <div class="modal-buttons">
-      <button class="nav-btn" onclick="vaiACreazioneChallenge('QUIZ')">Quiz</button>
-      <button class="nav-btn" onclick="vaiACreazioneChallenge('APERTO')">Domanda Aperta</button>
-      <button class="nav-btn" onclick="chiudiModaleChallenge()">Annulla</button>
-    </div>
-  </div>
-</div>
+<section>
+  <h3>Challenge Inviate</h3>
+  <ul th:if="${challengeInviate != null and challengeInviate.size() > 0}">
+    <li th:each="c : ${challengeInviate}">
+      [#<span th:text="${c.id}"></span>]
+      <span th:text="${c.domanda}">DOMANDA</span> – 
+      <span th:text="${c.destinatario.username}">DESTINATARIO</span>
+
+      <th:block th:if="${challengeRisposte != null and challengeRisposte[c.id] != null}">
+        <span> – 
+          <strong th:text="${challengeRisposte[c.id].corretta 
+                            ? 'Risposta corretta' 
+                            : 'Risposta errata'}"></strong>
+        </span>
+      </th:block>
+
+      <th:block th:if="${challengeRisposte == null or challengeRisposte[c.id] == null}">
+        <span> – In attesa di risposta</span>
+      </th:block>
+    </li>
+  </ul>
+  <p th:if="${challengeInviate == null or challengeInviate.size() == 0}">
+    Nessuna challenge inviata
+  </p>
+</section>
 
 </body>
 </html>

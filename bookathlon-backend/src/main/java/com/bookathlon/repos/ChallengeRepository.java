@@ -21,6 +21,12 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
             ORDER BY "data_creazione" DESC
         """, nativeQuery = true)
         List<Challenge> queryChallengeRicevute(@Param("utenteId") Long utenteId);
+    
+    @Query(value = """
+    		  SELECT * FROM "better-mockup-schema-2".challenge 
+    		  WHERE destinatario_id = :id AND stato != 'COMPLETATA'
+    		""", nativeQuery = true)
+    		List<Challenge> queryChallAttive(@Param("id") Long id);
 
 }
 
