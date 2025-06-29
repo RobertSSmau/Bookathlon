@@ -29,7 +29,7 @@ public class CreazioneChallengeController {
 	private ChallengeService challengeService;
 	
 	@Autowired
-	private UtenteRepository utenteRepo;
+	private UtenteRepository utenteRepo; //errore, uso repo invece che un service
 	
 	@Autowired
 	private LibroService libroService;

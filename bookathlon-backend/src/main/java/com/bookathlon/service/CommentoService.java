@@ -8,5 +8,6 @@ public interface CommentoService {
 
 	  Commento salva(Commento commento);
 	  List<Commento> trovaPerLibro(Long libroId);
+	  Commento getById(Long id);
 	
 }

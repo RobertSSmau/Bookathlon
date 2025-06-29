@@ -19,7 +19,6 @@ import com.bookathlon.entities.Commento;
 import com.bookathlon.entities.LibreriaUtente;
 import com.bookathlon.entities.Libro;
 import com.bookathlon.entities.Utente;
-import com.bookathlon.repos.CommentoRepository;
 import com.bookathlon.repos.UtenteRepository;
 import com.bookathlon.service.CommentoService;
 import com.bookathlon.service.LibreriaUtenteService;
@@ -37,20 +36,16 @@ public class HomeController {
     private LibroService libroService;
     
     @Autowired
-    private UtenteRepository utenteRepo;
+    private UtenteRepository utenteRepo; //errore , uso repo invece che un service
     
     @Autowired
     private LibreriaUtenteService libreriaService;
     
+    @Autowired
+    private CommentoService commServ;
     
     @Autowired
-    private CommentoRepository commentoRepo;
-    
-    @Autowired
-    private CommentoService commentoService;
-    
-    @Autowired
-    private LikeCommentoService likeCommentoService;
+    private LikeCommentoService likeServ;
     
 
  /**
@@ -123,7 +118,7 @@ public class HomeController {
         Libro libro = libroService.getLibroById(id);
         m.addAttribute("libro", libro);
 
-        List<Commento> commenti = commentoService.trovaPerLibro(id);
+        List<Commento> commenti = commServ.trovaPerLibro(id);
         m.addAttribute("commenti", commenti);
         
         List<UtenteDTO> autoriCommenti = new ArrayList<>();
@@ -142,7 +137,7 @@ public class HomeController {
             m.addAttribute("utenteLoggatoId", utente.getId());
         }
 
-        m.addAttribute("likeService", likeCommentoService); 
+        m.addAttribute("likeService", likeServ); 
         return "dettaglio-libro";
     }
     
@@ -161,7 +156,7 @@ public class HomeController {
         nuovo.setUtenteId(utente.getId());
         nuovo.setContenuto(contenuto);
 
-        commentoService.salva(nuovo);
+        commServ.salva(nuovo);
 
         return "redirect:/libro?id=" + libroId;
     }
@@ -174,13 +169,17 @@ public class HomeController {
         Utente utente = utenteRepo.findByUsername(userDetails.getUsername());
         Long utenteId = utente.getId();
 
-        if (likeCommentoService.haGiaMessoLike(commentoId, utenteId)) {
-            likeCommentoService.rimuoviLike(commentoId, utenteId);
+        if (likeServ.haGiaMessoLike(commentoId, utenteId)) {
+            likeServ.rimuoviLike(commentoId, utenteId);
         } else {
-            likeCommentoService.mettiLike(commentoId, utenteId);
+            likeServ.mettiLike(commentoId, utenteId);
         }
 
-        Long libroId = commentoRepo.findById(commentoId).get().getLibroId();
+        Commento commento = commServ.getById(commentoId);
+        if (commento == null) 
+        	return "redirect:/";
+
+        Long libroId = commento.getLibroId();
         return "redirect:/libro?id=" + libroId;
     }
 }

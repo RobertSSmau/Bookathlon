@@ -24,4 +24,9 @@ public class CommentoServiceImpl implements CommentoService {
         return commentoRepo.trovaPerLibro(libroId);
     }
 	
+	@Override
+	public Commento getById(Long id) {
+	    return commentoRepo.findById(id).orElse(null);
+	}
+	
 }

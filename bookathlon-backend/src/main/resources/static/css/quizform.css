@@ -1,0 +1,89 @@
+/* WRAPPER PRINCIPALE */
+.challenge-form-wrapper {
+  background-color: #06131d;
+  border-radius: 15px;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 3rem auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* INFO LIBRO */
+.challenge-book-info {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.challenge-book-title {
+  color: #A3D5B6;
+  font-size: 1.5rem;
+}
+
+/* FORM */
+.challenge-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* LABEL */
+.challenge-form label {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #A3D5B6;
+  align-self: flex-start;
+}
+
+/* CAMPI INPUT E SELECT */
+.challenge-form input,
+.challenge-form textarea,
+.challenge-form select {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #103048;
+  color: #A3D5B6;
+  box-sizing: border-box;
+}
+
+/* TEXTAREA NON RESIZABILE */
+.challenge-textarea {
+  resize: none;
+}
+
+/* SELECT DEDICATA */
+.select-risposta {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23A3D5B6' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  background-size: 1rem;
+  padding-right: 2rem;
+}
+
+/* BOTTONE */
+.confirm-add-button {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 500px;
+  background-color: #103048;
+  color: #A3D5B6;
+  border: 2px solid #A3D5B6;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.confirm-add-button:hover {
+  background-color: #A3D5B6;
+  color: #103048;
+}

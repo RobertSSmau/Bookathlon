@@ -15,7 +15,10 @@ public class LikeCommentoServiceImpl implements LikeCommentoService {
 	 	@Autowired
 	    private LikeCommentoRepository likeRepo;
 
-
+	 	@Override
+	 	public long contaLike(Long commentoId) {
+	 	    return likeRepo.contaLike(commentoId);
+	 	}
 
 	    @Override
 	    public boolean haGiaMessoLike(Long commentoId, Long utenteId) {
