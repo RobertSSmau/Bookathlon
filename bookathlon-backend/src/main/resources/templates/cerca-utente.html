@@ -37,7 +37,7 @@
     <h2>Cerca un amico</h2>
     <form method="get" th:action="@{/area-personale/cerca-utente}">
       <input class="search-input" type="text" name="q" placeholder="Inserisci uno username" required />
-      <button class="search-btn" type="submit">Cerca</button>
+      <button type="submit">Cerca</button>
     </form>
   </section>
 
@@ -47,7 +47,7 @@
     <p th:if="${risultatiUtenti.size() == 0}">Nessun utente trovato.</p>
 
     <div class="card-container" th:if="${risultatiUtenti.size() > 0}">
-      <div class="card" th:each="utente : ${risultatiUtenti}">
+      <div class="card" style="height: 300px;" th:each="utente : ${risultatiUtenti}">
         <img src="/images/avatar.png" alt="Avatar" class="card-img shadowed-avatar">
         <h3 th:text="${utente.username}">Username</h3>
         <form method="post" th:action="@{/area-personale/amici/invia}">

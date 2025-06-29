@@ -17,7 +17,7 @@
       </a>
     </div>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    <nav class="nav-buttons">
+    <nav class="nav-buttons" style="height: 380px;">
       <div th:if="${#authorization.expression('isAuthenticated()')}">
         <a href="/" class="btn">Home</a>
         <a href="/area-personale/cerca" class="btn">Cerca Bookathloner</a>

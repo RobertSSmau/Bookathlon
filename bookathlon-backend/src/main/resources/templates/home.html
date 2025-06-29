@@ -20,7 +20,7 @@
 
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-    <nav class="nav-buttons" style="height: 200px; ">
+    <nav class="nav-buttons" style="height: 200px;">
       <div th:if="${#authorization.expression('isAuthenticated()')}">
         <a href="/area-personale" class="btn">Area Personale</a>
         <form th:action="@{/logout}" method="post" style="display:inline;">
@@ -57,9 +57,9 @@
         <ul class="glide__slides">
           <li class="glide__slide" th:each="libro : ${tendenze}">
             <div class="card">
-              <img th:src="${libro.url_copertina}" alt="Copertina libro" class="card-img">
+              <img th:src="${libro.url_copertina}" style="width: 150px; height: 200px;" alt="Copertina libro" class="card-img">
               <div class="card-content">
-                <h3 th:text="${libro.titolo}" style="height: 3em;" >Titolo</h3>
+                <h3 th:text="${libro.titolo}">Titolo</h3>
                 <p th:text="${libro.autore}">Autore</p>
                 <p th:text="${libro.genere}">Genere</p>
 
@@ -78,13 +78,15 @@
           </li>
         </ul>
       </div>
-      
-      <!-- Frecce di navigazione -->
-            <div data-glide-el="controls" class="glide-controls">
+        <!-- Frecce di navigazione -->
+      <div data-glide-el="controls" class="glide-controls">
         <button data-glide-dir="<" class="glide-arrow" >&lt;</button>
         <button data-glide-dir=">" class="glide-arrow">&gt;</button>
       </div>
+
     </div>
+   
+
   </div>
   
 </section>
@@ -95,7 +97,7 @@
   <!-- Menù a tendina -->
   <label for="genereSelect">Scegli un genere:</label>
   <select id="genereSelect">
-    <option disabled selected hidden value=""></option>
+    <option value="" selected></option>
     <option value="all">Tutti</option>
     <option th:each="entry : ${libriPerGenere}" th:value="${entry.key}" th:text="${entry.key}">Genere</option>
 
@@ -103,31 +105,42 @@
 
   <!-- Blocchi per ciascun genere -->
    
-<div th:each="entry : ${libriPerGenere}" th:attr="data-genere=${entry.key}" class="card-section-wrapper genere-section">
-    <h3 th:text="${entry.key}">Genere</h3>
-    <div class="carosello-scroll">
-      <div th:each="libro : ${entry.value}" class="card">
-        <a th:href="@{'/libro'(id=${libro.id})}">
-          <img th:src="${libro.url_copertina}" alt="Copertina libro" class="card-img" />
-        </a>
-        <div class="card-content">
-        <h4 th:text="${libro.titolo}">Titolo</h4>
-        <p th:text="${libro.autore}">Autore</p>
+<div th:each="entry : ${libriPerGenere}" class="genere-section card-section-wrapper" th:attr="data-genere=${entry.key}">
+  <h3 th:text="${entry.key}">Genere</h3>
 
-        <div th:if="${idLibriUtente == null or !idLibriUtente.contains(libro.id)}">
-          <form method="post" th:action="@{/area-personale/aggiungi}">
-            <input type="hidden" name="libroId" th:value="${libro.id}" />
-            <input type="hidden" name="stato" value="DA_LEGGERE" />
-            <button type="submit">Aggiungi</button>
-          </form>
-        </div>
-        <div th:if="${idLibriUtente != null and idLibriUtente.contains(libro.id)}">
-          <button class="btn-aggiunto"disabled>Aggiunto</button>
-        </div>
-      </div>
+  <div class="glide" th:attr="id='glide-' + ${entry.key.replaceAll('[^a-zA-Z0-9]', '_')}">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <li class="glide__slide" th:each="libro : ${entry.value}">
+          <div class="card">
+            <img th:src="${libro.url_copertina}" style="width: 150px; height: 200px;" alt="Copertina libro" class="card-img">
+            <div class="card-content">
+              <h3 th:text="${libro.titolo}">Titolo</h3>
+              <p th:text="${libro.autore}">Autore</p>
+              <div th:if="${idLibriUtente == null or !idLibriUtente.contains(libro.id)}">
+                <form method="post" th:action="@{/area-personale/aggiungi}">
+                  <input type="hidden" name="libroId" th:value="${libro.id}" />
+                  <input type="hidden" name="stato" value="DA_LEGGERE" />
+                  <button type="submit">Aggiungi</button>
+                </form>
+              </div>
+              <div th:if="${idLibriUtente != null and idLibriUtente.contains(libro.id)}">
+                <button class="btn-aggiunto" disabled>Aggiunto</button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
+            <div data-glide-el="controls" class="glide-controls">
+      <button data-glide-dir="<" class="glide-arrow">&lt;</button>
+      <button data-glide-dir=">" class="glide-arrow">&gt;</button>
+  </div>
     </div>
-  </div>  
+
+</div>
+
+
 </section>
 
 </main>
@@ -168,6 +181,13 @@ document.addEventListener('DOMContentLoaded', function () {
       sezioni.forEach(section => {
         const genere = section.getAttribute('data-genere');
         section.style.display = (valore === 'all' || valore === genere) ? 'block' : 'none';
+            // Inizializza Glide solo se serve
+    if (show) {
+      const glide = section.querySelector('.glide');
+      if (glide && glide.id) {
+        initGlideIfNeeded(glide.id);
+      }
+    }
       });
     });
   }
@@ -175,16 +195,71 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
 <script>
-  new Glide('#glideTendenze', {
-    type: 'carousel',
-    perView: 5,
-    gap: 20,
-    breakpoints: {
-      1024: { perView: 4 },
-      768: { perView: 3 },
-      480: { perView: 2 }
+  const glideInstances = {};
+
+  function initGlideIfNeeded(id) {
+    if (!glideInstances[id]) {
+      glideInstances[id] = new Glide(`#${id}`, {
+        type: 'carousel',
+        perView: 5,
+        gap: 0,
+        breakpoints: {
+          1024: { perView: 4 },
+          768: { perView: 3 },
+          480: { perView: 2 }
+        }
+      });
+      glideInstances[id].mount();
     }
-  }).mount();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Inizializza Tendenze
+    new Glide('#glideTendenze', {
+      type: 'carousel',
+      perView: 5,
+      gap: 0,
+      breakpoints: {
+        1024: { perView: 4 },
+        768: { perView: 3 },
+        480: { perView: 2 }
+      }
+    }).mount();
+
+    const select = document.getElementById('genereSelect');
+    const sezioni = document.querySelectorAll('.genere-section');
+
+    // Nascondi tutte le sezioni all’inizio
+    sezioni.forEach(section => {
+      section.style.display = 'none';
+    });
+
+    // Gestione selezione genere
+    if (select) {
+      select.addEventListener('change', function () {
+        const valore = this.value;
+        sezioni.forEach(section => {
+          const genere = section.getAttribute('data-genere');
+          const show = (valore === 'all' || valore === genere);
+          section.style.display = show ? 'block' : 'none';
+
+          if (show) {
+            const glide = section.querySelector('.glide');
+            if (glide && glide.id) {
+              initGlideIfNeeded(glide.id);
+            }
+          }
+        });
+      });
+
+      // Mostra inizialmente nessun genere
+      select.value = '';
+      select.dispatchEvent(new Event('change'));
+    }
+  });
 </script>
+
+
+
 </body>
 </html>
