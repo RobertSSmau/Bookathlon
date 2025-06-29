@@ -87,24 +87,24 @@
 <section>
   <h3>Challenge Inviate</h3>
   <ul th:if="${challengeInviate != null and challengeInviate.size() > 0}">
-    <li th:each="c : ${challengeInviate}">
-      [#<span th:text="${c.id}"></span>]
-      <span th:text="${c.domanda}">DOMANDA</span> – 
-      <span th:text="${c.destinatario.username}">DESTINATARIO</span>
+  <li th:each="c : ${challengeInviate}" th:if="${c.destinatario != null}">
+    [#<span th:text="${c.id}"></span>]
+    <span th:text="${c.domanda}">DOMANDA</span> – 
+    <span th:text="${c.destinatario.username}">DESTINATARIO</span>
 
-      <th:block th:if="${challengeRisposte != null and challengeRisposte[c.id] != null}">
-        <span> – 
-          <strong th:text="${challengeRisposte[c.id].corretta 
-                            ? 'Risposta corretta' 
-                            : 'Risposta errata'}"></strong>
-        </span>
-      </th:block>
+    <th:block th:if="${challengeRisposte != null and challengeRisposte[c.id] != null}">
+      <span> – 
+        <strong th:text="${challengeRisposte[c.id].corretta 
+                          ? 'Risposta corretta' 
+                          : 'Risposta errata'}"></strong>
+      </span>
+    </th:block>
 
-      <th:block th:if="${challengeRisposte == null or challengeRisposte[c.id] == null}">
-        <span> – In attesa di risposta</span>
-      </th:block>
-    </li>
-  </ul>
+    <th:block th:if="${challengeRisposte == null or challengeRisposte[c.id] == null}">
+      <span> – In attesa di risposta</span>
+    </th:block>
+  </li>
+</ul>
   <p th:if="${challengeInviate == null or challengeInviate.size() == 0}">
     Nessuna challenge inviata
   </p>

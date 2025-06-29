@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Invia Challenge</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/friends.css}">
 </head>
 <body>
 
@@ -18,26 +19,25 @@
 </header>
 
 <main>
-<section class="card-section-wrapper" style="max-width: 600px; margin: 2rem auto;">
-    <h2>Invia la tua Challenge</h2>
+<form th:action="@{/challenge/invia}" method="post">
+  <input type="hidden" name="challengeId" th:value="${challengeId}" />
 
-    <form th:action="@{/challenge/invia}" method="post">
-        <!-- ID della challenge nascosto -->
-        <input type="hidden" name="challengeId" th:value="${challengeId}" />
+  <div class="card-container">
+    <label class="card card-amico selectable-card" th:each="a : ${amici}">
+      <input type="checkbox" name="destinatari" th:value="${a.id}" class="card-checkbox" />
 
-        <ul style="list-style: none; padding: 0;">
-            <li th:each="amico : ${amici}" style="margin-bottom: 1rem;">
-                <label>
-                    <input type="checkbox" name="destinatari" th:value="${amico.id}" />
-                    <span th:text="${amico.username}">Username</span> 
-                    - <span th:text="'Punti: ' + ${amico.score}">Punti</span>
-                </label>
-            </li>
-        </ul>
+      <img src="/images/avatar.png" alt="Avatar" class="card-img shadowed-avatar">
+      <div class="card-content">
+        <h3 th:text="${a.username}">Username</h3>
+        <p th:text="'Punti: ' + ${a.score}">Punti</p>
+      </div>
+    </label>
+  </div>
 
-        <button type="submit" class="nav-btn">Invia Challenge</button>
-    </form>
-</section>
+  <div style="text-align: center; margin-top: 2rem;">
+    <button type="submit" class="nav-btn">Invia Challenge</button>
+  </div>
+</form>
 </main>
 
 </body>

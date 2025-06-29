@@ -35,4 +35,19 @@ public class UtenteServiceImpl implements UtenteService {
 	public boolean existsByUsername(String username) {
 		return dao.findByUsername(username) != null;
 	}
+	
+	@Override
+    public Utente getByUsername(String username) {
+        return dao.findByUsername(username);
+    }
+
+    @Override
+    public Utente getById(Long id) {
+        return dao.findById(id).orElse(null);
+    }
+
+    @Override
+    public void incrementaScore(Long id) {
+        dao.incrementaScore(id);
+    }
 }

@@ -1,5 +1,3 @@
-<!--debug-->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
@@ -7,33 +5,54 @@
   <title>Rispondi al Quiz</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" th:href="@{/css/home.css}">
+  <link rel="stylesheet" th:href="@{/css/quiz.css}">
 </head>
 <body>
-  <header>
-    <h1>Rispondi al Quiz</h1>
-  </header>
+<header>
+  <div class="header-content">
+    <div class="logo">
+      <a href="#" style="pointer-events: none; cursor: default;">
+        <img th:src="@{/images/logoverde.png}" alt="Logo Bookathlon" />
+      </a>
+    </div>
+    <nav class="nav-buttons">
+      <button class="btn" disabled style="opacity: 0.6; cursor: not-allowed;">Home</button>
+      <form th:action="@{/logout}" method="post" style="display:inline;">
+        <button type="submit" class="btn">Esci</button>
+      </form>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <p><strong>Domanda:</strong> <span th:text="${challenge.domanda}">Domanda</span></p>
+<main>
+	<div class="quiz-timer">
+	  Tempo rimanente: <span id="timer">10</span> secondi
+	</div>
+  <section class="quiz-layout">
+    <div class="quiz-left">
+      <img th:src="${libro.url_copertina}" alt="Copertina libro" class="quiz-cover" />
+    </div>
 
-    <form th:action="@{/challenge/risposta-quiz}" method="post">
-      <input type="hidden" name="challengeId" th:value="${challenge.id}" />
+    <div class="quiz-right">
+      <div class="quiz-book-title" th:text="${libro.titolo}">Libro</div>
+      <div class="quiz-autore" th:text="'Challenge inviata da: ' + ${autoreChallenge}">Sfidante</div>
+      <div class="quiz-domanda" th:text="${quiz.domanda}">Domanda</div>
 
-      <div>
-        <label><input type="radio" name="risposta" value="A" required /> <span th:text="${challenge.opzioneA}">Opzione A</span></label>
-      </div>
-      <div>
-        <label><input type="radio" name="risposta" value="B" /> <span th:text="${challenge.opzioneB}">Opzione B</span></label>
-      </div>
-      <div>
-        <label><input type="radio" name="risposta" value="C" /> <span th:text="${challenge.opzioneC}">Opzione C</span></label>
-      </div>
-      <div>
-        <label><input type="radio" name="risposta" value="D" /> <span th:text="${challenge.opzioneD}">Opzione D</span></label>
-      </div>
+      <form th:action="@{/challenge/risposta-quiz}" method="post">
+        <input type="hidden" name="challengeId" th:value="${quiz.id}" />
 
-      <button type="submit" class="nav-btn">Invia Risposta</button>
-    </form>
-  </main>
+        <div class="quiz-opzioni">
+          <label><input type="radio" name="risposta" value="A" required /> <span th:text="${quiz.opzioneA}">A</span></label>
+          <label><input type="radio" name="risposta" value="B" /> <span th:text="${quiz.opzioneB}">B</span></label>
+          <label><input type="radio" name="risposta" value="C" /> <span th:text="${quiz.opzioneC}">C</span></label>
+          <label><input type="radio" name="risposta" value="D" /> <span th:text="${quiz.opzioneD}">D</span></label>
+        </div>
+
+        <button type="submit" class="quiz-submit">Invia Risposta</button>
+      </form>
+    </div>
+  </section>
+</main>
+<script th:src="@{/js/timer.js}"></script>
 </body>
 </html>

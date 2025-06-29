@@ -16,4 +16,10 @@ public interface UtenteService {
      * Verifica se un utente con un determinato username esiste già nel sistema.
      */
     boolean existsByUsername(String username);
+    
+    Utente getByUsername(String username);
+    
+    Utente getById(Long id);
+    
+    void incrementaScore(Long id);
 }

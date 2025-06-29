@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookathlon.entities.Challenge;
 import com.bookathlon.entities.ChallengeRisp;
+import com.bookathlon.entities.Libro;
 import com.bookathlon.entities.Utente;
 import com.bookathlon.repos.UtenteRepository;
 import com.bookathlon.service.ChallengeRispService;
 import com.bookathlon.service.ChallengeService;
+import com.bookathlon.service.LibroService;
+import com.bookathlon.service.UtenteService;
 
 @Controller
 @RequestMapping("/challenge")
@@ -28,38 +31,56 @@ public class RispostaController {
     private ChallengeRispService challRisp;
 
     @Autowired
-    private UtenteRepository uRepo;//ERRORE, il controller non deve utilizzare le repo
+    private UtenteService utenteService;
+    
+    @Autowired
+    private LibroService libServ;
     
     @GetMapping("/risposta-quiz")
     public String mostraQuiz(@RequestParam Long id, Model model) {
 
         Challenge c = passaQuizvalido(id);
-        if (c == null) 
-        	return "redirect:/challenge";
-        
-        model.addAttribute("challenge", c);
-        
+        if (c == null)
+            return "redirect:/challenge";
+
+        Libro l = libServ.getLibroById(c.getLibroId());
+        if (l == null)
+            return "redirect:/challenge";
+
+        Utente a = c.getAutore();
+        if (a != null) {
+            model.addAttribute("autoreChallenge", a.getUsername());
+        }
+
+        model.addAttribute("quiz", c);
+        model.addAttribute("libro", l);
+
         return "risposta-quiz";
     }
+
     
     @PostMapping("/risposta-quiz")
     public String rispostaQuiz(@RequestParam Long challengeId,
-            					@RequestParam String risposta,
-            					@AuthenticationPrincipal UserDetails user) {
-    	
-    	Challenge c = passaQuizvalido(challengeId);
-    	if (c == null) 
-    		return "redirect:/challenge";
-    	
-    	Utente u = uRepo.findByUsername(user.getUsername());
-    	
-    	ChallengeRisp r = new ChallengeRisp();
-    	
-    	r.setChallengeId(challengeId);
+                                @RequestParam String risposta,
+                                @AuthenticationPrincipal UserDetails user) {
+
+        Challenge c = passaQuizvalido(challengeId);
+        if (c == null)
+            return "redirect:/challenge";
+
+        Utente u = utenteService.getByUsername(user.getUsername());
+        if (u == null)
+            return "redirect:/challenge";
+
+        ChallengeRisp r = new ChallengeRisp();
+        
+        r.setChallengeId(challengeId);
         r.setUtenteId(u.getId());
         r.setRisposta(risposta);
-    	
-        boolean corretta = risposta.equalsIgnoreCase(c.getRispostaCorretta());
+
+        boolean corretta = risposta.
+        		equalsIgnoreCase(c.
+        				getRispostaCorretta());
         r.setCorretta(corretta);
         challRisp.salva(r);
 
@@ -67,14 +88,13 @@ public class RispostaController {
         challServ.salvaChallenge(c);
 
         if (corretta) {
-        	uRepo.incrementaScore(u.getId());
+            utenteService.incrementaScore(u.getId());
         }
-        
+
         return "redirect:/challenge/esito?id=" 
         + challengeId 
         + "&corretta=" 
         + corretta;
-    	
     }
     
     
@@ -88,10 +108,7 @@ public class RispostaController {
     }
 
     private Challenge passaQuizvalido(Long id) {
-
-        Challenge quiz = challServ.getById(id);
-
-        return quiz;
+        return challServ.getById(id);
     }
     
     
