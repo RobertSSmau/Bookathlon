@@ -38,7 +38,7 @@ public class AreaPersonaleController {
 	 // Servizio per le operazioni sulla libreria dell'utente.
 
     @Autowired
-    private UtenteRepository utenteRepo; 
+    private UtenteRepository utenteRepo; //ERRORE, il controller non deve utilizzare le repo
 	// Repository per l'accesso ai dati dell'utente.
     
     @Autowired

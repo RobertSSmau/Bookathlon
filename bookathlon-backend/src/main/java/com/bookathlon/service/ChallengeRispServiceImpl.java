@@ -19,16 +19,6 @@ public class ChallengeRispServiceImpl implements ChallengeRispService {
     public ChallengeRisp salva(ChallengeRisp risposta) {
         return repo.save(risposta);
     }
-
-    @Override
-    public List<ChallengeRisp> getByChallengeId(Long challengeId) {
-        return repo.findByChallengeId(challengeId);
-    }
-    
-    @Override
-    public List<ChallengeRisp> trovaRisposte(Long utenteId) {
-        return repo.findByUtenteId(utenteId);
-    }
     
     @Override
     public List<ChallengeRisp> trovaRispId(List<Long> ids) {

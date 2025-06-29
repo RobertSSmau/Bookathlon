@@ -28,7 +28,7 @@ public class RispostaController {
     private ChallengeRispService challRisp;
 
     @Autowired
-    private UtenteRepository uRepo;
+    private UtenteRepository uRepo;//ERRORE, il controller non deve utilizzare le repo
     
     @GetMapping("/risposta-quiz")
     public String mostraQuiz(@RequestParam Long id, Model model) {

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.bookathlon.entities.Challenge;
 import com.bookathlon.entities.ChallengeRisp;
 import com.bookathlon.entities.Utente;
-import com.bookathlon.repos.ChallengeRepository;
 import com.bookathlon.repos.UtenteRepository;
 import com.bookathlon.service.ChallengeRispService;
 import com.bookathlon.service.ChallengeService;
@@ -30,7 +29,7 @@ public class ChallengeController {
 	private ClassificaService classificaService;
 	
 	@Autowired
-	private UtenteRepository utRepo;
+	private UtenteRepository utRepo;//ERRORE, il controller non deve utilizzare le repo
 	
 	@Autowired
 	private ChallengeRispService rispServ;

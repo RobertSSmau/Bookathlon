@@ -29,11 +29,6 @@ public class ChallengeServiceImpl implements ChallengeService {
 		return repo.findByAutoreId(autoreId);
 	}
 
-	@Override
-    public List<Challenge> getChallengeRicevute(Long destinatarioId) {
-        return repo.findByDestinatarioId(destinatarioId);
-    }
-	
 
 	@Override
     public Challenge getById(Long id) {

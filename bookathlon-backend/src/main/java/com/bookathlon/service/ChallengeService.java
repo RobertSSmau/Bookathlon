@@ -12,8 +12,6 @@ public interface ChallengeService {
 
     List<Challenge> getChallengeInviate(Long autoreId);
 
-    List<Challenge> getChallengeRicevute(Long destinatarioId);
-
     Challenge getById(Long id);
     
     List<Challenge> getChallAttive(Long destinatarioId);

@@ -17,17 +17,7 @@ public class UtenteServiceImpl implements UtenteService {
     
     @Autowired
     private PasswordEncoder passwordEncoder;	
-    @Override
-    public List<Utente> getUtenti() {
-        return dao
-        		.findAll();
-    }
 
-    @Override
-    public Utente getUtenteById(Long id) {
-        return dao.findById(id)
-        		.orElse(null);
-    }
 
     @Override
     public Utente addUtente(Utente u) {
