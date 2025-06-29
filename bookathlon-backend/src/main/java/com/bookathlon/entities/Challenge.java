@@ -10,11 +10,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "challenge", schema = "better-mockup-schema-2")
 public class Challenge {
 
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -175,6 +177,8 @@ public class Challenge {
 	public void setOpzioneD(String opzioneD) {
 		this.opzioneD = opzioneD;
 	}
+
+
 
     
 	

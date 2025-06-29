@@ -1,15 +1,13 @@
-let libroIdSelezionato = null;
-
-function apriSceltaChallenge(libroId) {
-  libroIdSelezionato = libroId;
-  document.getElementById("challenge-modal").classList.remove("d-none");
+function mostraSezioneChallenge(sezione) {
+  const sezioni = ['classifiche', 'challenge'];
+  sezioni.forEach(id => {
+    const el = document.getElementById('sezione-' + id);
+    if (el) {
+      el.classList.toggle('d-none', sezione !== id);
+    }
+  });
 }
 
-function chiudiModaleChallenge() {
-  document.getElementById("challenge-modal").classList.add("d-none");
-}
-
-function vaiACreazioneChallenge() {
-  if (!libroIdSelezionato) return;
-  window.location.href = `/challenge/nuova?libroId=${libroIdSelezionato}`;
-}
+window.addEventListener('DOMContentLoaded', () => {
+  mostraSezioneChallenge('classifiche');
+});

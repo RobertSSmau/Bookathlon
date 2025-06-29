@@ -46,4 +46,9 @@ public class ChallengeServiceImpl implements ChallengeService {
 	    return repo.queryChallAttive(destinatarioId);
 	}
 	
+	@Override
+	public List<Challenge> getChallengeRicevute(Long destinatarioId) {
+	    return repo.findByDestinatarioId(destinatarioId);
+	}
+	
 }
