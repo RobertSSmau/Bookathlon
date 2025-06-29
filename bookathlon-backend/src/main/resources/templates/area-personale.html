@@ -134,7 +134,7 @@
   <h2>I miei Bookathloners</h2>
   <div class="card-section-wrapper">
     <div class="card-container">
-      <div class="card" th:each="a : ${amici}">
+      <div class="card" style="height: 300px;" th:each="a : ${amici}">
         <img src="/images/avatar.png" alt="Avatar" class="card-img shadowed-avatar">
         <div class="card-content">
           <h3 th:text="${a.username}">Username</h3>
