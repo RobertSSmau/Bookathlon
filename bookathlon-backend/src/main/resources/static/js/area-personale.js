@@ -76,3 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     currentRemoveForm = null;
   });
 });
+
+function apriSceltaChallenge(libroId) {
+  window.location.href = "/challenge/nuova?libroId=" + libroId;
+}
