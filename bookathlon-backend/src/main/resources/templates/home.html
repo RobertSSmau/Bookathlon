@@ -40,14 +40,19 @@
 <main>
 
   <section class="search-section">
-    <h2>Cerca un libro</h2>
-    <div class="card-section-wrapper">
-    <form action="/cerca" method="get">
-      <input type="text" name="q" placeholder="Titolo o autore" required />
+  <h2>Cerca un libro</h2>
+  <div class="card-section-wrapper">
+    <form id="searchForm" action="/cerca-per-titolo" method="get">
+      <select id="searchType" class="select-bookathlon">
+        <option value="titolo">Titolo</option>
+        <option value="autore">Autore</option>
+      </select>
+
+      <input type="text" name="titolo" id="searchInput" placeholder="Inserisci il titolo" required />
       <button type="submit">Cerca</button>
     </form>
-    </div>
-  </section>
+  </div>
+</section>
 
   <section>
   <h2>Libri di Tendenza</h2>
@@ -98,8 +103,8 @@
 
   <!-- Menù a tendina -->
   <label for="genereSelect">Scegli un genere:</label>
-  <select id="genereSelect">
-    <option value="" selected></option>
+  <select id="genereSelect" class="select-bookathlon">
+    <option value="" selected>Seleziona</option>
     <option value="all">Tutti</option>
     <option th:each="entry : ${libriPerGenere}" th:value="${entry.key}" th:text="${entry.key}">Genere</option>
 
@@ -162,6 +167,7 @@
   </div>
 </div> 
 <script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/ricerca-titolo-autore.js}"></script>
 <script>
   function toggleMenu() {
     document.querySelector('.nav-buttons').classList.toggle('show');

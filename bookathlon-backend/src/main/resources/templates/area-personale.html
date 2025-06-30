@@ -80,10 +80,10 @@
         </form>
 
         <!-- Bottone "Rimuovi" -->
-        <form method="post" th:action="@{/area-personale/rimuovi}">
+        <form class="remove-form" method="post" th:action="@{/area-personale/rimuovi}">
           <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <button type="submit">Rimuovi</button>
+          <button type="submit" class="remove-button" title="Rimuovi libro">×</button>
         </form>
         
         <button type="button" class="nav-btn" th:onclick="|apriSceltaChallenge(${entry.libro.id})|">Crea Challenge</button>
@@ -119,11 +119,14 @@
         </p>
 
         <!-- Bottone "Rimuovi" -->
-        <form method="post" th:action="@{/area-personale/rimuovi}">
+        <form class="remove-form" method="post" th:action="@{/area-personale/rimuovi}">
           <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <button type="submit">Rimuovi</button>
+          <button type="submit" class="remove-button" title="Rimuovi libro">×</button>
         </form>
+
+         <button type="button" class="nav-btn" th:onclick="|apriSceltaChallenge(${entry.libro.id})|">Crea Challenge</button>
+         
       </div>
     </div>
     

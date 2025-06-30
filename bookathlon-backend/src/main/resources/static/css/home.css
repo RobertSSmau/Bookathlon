@@ -451,7 +451,7 @@ footer {
 }
   .glide-arrow {
     font-size: 1.5rem;
-    padding: 0.3rem 0.6rem;
+    padding: 1em 0.2rem;
   }
 
   .glide-controls {
@@ -553,8 +553,7 @@ footer {
 }
 
 
-#genereSelect {
-  margin-bottom: 1rem;
+.select-bookathlon {
   padding: 0.5rem;
   font-size: 1rem;
   border-radius: 5px;
@@ -777,4 +776,62 @@ footer {
   gap: 0.5rem;
   font-size: 1.1rem;
   color: #A3D5B6;
+}
+
+.search-section form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.search-section select,
+.search-section input,
+.search-section button {
+  height: 38px;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  line-height: 1; 
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.search-section select {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  background-color: #103048;
+  color: #A3D5B6;
+  border: 1px solid #ccc;
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+}
+
+.card {
+  position: relative;
+}
+
+.remove-form {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 10;
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff5f5f;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.remove-button:hover {
+  color: #ff0000;
+  transform: scale(1.2);
 }

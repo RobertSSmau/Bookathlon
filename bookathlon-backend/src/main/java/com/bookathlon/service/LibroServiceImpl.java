@@ -53,9 +53,13 @@ public class LibroServiceImpl implements LibroService {
      * Esegue una ricerca di libri basata su una parola chiave.
      * Delega la ricerca al metodo `ricercaSQL()` del repository.
      */
-    @Override
-    public List<Libro> cerca(String keyword) {
-        return repo.ricercaSQL(keyword);
-		 // Esegue la ricerca tramite la query SQL definita nel repository.
-    }
+	    @Override
+	    public List<Libro> cercaTitolo(String titolo) {
+	        return repo.titoloSQL(titolo);
+	    }
+
+	    @Override
+	    public List<Libro> cercaAutore(String autore) {
+	        return repo.autoreSQL(autore);
+	    }
 }

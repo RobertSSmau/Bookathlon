@@ -17,16 +17,22 @@ public interface LibroRepository extends JpaRepository<Libro, Long>{
 	 * Questo metodo cerca libri per parola chiave nel titolo o nell'autore, usando una query SQL nativa case-insensitive. 
 	 * Ritorna una lista di libri corrispondenti alla ricerca.
 	 */
-	@Query(
-		    value = """
-		        SELECT *
-		        FROM "better-mockup-schema-2".libro
-		        WHERE titolo ILIKE CONCAT('%', :kw, '%')
-		           OR autore ILIKE CONCAT('%', :kw, '%')
-		    """,
-		    nativeQuery = true
+	
+	@Query(value = """
+		    SELECT * 
+		    FROM "better-mockup-schema-2".libro
+		    WHERE titolo ILIKE CONCAT('%', :titolo, '%')
+		""", nativeQuery = true
 		)
-	List<Libro> ricercaSQL(@Param("kw") String keyword);
+		List<Libro> titoloSQL(@Param("titolo") String titolo);
+
+	@Query(value = """
+		    SELECT * 
+		    FROM "better-mockup-schema-2".libro
+		    WHERE autore ILIKE CONCAT('%', :autore, '%')
+		""", nativeQuery = true
+		)
+		List<Libro> autoreSQL(@Param("autore") String autore);
 	
 	@Query(value = """
 		    SELECT l.* 

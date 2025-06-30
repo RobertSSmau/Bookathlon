@@ -104,12 +104,18 @@ public class HomeController {
      * Esegue una ricerca sui libri basandosi sulla parola chiave fornita
      * e aggiunge i risultati al modello per la visualizzazione sulla pagina "risultati-filtrati".
      */
-    @GetMapping("/cerca")
-    public String cerca(@RequestParam String q, Model m) {
-        List<Libro> risultati = libroService.cerca(q);
+    @GetMapping("/cerca-per-titolo")
+    public String cercaPerTitolo(@RequestParam String titolo, Model m) {
+        List<Libro> risultati = libroService.cercaTitolo(titolo);
         m.addAttribute("filtrati", risultati);
-        return "risultati-filtrati"; 
-        // Questo HTML dovrà esistere nella cartella dei template.
+        return "risultati-filtrati";
+    }
+    
+    @GetMapping("/cerca-per-autore")
+    public String cercaPerAutore(@RequestParam String autore, Model m) {
+        List<Libro> risultati = libroService.cercaAutore(autore);
+        m.addAttribute("filtrati", risultati);
+        return "risultati-filtrati";
     }
     
     @GetMapping("/libro/{id}")
