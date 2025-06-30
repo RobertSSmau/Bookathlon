@@ -165,7 +165,7 @@ public class HomeController {
 
         commServ.salva(nuovo);
 
-        return "redirect:/libro?id=" + libroId;
+        return "redirect:/libro/" + libroId;
     }
     
     @PostMapping("/libro/commento/like")
@@ -187,6 +187,6 @@ public class HomeController {
         	return "redirect:/";
 
         Long libroId = commento.getLibroId();
-        return "redirect:/libro?id=" + libroId;
+        return "redirect:/libro/" + libroId;
     }
 }

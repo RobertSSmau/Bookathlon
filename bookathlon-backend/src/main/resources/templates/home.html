@@ -209,12 +209,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!glideInstances[id]) {
       glideInstances[id] = new Glide(`#${id}`, {
         type: 'carousel',
+        perMove: 5, 
         perView: 5,
+        animationDuration: 400,
+        bound: true,
         gap: 0,
         breakpoints: {
-          1024: { perView: 4 },
-          768: { perView: 3 },
-          480: { perView: 2 }
+          1024: { perView: 4, perMove: 4 },
+          768: { perView: 3,perMove: 3 },
+          480: { perView: 2,perMove: 2 }
         }
       });
       glideInstances[id].mount();
@@ -225,12 +228,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inizializza Tendenze
     new Glide('#glideTendenze', {
       type: 'carousel',
+      perMove: 5, 
       perView: 5,
+      animationDuration: 400,
+      bound: true,
       gap: 0,
       breakpoints: {
-        1024: { perView: 4 },
-        768: { perView: 3 },
-        480: { perView: 2 }
+        1024: { perView: 4 ,perMove: 4},
+        768: { perView: 3 ,perMove: 3},
+        480: { perView: 2 , perMove: 2}
       }
     }).mount();
 

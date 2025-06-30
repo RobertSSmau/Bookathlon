@@ -76,7 +76,7 @@
           <input type="hidden" name="libroId" th:value="${entry.libro.id}" />
           <input type="hidden" name="stato" value="LETTO" />
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <button type="submit">Segna come Letto</button>
+          <button type="submit" class="nav-btn">Segna come Letto</button>
         </form>
 
         <!-- Bottone "Rimuovi" -->
