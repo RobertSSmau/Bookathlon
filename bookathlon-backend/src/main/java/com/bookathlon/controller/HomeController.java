@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bookathlon.dto.UtenteDTO;
 import com.bookathlon.entities.Commento;
@@ -111,8 +112,8 @@ public class HomeController {
         // Questo HTML dovrà esistere nella cartella dei template.
     }
     
-    @GetMapping("/libro")
-    public String mostraDettaglioLibro(@RequestParam Long id, Model m,
+    @GetMapping("/libro/{id}")
+    public String mostraDettaglioLibro(@PathVariable("id") Long id, Model m,
                                        @AuthenticationPrincipal UserDetails userDetails) {
 
         Libro libro = libroService.getLibroById(id);

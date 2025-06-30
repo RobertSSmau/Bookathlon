@@ -57,7 +57,9 @@
         <ul class="glide__slides">
           <li class="glide__slide" th:each="libro : ${tendenze}">
             <div class="card">
+              <a th:href="@{/libro/{id}(id=${libro.id})}">
               <img th:src="${libro.url_copertina}" style="width: 150px; height: 200px;" alt="Copertina libro" class="card-img">
+             </a>
               <div class="card-content">
                 <h3 th:text="${libro.titolo}">Titolo</h3>
                 <p th:text="${libro.autore}">Autore</p>
