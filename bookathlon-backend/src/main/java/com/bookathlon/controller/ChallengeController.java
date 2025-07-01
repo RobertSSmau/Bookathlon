@@ -31,7 +31,7 @@ public class ChallengeController {
 	private ClassificaService classificaService;
 	
 	@Autowired
-	private UtenteRepository utRepo;//errore, il controller non deve utilizzare le repo
+	private UtenteRepository utRepo;
 	
 	@Autowired
 	private ChallengeRispService rispServ;

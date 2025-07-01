@@ -29,7 +29,7 @@ public class CreazioneChallengeController {
 	private ChallengeService challengeService;
 	
 	@Autowired
-	private UtenteRepository utenteRepo; //errore, uso repo invece che un service
+	private UtenteRepository utenteRepo;
 	
 	@Autowired
 	private LibroService libroService;
@@ -121,7 +121,6 @@ public class CreazioneChallengeController {
 	     return "seleziona-amici";
 		 }
 		 
-		 //workaround schifoso
 		 @PostMapping("/invia")
 		 public String inviaChallenge(@RequestParam Long challengeId,
 		                              @RequestParam(name = "destinatari") List<Long> destinatari,
@@ -151,7 +150,6 @@ public class CreazioneChallengeController {
 		         challengeService.salvaChallenge(copychall);
 		     }
 		     
-		     //elimina il record template che rimane nel db, spazzatura
 		     challengeService.eliminaDuplicato(challengeId);
 
 		     return "redirect:/challenge";
