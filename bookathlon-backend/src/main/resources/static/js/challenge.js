@@ -9,5 +9,5 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    mostraSezioneChallenge('classifiche');
+    mostraSezioneChallenge('challenge');
   });
