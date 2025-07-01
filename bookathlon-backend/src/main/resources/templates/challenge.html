@@ -5,6 +5,7 @@
     <title>Bookathlon - Challenge</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/challenge.css}">
 </head>
 <body>
 
@@ -16,7 +17,7 @@
       </a>
     </div>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    <nav class="nav-buttons">
+    <nav class="nav-buttons" style="height: 380px;">
       <div th:if="${#authorization.expression('isAuthenticated()')}">
         <a href="/" class="btn">Home</a>
         <a href="/area-personale/cerca" class="btn">Cerca Bookathloner</a>
@@ -33,12 +34,17 @@
   </div>
 </header>
 
+<div class="view-toggle-buttons" style="text-align: center; margin-top: 1rem;">
+  <button type="button" class="nav-btn" onclick="mostraSezioneChallenge('classifiche')">Classifiche</button>
+  <button type="button" class="nav-btn" onclick="mostraSezioneChallenge('challenge')">Le mie Challenge</button>
+</div>
+
 <div class="user-greeting-box">
   <h1 class="user-welcome">Benvenuto nella pagina Challenge!</h1>
 </div>
 
 <main>
-  <section>
+  <section id="sezione-classifiche" class="d-none">
     <h2>Classifica Globale</h2>
     <div class="card-section-wrapper">
       <table class="tabella-challenge">
@@ -58,9 +64,7 @@
         </tbody>
       </table>
     </div>
-  </section>
 
-  <section>
     <h2>Classifica Amici</h2>
     <div class="card-section-wrapper">
       <table class="tabella-challenge" th:if="${classificaAmici.size() > 0}">
@@ -82,15 +86,94 @@
       <p th:if="${classificaAmici.size() == 0}">Non hai ancora amici registrati.</p>
     </div>
   </section>
+
+ <section id="sezione-challenge">
+
+  <!-- CHALLENGE INVIATE -->
+  <h3>Challenge Inviate</h3>
+
+  <div class="card-container-vertical" th:if="${challengeInviate != null and challengeInviate.size() > 0}">
+    <div class="challenge-card" th:each="c : ${challengeInviate}" th:if="${c.destinatario != null}">
+      <div class="challenge-card-left">
+        <img th:src="${libriChallenge[c.id].url_copertina}" alt="copertina" class="challenge-cover" />
+        <h4 th:text="${libriChallenge[c.id].titolo}">Titolo</h4>
+      </div>
+
+      <div class="challenge-card-right">
+        <p><strong>Domanda:</strong> <span th:text="${c.domanda}">Domanda</span></p>
+        <p><strong>Destinatario:</strong> <span th:text="${c.destinatario.username}">Utente</span></p>
+
+        <!-- Se ha risposto -->
+        <th:block th:if="${challengeRisposte[c.id] != null}">
+          <p>
+            <strong class="status-pill"
+                    th:classappend="${challengeRisposte[c.id].corretta} ? 'corretta' : 'errata'"
+                    th:text="${challengeRisposte[c.id].corretta} ? 'Risposta corretta' : 'Risposta errata'">
+              Esito
+            </strong>
+          </p>
+        </th:block>
+
+        <!-- Se NON ha risposto -->
+        <th:block th:if="${challengeRisposte[c.id] == null}">
+          <p><em>In attesa di risposta</em></p>
+        </th:block>
+      </div>
+    </div>
+  </div>
+
+  <p th:if="${challengeInviate == null or challengeInviate.size() == 0}">
+    Nessuna challenge inviata
+  </p>
+
+  <!-- CHALLENGE RICEVUTE -->
+  <h3>Challenge Ricevute</h3>
+
+  <div class="card-container-vertical" th:if="${challengeRicevute != null and challengeRicevute.size() > 0}">
+    <div class="challenge-card" th:each="c : ${challengeRicevute}">
+      <div class="challenge-card-left">
+        <img th:src="${libriChallenge[c.id].url_copertina}" alt="copertina" class="challenge-cover" />
+        <h4 th:text="${libriChallenge[c.id].titolo}">Titolo</h4>
+      </div>
+
+      <div class="challenge-card-right">
+        <p><strong>Domanda:</strong> <span th:text="${c.domanda}">Domanda</span></p>
+        <p><strong>Inviata da:</strong> <span th:text="${c.autore.username}">Autore</span></p>
+
+        <!-- Se NON ho ancora risposto -->
+        <th:block th:if="${challengeRisposte[c.id] == null}">
+          <a class="nav-btn" th:href="@{/challenge/risposta-quiz(id=${c.id})}">Rispondi</a>
+        </th:block>
+
+        <!-- Se ho risposto -->
+        <th:block th:if="${challengeRisposte[c.id] != null}">
+          <p>
+            <strong class="status-pill"
+                    th:classappend="${challengeRisposte[c.id].corretta} ? 'corretta' : 'errata'"
+                    th:text="${challengeRisposte[c.id].corretta} ? 'Risposta corretta' : 'Risposta errata'">
+              Esito
+            </strong>
+          </p>
+          <p><em>Hai già risposto a questa challenge.</em></p>
+        </th:block>
+      </div>
+    </div>
+  </div>
+
+  <p th:if="${challengeRicevute == null or challengeRicevute.size() == 0}">
+    Nessuna challenge ricevuta
+  </p>
+
+</section>
+
 </main>
 
-<footer>
-  <p>Bookathlon</p>
-</footer>
 
+<script th:src="@{/js/challenge.js}"></script>
 <script>
   function toggleMenu() {
     document.querySelector('.nav-buttons').classList.toggle('show');
+
   }
 </script>
 </body>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Invia Challenge</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/friends.css}">
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <a th:href="@{/}">
+                <img th:src="@{/images/logoverde.png}" alt="Logo" />
+            </a>
+        </div>
+    </div>
+</header>
+
+<main>
+<form th:action="@{/challenge/invia}" method="post">
+  <input type="hidden" name="challengeId" th:value="${challengeId}" />
+
+  <div class="card-container">
+    <label class="card card-amico selectable-card" th:each="a : ${amici}">
+      <input type="checkbox" name="destinatari" th:value="${a.id}" class="card-checkbox" />
+
+      <img src="/images/avatar.png" alt="Avatar" class="card-img shadowed-avatar">
+      <div class="card-content">
+        <h3 th:text="${a.username}">Username</h3>
+        <p th:text="'Punti: ' + ${a.score}">Punti</p>
+      </div>
+    </label>
+  </div>
+
+  <div style="text-align: center; margin-top: 2rem;">
+    <button type="submit" class="nav-btn">Invia Challenge</button>
+  </div>
+</form>
+</main>
+
+</body>
+</html>

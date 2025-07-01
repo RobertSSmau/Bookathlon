@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esito Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+  <div class="user-greeting-box">
+    <h1 th:if="${corretta}" style="color:green;">✔ Risposta corretta!</h1>
+    <h1 th:unless="${corretta}" style="color:red;">✘ Risposta sbagliata</h1>
+    <p th:if="${corretta}">Hai guadagnato 1 punto. Ben fatto!</p>
+    <p th:unless="${corretta}">Purtroppo la risposta era errata. Riprova con una nuova challenge!</p>
+    <br>
+    <a class="nav-btn" th:href="@{/challenge}">Torna alla pagina Challenge</a>
+  </div>
+</body>
+</html>

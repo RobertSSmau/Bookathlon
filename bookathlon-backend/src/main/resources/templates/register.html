@@ -8,7 +8,7 @@
 <body>
         <div class="logo">
         <a th:href="@{/}">
-            <img th:src="@{/images/logoverde.png}" alt="Logo" width="200">
+            <img th:src="@{/images/logoverde.png}" alt="Logo" width="300">
         </a>
     </div>
     <h2>Crea un nuovo account</h2>
@@ -19,9 +19,27 @@
         <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         <br/>
 
-        <label>Password:</label>
+    <label>Password:</label>
+    <div class="input-with-info">
         <input type="password" th:field="*{password}" />
-        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        <div class="info-container">
+            <div class="info-icon">
+                <img th:src="@{/images/info.png}" alt="Info" width="30">
+            </div>
+            <div class="info-text">
+                La password deve essere composta da almeno 8 caratteri, deve contenere almeno una lettera maiuscola, una minuscola, un carattere speciale e un numero.
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <br/>
+
+
+
+        <label>Conferma Password:</label>
+        <input type="password" th:field="*{confermaPassword}" />
+        <div th:if="${#fields.hasErrors('confermaPassword')}" th:errors="*{confermaPassword}"></div>
         <br/>
 
         <label>Email:</label>
@@ -31,10 +49,44 @@
 
          <input type="hidden" th:field="*{ruolo}" value="USER" />
 
+         <div class="scroll-box">
+            <h3>Termini e Condizioni di Utilizzo</h3>
+            <p>
+                Utilizzando la piattaforma Bookathlon, l’utente accetta integralmente i seguenti termini e condizioni, nonché la nostra informativa sulla privacy, in conformità con il Regolamento (UE) 2016/679 (GDPR) e la normativa italiana vigente in materia di protezione dei dati personali.
+                <br/><br/>
+                1. È fatto divieto di pubblicare contenuti offensivi, discriminatori, diffamatori o contrari alla legge. Bookathlon si riserva il diritto di rimuovere tali contenuti senza preavviso.<br/>
+                2. I commenti degli utenti vengono monitorati periodicamente e, in caso di segnalazioni, possono essere moderati, oscurati o eliminati.<br/>
+                3. L’utente è l’unico responsabile dei contenuti che pubblica e si impegna a utilizzare la piattaforma in modo lecito, corretto e rispettoso della community.<br/>
+                4. Bookathlon non è responsabile per eventuali danni derivanti da un uso improprio del sito o da interazioni tra utenti.<br/>
+                5. I dati personali forniti in fase di registrazione saranno utilizzati esclusivamente per le finalità legate al funzionamento della piattaforma e non saranno condivisi con terze parti senza consenso esplicito.<br/>
+                6. L’utente ha diritto in qualsiasi momento di accedere, modificare o richiedere la cancellazione dei propri dati secondo quanto previsto dalla normativa vigente.<br/>
+                <br/>
+                Per maggiori informazioni consulta la nostra Informativa Privacy completa.
+            </p>
+        </div>
+
+         <div class="checkbox-container">
+            <label>
+                <input type="checkbox" id="accettaTermini" name="accettaTermini" required />
+                Accetto i termini e condizioni e la privacy policy.
+            </label>
+            </div>
+
         <button type="submit">Registrati</button>
 
     </form>
 
     <p>Hai già un account? <a th:href="@{/login}">Accedi</a></p>
+    <script>
+document.querySelector("form").addEventListener("submit", function(e) {
+  const password = document.querySelector('[name="password"]').value;
+  const conferma = document.querySelector('[name="confermaPassword"]').value;
+
+  if (password !== conferma) {
+    e.preventDefault();
+    alert("Le password non coincidono");
+  }
+});
+</script>
 </body>
 </html>

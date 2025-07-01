@@ -1,0 +1,105 @@
+.challenge-tab-selector {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.challenge-tab {
+  background-color: #103048;
+  color: #A3D5B6;
+  border: 2px solid #A3D5B6;
+  padding: 0.6rem 1.2rem;
+  margin: 0 0.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.challenge-tab.active {
+  background-color: #A3D5B6;
+  color: #103048;
+}
+
+.card-container-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.challenge-card {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #103048;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.challenge-card-left {
+  flex: 0 0 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.challenge-cover {
+  width: 100px;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.challenge-card-right {
+  flex: 1;
+  padding: 1rem;
+  color: #A3D5B6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.challenge-card-right h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  color: #A3D5B6;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.status-pill.corretta {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.status-pill.errata {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .challenge-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .challenge-card-left,
+  .challenge-card-right {
+    flex: unset;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .challenge-cover {
+    width: 80px;
+  }
+}

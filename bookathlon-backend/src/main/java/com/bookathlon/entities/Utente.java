@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -31,11 +32,16 @@ public class Utente {
 
     @NotBlank(message = "La password è obbligatoria")
     @Pattern(
-        regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,}$",
-        message = "La password deve contenere almeno 8 caratteri, un numero, una lettera maiuscola, una minuscola e un carattere speciale"
-         )
+    regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()\\[\\]{}:;',.?/~$^+=<>]).{8,}$",
+    message = "La password deve contenere almeno 8 caratteri, un numero, una lettera maiuscola, una minuscola e un carattere speciale"
+    )
     @Column(nullable = false)  //La password è obbligatoria e deve essere cifrata prima di salvarla nel DB
     private String password;
+
+    @Transient // Non verrà salvato nel DB
+    @NotBlank(message = "La conferma della password è obbligatoria")
+    private String confermaPassword;
+
     
     @NotBlank(message = "L'email è obbligatoria")
     @Email(message = "Email non valida")
@@ -80,8 +86,17 @@ public class Utente {
 
     public void setPassword(String password) {
         this.password = password;
+
     }
     
+    public String getConfermaPassword() {
+        return confermaPassword;
+    }
+
+    public void setConfermaPassword(String confermaPassword) {
+        this.confermaPassword = confermaPassword;
+    }
+
     public String getEmail() {
         return email;
     }

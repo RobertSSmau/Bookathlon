@@ -32,8 +32,9 @@ public interface LibroService {
     /**
      * Esegue una ricerca di libri basata su una parola chiave, filtrando su vari campi come titolo, autore o genere.
      */
-    List<Libro> cerca(String keyword);
-
+    List<Libro> cercaTitolo(String titolo);
+    
+    List<Libro> cercaAutore(String autore);
 }
 
 

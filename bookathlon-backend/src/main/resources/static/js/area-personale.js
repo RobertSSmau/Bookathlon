@@ -40,3 +40,43 @@ function mostraElementiAmici() {
 function nascondiElementiAmici() {
   document.querySelectorAll('#sezione-amici').forEach(el => el.classList.add('d-none'));
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  let currentRemoveForm = null;
+
+  const removeButtons = document.querySelectorAll("form[action*='/area-personale/rimuovi'] button[type='submit']");
+
+  removeButtons.forEach(button => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      currentRemoveForm = button.closest("form");
+
+      const card = button.closest(".card");
+      const img = card.querySelector("img");
+      const modalImg = document.getElementById("remove-cover");
+
+      if (img && modalImg) {
+        modalImg.src = img.src;
+      }
+
+      document.getElementById("remove-modal").classList.remove("d-none");
+    });
+  });
+
+  document.getElementById("remove-yes").addEventListener("click", function () {
+    if (currentRemoveForm) {
+      document.getElementById("remove-modal").classList.add("d-none");
+      currentRemoveForm.submit();
+    }
+  });
+
+  document.getElementById("remove-no").addEventListener("click", function () {
+    document.getElementById("remove-modal").classList.add("d-none");
+    currentRemoveForm = null;
+  });
+});
+
+function apriSceltaChallenge(libroId) {
+  window.location.href = "/challenge/nuova?libroId=" + libroId;
+}
