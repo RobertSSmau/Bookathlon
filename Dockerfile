@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine AS build
 
 WORKDIR /app
 
@@ -10,4 +10,10 @@ RUN chmod +x mvnw
 
 RUN ./mvnw clean package -DskipTests
 
-ENTRYPOINT ["java", "-jar", "target/bookathlon-backend-0.0.1-SNAPSHOT.jar"]
+FROM eclipse-temurin:21-jdk-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/bookathlon-backend/target/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
